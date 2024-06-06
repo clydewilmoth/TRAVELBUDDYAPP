@@ -1,6 +1,7 @@
 package de.hs_mannheim.domain;
 
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class System {
     
@@ -26,5 +27,36 @@ public class System {
         return true;
     }
 
+    public TreeSet<String> search(String hometown_or_zip){
+        return new TreeSet<String>();
+    }
+
+    public TreeSet<String> random_destinations(){
+        return new TreeSet<String>();
+    }
+
+    public String[] destination_details(String destination_zip){
+        return new String[1];
+    }
+
+    public String current_weather(){
+        return "";
+    }
+
+    public String weather_forecast(String destination_zip){
+        return "";
+    }
+
+    public String distance(String destination_zip){
+        return "";
+    }
+
+    public String[] travel_time(String destination_zip){
+        return new String[1];
+    }
+
+    public String calc_co2(String destination_zip){
+        return "";
+    }
 }
 
