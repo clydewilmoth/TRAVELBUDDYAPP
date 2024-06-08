@@ -6,6 +6,15 @@ import java.util.TreeSet;
 public class System {
     
     private User current_user;
+    private String api_key;
+
+    public String getApi_key() {
+        return api_key;
+    }
+
+    public void setApi_key(String api_key) {
+        this.api_key = api_key;
+    }
 
     public HashSet<User> get_all_user(){
         return new HashSet<User>();
