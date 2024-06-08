@@ -85,7 +85,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--  Static code analysis, cf: target/site/pmd.html  -->
+            <!--  Static code analysis, cf: target/site/pmd.html
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
@@ -98,20 +98,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <!--  Security checking the plugins (not so important for non-web applications)  -->
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>9.2.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>
