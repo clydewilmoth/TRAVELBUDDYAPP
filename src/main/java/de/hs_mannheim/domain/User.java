@@ -7,9 +7,9 @@ public class User {
     private String hometown = "";
     private int zip;
     private String car_name = "";
-    private String car_co2_kmh = "";
-    private String car_avg_kmh = "";
-    private String bike_avg_kmh = "";
+    private double car_co2_kmh;
+    private double car_avg_kmh;
+    private double bike_avg_kmh;
 
     public String getUsername() {
         return username;
@@ -51,27 +51,27 @@ public class User {
         this.car_name = car_name;
     }
 
-    public String getCar_co2_kmh() {
+    public double getCar_co2_kmh() {
         return car_co2_kmh;
     }
 
-    public void setCar_co2_kmh(String car_co2_kmh) {
+    public void setCar_co2_kmh(double car_co2_kmh) {
         this.car_co2_kmh = car_co2_kmh;
     }
 
-    public String getCar_avg_kmh() {
+    public double getCar_avg_kmh() {
         return car_avg_kmh;
     }
 
-    public void setCar_avg_kmh(String car_avg_kmh) {
+    public void setCar_avg_kmh(double car_avg_kmh) {
         this.car_avg_kmh = car_avg_kmh;
     }
 
-    public String getBike_avg_kmh() {
+    public double getBike_avg_kmh() {
         return bike_avg_kmh;
     }
 
-    public void setBike_avg_kmh(String bike_avg_kmh) {
+    public void setBike_avg_kmh(double bike_avg_kmh) {
         this.bike_avg_kmh = bike_avg_kmh;
     }
 }
