@@ -226,14 +226,15 @@ public class System {
                     lat2 = Double.parseDouble(line.split(";")[3]);
                 }
 
-                if(line.split(";")[0].equals(current_user.getZip())){
+                if(line.split(";")[0].equals(""+current_user.getZip())){
                     lon1 = Double.parseDouble(line.split(";")[2]);
                     lat1 = Double.parseDouble(line.split(";")[3]);
                 }
             }
         } catch (Exception e) {}
-        
-        return "" + 6378.388 * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
+
+        return "" + (Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)) * 111.324) + " km";
+    
     }
 
     public String[] travel_time(String destination_zip){
