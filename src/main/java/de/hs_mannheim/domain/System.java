@@ -72,8 +72,8 @@ public class System {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                if(line.contains(hometown_or_zip)&&zip_set.size()<200){
+            while ((line = reader.readLine()) != null && zip_set.size()<200) {
+                if(line.contains(hometown_or_zip)){
                     line = line.replace("\"", "");
                     zip_set.add(line);
                 }
@@ -91,7 +91,7 @@ public class System {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && result.size()<3) {
                 
                 line = line.replace("\"", "");
                 
@@ -111,7 +111,7 @@ public class System {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && result.size()<3) {
                 
                 line = line.replace("\"", "");
                 

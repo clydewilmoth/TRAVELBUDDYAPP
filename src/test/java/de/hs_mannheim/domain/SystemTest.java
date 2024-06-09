@@ -82,4 +82,20 @@ public class SystemTest {
         assertEquals("60.361 l", current_system.calc_l_consumption("10115")); // Kraftstoffverbrauch nach Berlin
     }
 
+    @Test
+    public void random_destinations(){
+
+        System current_system = new System("35a75437476f12302f72e55d368485db");
+
+        current_system.set_current_user_zip("68161");
+     
+        assertEquals(3, current_system.random_destinations_car().size()); // random_destinations_car gibt genau 3 destinations zurück
+        assertEquals(3, current_system.random_destinations_bike().size()); // random destinations_bike gibt genau 3 destinations zurück
+
+        // random_destinations_car gibt nur destinations mit mindestens 150 km Entfernung zurück
+        assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_car().get(0).split(";")[0]).replace(" km", "")) > 150);
+        // random_destinations_bike gibt nur destinations mit maximal 100 km Entfernung zurück
+        assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_bike().get(0).split(";")[0]).replace(" km", "")) < 100);
+    }
+
 }
