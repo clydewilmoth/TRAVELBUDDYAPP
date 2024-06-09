@@ -1,8 +1,6 @@
 package de.hs_mannheim.domain;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -17,11 +15,7 @@ public class System {
     private User current_user;
     private String api_key;
 
-    public String getApi_key() {
-        return api_key;
-    }
-
-    public void setApi_key(String api_key) {
+    public System(String api_key) {
         this.api_key = api_key;
     }
 
