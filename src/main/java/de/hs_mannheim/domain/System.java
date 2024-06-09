@@ -65,9 +65,7 @@ public class System {
                     zip_set.add(line);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
         
         return new ArrayList<>(zip_set);
     }
