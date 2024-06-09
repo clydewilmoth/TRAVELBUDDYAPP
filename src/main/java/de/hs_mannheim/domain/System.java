@@ -82,42 +82,52 @@ public class System {
 
     public ArrayList<String> random_destinations_car(){
         
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> mem = new ArrayList<>();
         
         InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
-            while ((line = reader.readLine()) != null && result.size()<3) {
+            while ((line = reader.readLine()) != null) {
                 
                 line = line.replace("\"", "");
                 
                 if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) > 150)
-                    result.add(line);
+                    mem.add(line);
                 
             }
         } catch (Exception e) {}
         
+        ArrayList<String> result = new ArrayList<>();
+        
+        for(int i = 0; i<3; i++)
+            result.add(mem.get((int) (Math.random()*mem.size())));
+
         return result;
     }
 
     public ArrayList<String> random_destinations_bike(){
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> mem = new ArrayList<>();
         
         InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
-            while ((line = reader.readLine()) != null && result.size()<3) {
+            while ((line = reader.readLine()) != null) {
                 
                 line = line.replace("\"", "");
                 
                 if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) < 100)
-                    result.add(line);
+                    mem.add(line);
                 
             }
         } catch (Exception e) {}
         
+        ArrayList<String> result = new ArrayList<>();
+        
+        for(int i = 0; i<3; i++)
+            result.add(mem.get((int) (Math.random()*mem.size())));
+
         return result;
     }
 
