@@ -39,4 +39,17 @@ public class SystemTest {
 
     }
 
+    @Test
+    public void distance(){
+
+        System current_system = new System("35a75437476f12302f72e55d368485db");
+
+        current_system.set_current_user_zip("68161");
+        
+        assertEquals("88.4596509227594 km", current_system.distance("60306")); // Frankfurt 
+        assertEquals("581.1091061333296 km", current_system.distance("20095")); // Hamburg
+        assertEquals("603.6077163174941 km", current_system.distance("10115")); // Berlin
+
+    }
+
 }
