@@ -113,7 +113,15 @@ public class System {
     }
 
     public String[] destination_details(String destination_zip){
-        return new String[1];
+        String[] result = new String[5];
+        
+        result[0] = distance(destination_zip); // Entfernung
+        result[1] = travel_time(destination_zip)[0]; // Reisedauer Auto
+        result[2] = travel_time(destination_zip)[1]; // Reisedauer Fahrrad
+        result[3] = calc_l_consumption(destination_zip); // Kraftstoffverbrauch Auto
+        result[4] = weather_forecast(destination_zip); // Wettervorhersage für die nächsten 3 Tage
+
+        return result;
     }
 
     public String current_weather(){
