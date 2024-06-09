@@ -5,6 +5,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -43,12 +44,12 @@ public class System {
         return true;
     }
 
-    public TreeSet<String> search(String hometown_or_zip){
-        return new TreeSet<String>();
+    public ArrayList<String> search(String hometown_or_zip){
+        return new ArrayList<String>();
     }
 
-    public TreeSet<String> random_destinations(){
-        return new TreeSet<String>();
+    public ArrayList<String> random_destinations(){
+        return new ArrayList<String>();
     }
 
     public String[] destination_details(String destination_zip){
