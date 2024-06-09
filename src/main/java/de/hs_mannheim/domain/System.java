@@ -12,6 +12,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.json.JSONObject;
@@ -71,7 +72,24 @@ public class System {
     }
 
     public ArrayList<String> random_destinations_car(){
-        return new ArrayList<String>();
+        
+        ArrayList<String> result = new ArrayList<>();
+        
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                
+                line = line.replace("\"", "");
+                
+                if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) > 150)
+                    result.add(line);
+                
+            }
+        } catch (Exception e) {}
+        
+        return result;
     }
 
     public ArrayList<String> random_destinations_bike(){
