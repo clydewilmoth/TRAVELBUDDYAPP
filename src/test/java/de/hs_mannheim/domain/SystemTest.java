@@ -46,10 +46,56 @@ public class SystemTest {
 
         current_system.set_current_user_zip("68161");
         
-        assertEquals("88.4596509227594 km", current_system.distance("60306")); // Frankfurt 
-        assertEquals("581.1091061333296 km", current_system.distance("20095")); // Hamburg
-        assertEquals("603.6077163174941 km", current_system.distance("10115")); // Berlin
+        assertEquals("88.46 km", current_system.distance("60306")); // Frankfurt 
+        assertEquals("581.109 km", current_system.distance("20095")); // Hamburg
+        assertEquals("603.608 km", current_system.distance("10115")); // Berlin
 
+    }
+
+    @Test
+    public void travel_time(){
+
+        System current_system = new System("35a75437476f12302f72e55d368485db");
+
+        current_system.set_current_user_zip("68161");
+        current_system.set_current_user_car_avg_kmh(100);
+        current_system.set_current_user_bike_avg_kmh(20);
+        
+        assertEquals("0.885 h", current_system.travel_time("60306")[0]); // Frankfurt mit Auto
+        assertEquals("4.423 h", current_system.travel_time("60306")[1]); // Frankfurt mit Fahrrad
+
+        assertEquals("6.036 h", current_system.travel_time("10115")[0]); // Berlin mit Auto
+        assertEquals("30.18 h", current_system.travel_time("10115")[1]); // Berlin mit Fahrrad
+    }
+
+    @Test
+    public void calc_l_consumption(){
+
+        System current_system = new System("35a75437476f12302f72e55d368485db");
+
+        current_system.set_current_user_zip("68161");
+        current_system.set_current_user_car_avg_kmh(100);
+        current_system.set_current_user_car_l_100km(10);
+        
+        assertEquals("8.846 l", current_system.calc_l_consumption("60306")); // Kraftstoffverbrauch nach Frankfurt
+        assertEquals("58.111 l", current_system.calc_l_consumption("20095")); // Kraftstoffverbrauch nach Hamburg
+        assertEquals("60.361 l", current_system.calc_l_consumption("10115")); // Kraftstoffverbrauch nach Berlin
+    }
+
+    @Test
+    public void random_destinations(){
+
+        System current_system = new System("35a75437476f12302f72e55d368485db");
+
+        current_system.set_current_user_zip("68161");
+     
+        assertEquals(3, current_system.random_destinations_car().size()); // random_destinations_car gibt genau 3 destinations zurück
+        assertEquals(3, current_system.random_destinations_bike().size()); // random destinations_bike gibt genau 3 destinations zurück
+
+        // random_destinations_car gibt nur destinations mit mindestens 150 km Entfernung zurück
+        assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_car().get(0).split(";")[0]).replace(" km", "")) > 150);
+        // random_destinations_bike gibt nur destinations mit maximal 100 km Entfernung zurück
+        assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_bike().get(0).split(";")[0]).replace(" km", "")) < 100);
     }
 
 }

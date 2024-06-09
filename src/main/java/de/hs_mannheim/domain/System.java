@@ -12,6 +12,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.json.JSONObject;
@@ -31,6 +32,18 @@ public class System {
         this.current_user.setZip(Integer.parseInt(zip));
     }
 
+    public void set_current_user_car_l_100km(double car_l_100km){
+        this.current_user.setCar_l_100km(car_l_100km);
+    }
+
+    public void set_current_user_car_avg_kmh(double car_avg_kmh){
+        this.current_user.setCar_avg_kmh(car_avg_kmh);
+    }
+
+    public void set_current_user_bike_avg_kmh(double bike_avg_kmh){
+        this.current_user.setBike_avg_kmh(bike_avg_kmh);
+    }
+    
     public HashSet<User> get_all_user(){
         return new HashSet<User>();
     }
@@ -59,8 +72,8 @@ public class System {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                if(line.contains(hometown_or_zip)&&zip_set.size()<200){
+            while ((line = reader.readLine()) != null && zip_set.size()<200) {
+                if(line.contains(hometown_or_zip)){
                     line = line.replace("\"", "");
                     zip_set.add(line);
                 }
@@ -71,15 +84,56 @@ public class System {
     }
 
     public ArrayList<String> random_destinations_car(){
-        return new ArrayList<String>();
+        
+        ArrayList<String> result = new ArrayList<>();
+        
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null && result.size()<3) {
+                
+                line = line.replace("\"", "");
+                
+                if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) > 150)
+                    result.add(line);
+                
+            }
+        } catch (Exception e) {}
+        
+        return result;
     }
 
     public ArrayList<String> random_destinations_bike(){
-        return new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
+        
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null && result.size()<3) {
+                
+                line = line.replace("\"", "");
+                
+                if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) < 100)
+                    result.add(line);
+                
+            }
+        } catch (Exception e) {}
+        
+        return result;
     }
 
     public String[] destination_details(String destination_zip){
-        return new String[1];
+        String[] result = new String[5];
+        
+        result[0] = distance(destination_zip); // Entfernung
+        result[1] = travel_time(destination_zip)[0]; // Reisedauer Auto
+        result[2] = travel_time(destination_zip)[1]; // Reisedauer Fahrrad
+        result[3] = calc_l_consumption(destination_zip); // Kraftstoffverbrauch Auto
+        result[4] = weather_forecast(destination_zip); // Wettervorhersage für die nächsten 3 Tage
+
+        return result;
     }
 
     public String current_weather(){
@@ -209,10 +263,10 @@ public class System {
 
     public String distance(String destination_zip){
         
-        double lon1 = 1;
-        double lon2 = 1;
-        double lat1 = 1;
-        double lat2 = 1;
+        double lon1 = -1;
+        double lon2 = -1;
+        double lat1 = -1;
+        double lat2 = -1;
 
         InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
 
@@ -233,6 +287,9 @@ public class System {
             }
         } catch (Exception e) {}
 
+        if(lon1==-1||lon2==-1||lat1==-1||lat2==-1)
+            return "Es ist ein Fehler aufgetreten!";
+
         double dLat = lat2-lat1;
         double dLon = lon2-lon1;
 
@@ -240,16 +297,33 @@ public class System {
 
         double distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a));
 
-        return "" + (distance * 1.25) + " km";
+        return "" + (Math.round((distance * 1.25)*1000)/1000.0) + " km";
     
     }
 
     public String[] travel_time(String destination_zip){
-        return new String[1];
+        
+        String[] result = new String[2];
+        
+        if(distance(destination_zip).equals("Es ist ein Fehler aufgetreten!")){
+            result[0] = "Es ist ein Fehler aufgetreten!";
+            result[1] = "Es ist ein Fehler aufgetreten!";
+            return result;
+        }
+
+        result[0] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh()))*1000) / 1000.0) + " h";
+        result[1] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh()))*1000) / 1000.0) + " h";
+        
+        return result;
     }
 
-    public String calc_co2(String destination_zip){
-        return "";
+    public String calc_l_consumption(String destination_zip){
+        
+        if(distance(destination_zip).equals("Es ist ein Fehler aufgetreten!"))
+            return "Es ist ein Fehler aufgetreten!";
+
+        return "" + (Math.round((Double.parseDouble(distance(destination_zip).replace(" km", "")) * (current_user.getCar_l_100km() / 100.0))*1000)/1000.0) + " l";
+    
     }
 }
 
