@@ -1,5 +1,6 @@
 package de.hs_mannheim.facade;
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 import de.hs_mannheim.domain.System;
@@ -28,12 +29,16 @@ public class Application {
         return true;
     }
 
-    public TreeSet<String> search(String hometown_or_zip){
-        return new TreeSet<String>();
+    public ArrayList<String> search(String hometown_or_zip){
+        return new ArrayList<String>();
     }
 
-    public TreeSet<String> random_destinations(){
-        return new TreeSet<String>();
+    public ArrayList<String> random_destinations_car(){
+        return new ArrayList<String>();
+    }
+
+    public ArrayList<String> random_destinations_bike(){
+        return new ArrayList<String>();
     }
 
     public String[] destination_details(String destination_zip){

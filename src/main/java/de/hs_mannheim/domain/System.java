@@ -1,14 +1,22 @@
 package de.hs_mannheim.domain;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.json.JSONObject;
+
+import de.hs_mannheim.ui.Main;
 
 public class System {
     
@@ -43,12 +51,31 @@ public class System {
         return true;
     }
 
-    public TreeSet<String> search(String hometown_or_zip){
-        return new TreeSet<String>();
+    public ArrayList<String> search(String hometown_or_zip){
+        
+        TreeSet<String> zip_set = new TreeSet<>();
+
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if(line.contains(hometown_or_zip)&&zip_set.size()<200){
+                    line = line.replace("\"", "");
+                    zip_set.add(line);
+                }
+            }
+        } catch (IOException e) {}
+        
+        return new ArrayList<>(zip_set);
     }
 
-    public TreeSet<String> random_destinations(){
-        return new TreeSet<String>();
+    public ArrayList<String> random_destinations_car(){
+        return new ArrayList<String>();
+    }
+
+    public ArrayList<String> random_destinations_bike(){
+        return new ArrayList<String>();
     }
 
     public String[] destination_details(String destination_zip){
