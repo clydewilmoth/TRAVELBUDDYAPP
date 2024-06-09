@@ -68,4 +68,18 @@ public class SystemTest {
         assertEquals("30.18 h", current_system.travel_time("10115")[1]); // Berlin mit Fahrrad
     }
 
+    @Test
+    public void calc_l_consumption(){
+
+        System current_system = new System("35a75437476f12302f72e55d368485db");
+
+        current_system.set_current_user_zip("68161");
+        current_system.set_current_user_car_avg_kmh(100);
+        current_system.set_current_user_car_l_100km(10);
+        
+        assertEquals("8.846 l", current_system.calc_l_consumption("60306")); // Kraftstoffverbrauch nach Frankfurt
+        assertEquals("58.111 l", current_system.calc_l_consumption("20095")); // Kraftstoffverbrauch nach Hamburg
+        assertEquals("60.361 l", current_system.calc_l_consumption("10115")); // Kraftstoffverbrauch nach Berlin
+    }
+
 }
