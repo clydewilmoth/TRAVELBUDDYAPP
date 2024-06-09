@@ -1,7 +1,6 @@
 package de.hs_mannheim.domain;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -9,10 +8,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.TreeSet;
 
 import org.json.JSONObject;
@@ -149,7 +146,7 @@ public class System {
                                             .GET()
                                             .build();
         
-        HttpResponse get_response = http_client.send(get_request, BodyHandlers.ofString());
+        HttpResponse<String> get_response = http_client.send(get_request, BodyHandlers.ofString());
 
         JSONObject json = new JSONObject(((String)get_response.body()).substring(0,((String) get_response.body()).length()));
         weather = json.getJSONArray("weather").getJSONObject(0).getString("description");
@@ -205,7 +202,7 @@ public class System {
                                                 .GET()
                                                 .build();
             
-            HttpResponse get_response = http_client.send(get_request, BodyHandlers.ofString());
+            HttpResponse<String> get_response = http_client.send(get_request, BodyHandlers.ofString());
 
             JSONObject json = new JSONObject(((String)get_response.body()).substring(0,((String) get_response.body()).length()));
             weather_day_1 = json.getJSONArray("list").getJSONObject(11).getJSONArray("weather").getJSONObject(0).getString("description");
