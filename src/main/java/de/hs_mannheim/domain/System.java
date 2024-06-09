@@ -93,7 +93,23 @@ public class System {
     }
 
     public ArrayList<String> random_destinations_bike(){
-        return new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
+        
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                
+                line = line.replace("\"", "");
+                
+                if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) < 100)
+                    result.add(line);
+                
+            }
+        } catch (Exception e) {}
+        
+        return result;
     }
 
     public String[] destination_details(String destination_zip){
