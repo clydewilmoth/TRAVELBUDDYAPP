@@ -9,18 +9,16 @@ import org.junit.jupiter.api.Test;
 
 public class SystemTest {
     
+    System current_system = new System("35a75437476f12302f72e55d368485db");
+    
     @Test
     public void weather_forecast(){
-
-        System current_system = new System("35a75437476f12302f72e55d368485db");
 
         assertNotEquals("Es ist ein Fehler aufgetreten!",current_system.weather_forecast("68161"));
     }
 
     @Test
     public void current_weather(){
-
-        System current_system = new System("35a75437476f12302f72e55d368485db");
 
         current_system.set_current_user_zip("68161");
 
@@ -29,8 +27,6 @@ public class SystemTest {
 
     @Test
     public void search(){
-
-        System current_system = new System("35a75437476f12302f72e55d368485db");
 
         ArrayList<String> list = current_system.search("Mannheim");
         
@@ -42,8 +38,6 @@ public class SystemTest {
     @Test
     public void distance(){
 
-        System current_system = new System("35a75437476f12302f72e55d368485db");
-
         current_system.set_current_user_zip("68161");
         
         assertEquals("88.46 km", current_system.distance("60306")); // Frankfurt 
@@ -54,8 +48,6 @@ public class SystemTest {
 
     @Test
     public void travel_time(){
-
-        System current_system = new System("35a75437476f12302f72e55d368485db");
 
         current_system.set_current_user_zip("68161");
         current_system.set_current_user_car_avg_kmh(100);
@@ -71,8 +63,6 @@ public class SystemTest {
     @Test
     public void calc_l_consumption(){
 
-        System current_system = new System("35a75437476f12302f72e55d368485db");
-
         current_system.set_current_user_zip("68161");
         current_system.set_current_user_car_avg_kmh(100);
         current_system.set_current_user_car_l_100km(10);
@@ -84,8 +74,6 @@ public class SystemTest {
 
     @Test
     public void random_destinations(){
-
-        System current_system = new System("35a75437476f12302f72e55d368485db");
 
         current_system.set_current_user_zip("68161");
      

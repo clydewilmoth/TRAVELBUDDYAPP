@@ -20,6 +20,7 @@ public class System {
     
     private User current_user = new User();
     private String api_key;
+    private ArrayList<String> distances = new ArrayList<>();
 
     public System(String api_key) {
         this.api_key = api_key;
@@ -54,7 +55,9 @@ public class System {
         return true;
     }
 
-    public void sign_out_user(){}
+    public void sign_out_user(){
+        this.distances = new ArrayList<>();
+    }
 
     public boolean change_user_details(String username, String password, String hometown, int zip, 
                                 String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
@@ -82,42 +85,37 @@ public class System {
 
     public ArrayList<String> random_destinations_car(){
         
-        ArrayList<String> result = new ArrayList<>();
-        
-        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+        calc_all_distances();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = reader.readLine()) != null && result.size()<3) {
-                
-                line = line.replace("\"", "");
-                
-                if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) > 150)
-                    result.add(line);
-                
-            }
-        } catch (Exception e) {}
+        ArrayList<String> mem = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+
+        for(int i = 0; i<this.distances.size(); i++){
+            if(Double.parseDouble(this.distances.get(i).split(";")[2])>150)
+                mem.add(this.distances.get(i));
+        }
         
+        for(int i = 0; i<3; i++)
+            result.add(mem.get((int) (Math.random()*mem.size())));
+
         return result;
     }
 
     public ArrayList<String> random_destinations_bike(){
-        ArrayList<String> result = new ArrayList<>();
         
-        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+        calc_all_distances();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = reader.readLine()) != null && result.size()<3) {
-                
-                line = line.replace("\"", "");
-                
-                if(Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")) < 100)
-                    result.add(line);
-                
-            }
-        } catch (Exception e) {}
+        ArrayList<String> mem = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+
+        for(int i = 0; i<this.distances.size(); i++){
+            if(Double.parseDouble(this.distances.get(i).split(";")[2])<100)
+                mem.add(this.distances.get(i));
+        }
         
+        for(int i = 0; i<3; i++)
+            result.add(mem.get((int) (Math.random()*mem.size())));
+
         return result;
     }
 
@@ -298,6 +296,25 @@ public class System {
     
     }
 
+    public void calc_all_distances(){
+
+        if(!this.distances.isEmpty())
+            return;
+
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                
+                line = line.replace("\"", "");
+                
+                this.distances.add(line.split(";")[0] + ";" + line.split(";")[1] + ";" + Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")));
+                
+            }
+        } catch (Exception e) {}
+    }
+    
     public String[] travel_time(String destination_zip){
         
         String[] result = new String[2];
