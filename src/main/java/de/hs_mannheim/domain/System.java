@@ -233,7 +233,14 @@ public class System {
             }
         } catch (Exception e) {}
 
-        return "" + (Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)) * 111.324) + " km";
+        double dLat = lat2-lat1;
+        double dLon = lon2-lon1;
+
+        double a = Math.pow(Math.sin(Math.toRadians(dLat/2.0)), 2) + Math.pow(Math.sin(Math.toRadians(dLon/2.0)), 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+
+        double distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a));
+
+        return "" + (distance * 1.25) + " km";
     
     }
 
