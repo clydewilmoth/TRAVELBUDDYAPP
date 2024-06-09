@@ -29,23 +29,23 @@ public class Application {
     }
 
     public ArrayList<String> search(String hometown_or_zip){
-        return new ArrayList<String>();
+        return running_system.search(hometown_or_zip);
     }
 
     public ArrayList<String> random_destinations_car(){
-        return new ArrayList<String>();
+        return running_system.random_destinations_car();
     }
 
     public ArrayList<String> random_destinations_bike(){
-        return new ArrayList<String>();
+        return running_system.random_destinations_bike();
     }
 
     public String[] destination_details(String destination_zip){
-        return new String[1];
+        return running_system.destination_details(destination_zip);
     }
 
     public String current_weather(){
-        return "";
+        return running_system.current_weather();
     }
 
 }
