@@ -65,7 +65,7 @@ public class System {
                     zip_set.add(line);
                 }
             }
-        } catch (IOException e) {}
+        } catch (Exception e) {}
         
         return new ArrayList<>(zip_set);
     }
@@ -208,7 +208,40 @@ public class System {
     }
 
     public String distance(String destination_zip){
-        return "";
+        
+        double lon1 = 1;
+        double lon2 = 1;
+        double lat1 = 1;
+        double lat2 = 1;
+
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                line = line.replace("\"", "");
+                
+                if(line.split(";")[0].equals(destination_zip)){
+                    lon2 = Double.parseDouble(line.split(";")[2]);
+                    lat2 = Double.parseDouble(line.split(";")[3]);
+                }
+
+                if(line.split(";")[0].equals(""+current_user.getZip())){
+                    lon1 = Double.parseDouble(line.split(";")[2]);
+                    lat1 = Double.parseDouble(line.split(";")[3]);
+                }
+            }
+        } catch (Exception e) {}
+
+        double dLat = lat2-lat1;
+        double dLon = lon2-lon1;
+
+        double a = Math.pow(Math.sin(Math.toRadians(dLat/2.0)), 2) + Math.pow(Math.sin(Math.toRadians(dLon/2.0)), 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+
+        double distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a));
+
+        return "" + (distance * 1.25) + " km";
+    
     }
 
     public String[] travel_time(String destination_zip){
