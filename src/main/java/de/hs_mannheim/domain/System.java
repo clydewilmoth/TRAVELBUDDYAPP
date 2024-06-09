@@ -1,15 +1,21 @@
 package de.hs_mannheim.domain;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.json.JSONObject;
+
+import de.hs_mannheim.ui.Main;
 
 public class System {
     
@@ -45,7 +51,21 @@ public class System {
     }
 
     public ArrayList<String> search(String hometown_or_zip){
-        return new ArrayList<String>();
+        
+        TreeSet<String> zip_set = new TreeSet<>();
+
+        try (InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if(line.contains("hometown_or_zip")&&zip_set.size()<200)
+                    zip_set.add(line);
+            }
+
+        } catch (Exception e) {}
+        
+        return new ArrayList<>(zip_set);
     }
 
     public ArrayList<String> random_destinations(){
