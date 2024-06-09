@@ -245,7 +245,12 @@ public class System {
     }
 
     public String[] travel_time(String destination_zip){
-        return new String[1];
+        
+        String[] result = new String[2];
+        result[0] = "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh()) + " h";
+        result[1] = "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh()) + " h";
+        
+        return result;
     }
 
     public String calc_co2(String destination_zip){
