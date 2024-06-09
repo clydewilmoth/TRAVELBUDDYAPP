@@ -33,7 +33,11 @@ public class Application {
         return new ArrayList<String>();
     }
 
-    public ArrayList<String> random_destinations(){
+    public ArrayList<String> random_destinations_car(){
+        return new ArrayList<String>();
+    }
+
+    public ArrayList<String> random_destinations_bike(){
         return new ArrayList<String>();
     }
 

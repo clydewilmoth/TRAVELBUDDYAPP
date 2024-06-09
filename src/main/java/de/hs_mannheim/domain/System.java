@@ -72,7 +72,11 @@ public class System {
         return new ArrayList<>(zip_set);
     }
 
-    public ArrayList<String> random_destinations(){
+    public ArrayList<String> random_destinations_car(){
+        return new ArrayList<String>();
+    }
+
+    public ArrayList<String> random_destinations_bike(){
         return new ArrayList<String>();
     }
 
