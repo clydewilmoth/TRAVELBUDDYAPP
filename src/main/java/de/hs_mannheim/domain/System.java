@@ -251,10 +251,10 @@ public class System {
 
     public String distance(String destination_zip){
         
-        double lon1 = 1;
-        double lon2 = 1;
-        double lat1 = 1;
-        double lat2 = 1;
+        double lon1 = -1;
+        double lon2 = -1;
+        double lat1 = -1;
+        double lat2 = -1;
 
         InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
 
@@ -275,6 +275,9 @@ public class System {
             }
         } catch (Exception e) {}
 
+        if(lon1==-1||lon2==-1||lat1==-1||lat2==-1)
+            return "Es ist ein Fehler aufgetreten!";
+
         double dLat = lat2-lat1;
         double dLon = lon2-lon1;
 
@@ -289,6 +292,13 @@ public class System {
     public String[] travel_time(String destination_zip){
         
         String[] result = new String[2];
+        
+        if(distance(destination_zip).equals("Es ist ein Fehler aufgetreten!")){
+            result[0] = "Es ist ein Fehler aufgetreten!";
+            result[1] = "Es ist ein Fehler aufgetreten!";
+            return result;
+        }
+
         result[0] = "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh()) + " h";
         result[1] = "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh()) + " h";
         
@@ -297,6 +307,9 @@ public class System {
 
     public String calc_l_consumption(String destination_zip){
         
+        if(distance(destination_zip).equals("Es ist ein Fehler aufgetreten!"))
+            return "Es ist ein Fehler aufgetreten!";
+
         return "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) * (current_user.getCar_l_100km() / 100)) + " l";
     
     }
