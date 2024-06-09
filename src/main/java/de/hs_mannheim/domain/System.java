@@ -1,6 +1,7 @@
 package de.hs_mannheim.domain;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -54,16 +55,19 @@ public class System {
         
         TreeSet<String> zip_set = new TreeSet<>();
 
-        try (InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
 
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if(line.contains("hometown_or_zip")&&zip_set.size()<200)
+                if(line.contains(hometown_or_zip)&&zip_set.size()<200){
+                    line = line.replace("\"", "");
                     zip_set.add(line);
+                }
             }
-
-        } catch (Exception e) {}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
         return new ArrayList<>(zip_set);
     }
