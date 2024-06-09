@@ -12,11 +12,15 @@ import org.json.JSONObject;
 
 public class System {
     
-    private User current_user;
+    private User current_user = new User();
     private String api_key;
 
     public System(String api_key) {
         this.api_key = api_key;
+    }
+
+    public void set_current_user_zip(String zip){
+        this.current_user.setZip(Integer.parseInt(zip));
     }
 
     public HashSet<User> get_all_user(){
@@ -54,19 +58,19 @@ public class System {
     public String current_weather(){
         
         String weather = "";
-        double temperature = 1; 
-        
+        double temperature = 1;
+
         try{
         HttpClient http_client = HttpClient.newHttpClient();
         
         HttpRequest get_request = HttpRequest.newBuilder()
-                                            .uri(new URI("https://api.openweathermap.org/data/2.5/weather?zip="+current_user.getZip()+",de&appid="+api_key+"&units=metric&lang=de)"))
+                                            .uri(new URI("https://api.openweathermap.org/data/2.5/weather?zip="+current_user.getZip()+",de&appid="+api_key+"&units=metric&lang=de"))
                                             .GET()
                                             .build();
         
         HttpResponse get_response = http_client.send(get_request, BodyHandlers.ofString());
 
-        JSONObject json = new JSONObject(get_response.body());
+        JSONObject json = new JSONObject(((String)get_response.body()).substring(0,((String) get_response.body()).length()));
         weather = json.getJSONArray("weather").getJSONObject(0).getString("description");
         temperature = json.getJSONObject("main").getDouble("temp");
         } catch (Exception e){}
@@ -116,13 +120,13 @@ public class System {
             HttpClient http_client = HttpClient.newHttpClient();
             
             HttpRequest get_request = HttpRequest.newBuilder()
-                                                .uri(new URI("https://api.openweathermap.org/data/2.5/forecast?zip="+destination_zip+",de&appid="+api_key+"&units=metric&lang=de)"))
+                                                .uri(new URI("https://api.openweathermap.org/data/2.5/forecast?zip="+destination_zip+",de&appid="+api_key+"&units=metric&lang=de"))
                                                 .GET()
                                                 .build();
             
             HttpResponse get_response = http_client.send(get_request, BodyHandlers.ofString());
-    
-            JSONObject json = new JSONObject(get_response.body());
+
+            JSONObject json = new JSONObject(((String)get_response.body()).substring(0,((String) get_response.body()).length()));
             weather_day_1 = json.getJSONArray("list").getJSONObject(11).getJSONArray("weather").getJSONObject(0).getString("description");
             weather_day_2 = json.getJSONArray("list").getJSONObject(19).getJSONArray("weather").getJSONObject(0).getString("description");
             weather_day_3 = json.getJSONArray("list").getJSONObject(27).getJSONArray("weather").getJSONObject(0).getString("description");
