@@ -55,7 +55,9 @@ public class System {
         return true;
     }
 
-    public void sign_out_user(){}
+    public void sign_out_user(){
+        this.distances = new ArrayList<>();
+    }
 
     public boolean change_user_details(String username, String password, String hometown, int zip, 
                                 String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
