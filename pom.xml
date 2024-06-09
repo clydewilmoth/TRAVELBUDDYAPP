@@ -30,6 +30,11 @@
         </dependency>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -58,7 +63,7 @@
                             <transformers>
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass> de.hs_mannheim.ui.Main</mainClass>
+                                    <mainClass>de.hs_mannheim.ui.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

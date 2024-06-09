@@ -8,8 +8,8 @@ public class Application {
     
     private System running_system;
 
-    public Application(){
-        this.running_system = new System();
+    public Application(String api_key){
+        this.running_system = new System(api_key);
     }
 
     public boolean sign_in_user(String username, String password){
