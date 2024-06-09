@@ -253,8 +253,10 @@ public class System {
         return result;
     }
 
-    public String calc_co2(String destination_zip){
-        return "";
+    public String calc_l_consumption(String destination_zip){
+        
+        return "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) * (current_user.getCar_l_100km() / 100)) + " l";
+    
     }
 }
 
