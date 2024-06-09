@@ -32,6 +32,18 @@ public class System {
         this.current_user.setZip(Integer.parseInt(zip));
     }
 
+    public void set_current_user_car_l_100km(double car_l_100km){
+        this.current_user.setCar_l_100km(car_l_100km);
+    }
+
+    public void set_current_user_car_avg_kmh(double car_avg_kmh){
+        this.current_user.setCar_avg_kmh(car_avg_kmh);
+    }
+
+    public void set_current_user_bike_avg_kmh(double bike_avg_kmh){
+        this.current_user.setBike_avg_kmh(bike_avg_kmh);
+    }
+    
     public HashSet<User> get_all_user(){
         return new HashSet<User>();
     }
@@ -285,7 +297,7 @@ public class System {
 
         double distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a));
 
-        return "" + (distance * 1.25) + " km";
+        return "" + (Math.round((distance * 1.25)*1000)/1000.0) + " km";
     
     }
 
@@ -299,8 +311,8 @@ public class System {
             return result;
         }
 
-        result[0] = "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh()) + " h";
-        result[1] = "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh()) + " h";
+        result[0] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh()))*1000) / 1000.0) + " h";
+        result[1] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh()))*1000) / 1000.0) + " h";
         
         return result;
     }
@@ -310,7 +322,7 @@ public class System {
         if(distance(destination_zip).equals("Es ist ein Fehler aufgetreten!"))
             return "Es ist ein Fehler aufgetreten!";
 
-        return "" + (Double.parseDouble(distance(destination_zip).replace(" km", "")) * (current_user.getCar_l_100km() / 100)) + " l";
+        return "" + (Math.round((Double.parseDouble(distance(destination_zip).replace(" km", "")) * (current_user.getCar_l_100km() / 100.0))*1000)/1000.0) + " l";
     
     }
 }
