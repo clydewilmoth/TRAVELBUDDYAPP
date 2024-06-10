@@ -65,9 +65,6 @@ public class System {
 
             while((path = bufferedReader.readLine()) != null){
                 fileString = path.split(";");
-                fileString = (String[]) Arrays.stream(fileString)
-                                .map(string -> string.substring(0, string.length()-1))
-                                .toArray();
                 encoding(fileString[1]);
                 all_users.add(new User(fileString[0], fileString[1], fileString[2],
                         Integer.parseInt(fileString[3]), fileString[4],
@@ -105,6 +102,27 @@ public class System {
                 current_user = new User(username, password,
                         hometown, zip, car_name,
                         car_l_100km, car_avg_kmh, bike_avg_kmh);
+
+            ArrayList<String> content = new ArrayList<>();
+            for(User user : mem){
+                content.add(user.getUsername() + ";" + user.getPassword() + ";" + user.getHometown()
+                        + ";" + user.getZip() + ";" + user.getCar_name()
+                        + ";" + user.getCar_l_100km() + ";" + user.getCar_avg_kmh()
+                        + ";" + user.getBike_avg_kmh());
+            }
+
+            File file = new File("/user_data.csv");
+
+            try {
+                FileWriter fileWriter = new FileWriter(file, false);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+                for (String line : content) {
+                    bufferedWriter.write(line);
+                    bufferedWriter.newLine();
+                }
+                bufferedWriter.close();
+            } catch (IOException e) {}
 
                 return true;
         }
