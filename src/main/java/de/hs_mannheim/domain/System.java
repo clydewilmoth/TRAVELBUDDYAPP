@@ -105,6 +105,7 @@ public class System {
 
             ArrayList<String> content = new ArrayList<>();
             for(User user : mem){
+                user.setPassword(decoding(user.getPassword()));
                 content.add(user.getUsername() + ";" + user.getPassword() + ";" + user.getHometown()
                         + ";" + user.getZip() + ";" + user.getCar_name()
                         + ";" + user.getCar_l_100km() + ";" + user.getCar_avg_kmh()
