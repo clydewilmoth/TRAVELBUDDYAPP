@@ -94,8 +94,18 @@ public class System {
         return all_users;
     }
 
-    public boolean sign_in_user(String username, String password){
-        return true;
+    public boolean sign_in_user(String username, String password) throws IOException {
+        ArrayList<User> mem = new ArrayList<>(get_all_user());
+
+        for(User user : mem){
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                current_user = new User(user.getUsername(), user.getPassword(),
+                        user.getHometown(), user.getZip(), user.getCar_name(),
+                        user.getCar_l_100km(), user.getCar_avg_kmh(), user.getBike_avg_kmh());
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean sign_up_user(String username, String password, String hometown, int zip, 
