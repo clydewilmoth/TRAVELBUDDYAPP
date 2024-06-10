@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.TreeSet;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
 public class System {
@@ -39,8 +40,17 @@ public class System {
         this.current_user.setBike_avg_kmh(bike_avg_kmh);
     }
 
-    public void encoding(String string){
+    public void decoding(String string){
+        byte[] binary_data = Base64.decodeBase64(string);
+        string = new String(binary_data);
+    }
 
+    public void encoding(String string){
+        byte[] binary_data = new byte[string.length()];
+        for(int i = 0; i < string.length(); i++){
+            binary_data[i] = (byte) string.charAt(i);
+        }
+        string = Base64.encodeBase64String(binary_data);
     }
     
     public HashSet<User> get_all_user() throws FileNotFoundException, IOException{
