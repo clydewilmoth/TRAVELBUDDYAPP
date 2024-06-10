@@ -14,8 +14,6 @@ import java.util.TreeSet;
 
 import org.json.JSONObject;
 
-import de.hs_mannheim.ui.Main;
-
 public class System {
     
     private User current_user = new User();
@@ -68,7 +66,7 @@ public class System {
         
         TreeSet<String> zip_set = new TreeSet<>();
 
-        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+        InputStream inputStream = System.class.getResourceAsStream("/zip.csv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
@@ -263,7 +261,7 @@ public class System {
         double lat1 = -1;
         double lat2 = -1;
 
-        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+        InputStream inputStream = System.class.getResourceAsStream("/zip.csv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
@@ -301,7 +299,7 @@ public class System {
         if(!this.distances.isEmpty())
             return;
 
-        InputStream inputStream = Main.class.getResourceAsStream("/zip.csv");
+        InputStream inputStream = System.class.getResourceAsStream("/zip.csv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
