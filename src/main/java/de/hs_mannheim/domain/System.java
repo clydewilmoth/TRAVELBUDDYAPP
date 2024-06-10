@@ -12,8 +12,6 @@ import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONObject;
 
 public class System {
@@ -21,11 +19,9 @@ public class System {
     private User current_user = new User();
     private String api_key;
     private ArrayList<String> distances = new ArrayList<>();
-    private XSSFWorkbook workbook = new XSSFWorkbook();
 
     public System(String api_key) {
         this.api_key = api_key;
-        createSheet();
     }
 
     public void set_current_user_zip(String zip){
@@ -57,20 +53,9 @@ public class System {
         string = Base64.encodeBase64String(binary_data);
     }
 
-    public void createSheet(){
-        try
-        {
-            XSSFSheet sheet1 = workbook.createSheet("user_information");
-            FileOutputStream fileOut = new FileOutputStream("workbook.xlsx");
-            workbook.write(fileOut);
-            fileOut.close();
-        }
-        catch(Exception ex) {}
-    }
-
     public HashSet<User> get_all_user() throws FileNotFoundException, IOException{
         HashSet<User> all_users = new HashSet<>();
-        File file = new File("workbook.xlsx");
+        File file = new File("/user_data.csv");
         String[] fileString = new String[8];
 
         if(file.exists() && file.isFile()){
@@ -109,8 +94,21 @@ public class System {
     }
 
     public boolean sign_up_user(String username, String password, String hometown, int zip, 
-                                String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
-        return true;
+                                String car_name, double car_l_100km, double car_avg_kmh, double bike_avg_kmh) throws IOException {
+        ArrayList<User> mem = new ArrayList<>(get_all_user());
+        ArrayList<String> user_names = new ArrayList<>();
+
+        for(User user : mem){
+            user_names.add(user.getUsername());
+        }
+        if(!user_names.contains(username)){
+                current_user = new User(username, password,
+                        hometown, zip, car_name,
+                        car_l_100km, car_avg_kmh, bike_avg_kmh);
+
+                return true;
+        }
+        return false;
     }
 
     public void sign_out_user(){
@@ -120,7 +118,7 @@ public class System {
     }
 
     public boolean change_user_details(String username, String password, String hometown, int zip, 
-                                String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
+                                String car_name, double car_l_100km, double car_avg_kmh, double bike_avg_kmh){
         return true;
     }
 
