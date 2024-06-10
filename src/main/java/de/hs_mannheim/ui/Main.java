@@ -156,22 +156,22 @@ public class Main extends JFrame {
         jframe.setVisible(true);
     }
 
-	private void profileCreate() {
-		profile = new JPanel(new FlowLayout());
-		ImageIcon png = png("profile.png", 30, 30);
-		JLabel jl = new JLabel(png);
-		String[] details = facade.getUserDetails(); // 6 bzw 7
-		JLabel jlTXT = new JLabel("Name: " + details[0]
-				               + "\nWohnort: " + details[1]
-				               + "\nPlz: " + details[2]
-				               + "\nAuto Name: " + details[3]
-				               + "\nAuto km/h: " + details[4]
-				               + "\nCO2/100km: " + details[5]
-				               + "\nFahrrad km/h: " + details[6]
-				               + "\nWetter: " + facade.current_weather());
-		profile.add(jl);
-		profile.add(jlTXT);
-	}
+    private void profileCreate() {
+        profile = new JPanel(new FlowLayout());
+        ImageIcon png = png("profile.png", 30, 30);
+        JLabel jl = new JLabel(png);
+        String[] details = facade.getUserDetails(); // 6 bzw 7
+        JLabel jlTXT = new JLabel("Name: " + details[0]
+                + "\nWohnort: " + details[1]
+                + "\nPlz: " + details[2]
+                + "\nAuto Name: " + details[3]
+                + "\nAuto km/h: " + details[4]
+                + "\nCO2/100km: " + details[5]
+                + "\nFahrrad km/h: " + details[6]
+                + "\nWetter: " + facade.current_weather());
+        profile.add(jl);
+        profile.add(jlTXT);
+    }
 
     private void errorMessageCreate() {
         errorMessage = new JPanel();
@@ -189,7 +189,7 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "2");
                 jframe.setSize(new Dimension(400, 150));
-                // implementiere einlesen der textfelder des Panels
+                // implementiere einlesen der textfelder des Panles
             }
         });
 
@@ -234,9 +234,15 @@ public class Main extends JFrame {
         loginConfirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelLayout, "4");
-                jframe.setSize(new Dimension(500, 500));
-                // implementiere einlesen der textfelder des Panles
+                String nameTXT = getTextfieldContent(loginName, "loginNameText");
+                String passwordTXT = getTextfieldContent(loginPassword, "loginPasswordText");
+                if(facade.sign_in_user(nameTXT, passwordTXT)) {
+                    cardLayout.show(panelLayout, "4");
+                    jframe.setSize(new Dimension(500, 500));
+                }
+                else{
+                    //vllt zukünftig implementiert
+                }
             }
         });
     }
@@ -429,6 +435,15 @@ public class Main extends JFrame {
                 // implementiere Ausloggen im Backend
             }
         });
+    }
+
+    private String getTextfieldContent(JPanel panel, String name) {
+        for (Component component : panel.getComponents()) {
+            if (component instanceof JTextField && name.equals(component.getName())) {
+                return component.getText();
+            }
+        }
+        return null;
     }
 
     public ImageIcon png(String path, int sizeX, int sizeY) { // umständlich und png nicht transparent
