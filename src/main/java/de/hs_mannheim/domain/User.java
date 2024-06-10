@@ -11,6 +11,20 @@ public class User {
     private double car_avg_kmh;
     private double bike_avg_kmh;
 
+    public User(){}
+
+    public User(String username, String password, String hometown, int zip
+                , String car_name, double car_l_100km, double car_avg_kmh, double bike_avg_kmh){
+        this.username = username;
+        this.password = password;
+        this.hometown = hometown;
+        this.zip = zip;
+        this.car_name = car_name;
+        this.car_l_100km = car_l_100km;
+        this.car_avg_kmh = car_avg_kmh;
+        this.bike_avg_kmh = bike_avg_kmh;
+    }
+
     public String getUsername() {
         return username;
     }

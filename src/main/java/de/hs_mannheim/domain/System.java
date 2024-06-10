@@ -1,27 +1,31 @@
 package de.hs_mannheim.domain;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.TreeSet;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONObject;
 
 public class System {
-    
+
     private User current_user = new User();
     private String api_key;
     private ArrayList<String> distances = new ArrayList<>();
+    private XSSFWorkbook workbook = new XSSFWorkbook();
 
     public System(String api_key) {
         this.api_key = api_key;
+        createSheet();
     }
 
     public void set_current_user_zip(String zip){
@@ -39,9 +43,55 @@ public class System {
     public void set_current_user_bike_avg_kmh(double bike_avg_kmh){
         this.current_user.setBike_avg_kmh(bike_avg_kmh);
     }
-    
-    public HashSet<User> get_all_user(){
-        return new HashSet<User>();
+
+    public void decoding(String string){
+        byte[] binary_data = Base64.decodeBase64(string);
+        string = new String(binary_data);
+    }
+
+    public void encoding(String string){
+        byte[] binary_data = new byte[string.length()];
+        for(int i = 0; i < string.length(); i++){
+            binary_data[i] = (byte) string.charAt(i);
+        }
+        string = Base64.encodeBase64String(binary_data);
+    }
+
+    public void createSheet(){
+        try
+        {
+            XSSFSheet sheet1 = workbook.createSheet("user_information");
+            FileOutputStream fileOut = new FileOutputStream("workbook.xlsx");
+            workbook.write(fileOut);
+            fileOut.close();
+        }
+        catch(Exception ex) {}
+    }
+
+    public HashSet<User> get_all_user() throws FileNotFoundException, IOException{
+        HashSet<User> all_users = new HashSet<>();
+        File file = new File("workbook.xlsx");
+        String[] fileString = new String[8];
+
+        if(file.exists() && file.isFile()){
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String path;
+
+            while((path = bufferedReader.readLine()) != null){
+                fileString = path.split(";");
+                fileString = (String[]) Arrays.stream(fileString)
+                                .map(string -> string.substring(0, string.length()-1))
+                                .toArray();
+                encoding(fileString[1]);
+                all_users.add(new User(fileString[0], fileString[1], fileString[2],
+                        Integer.parseInt(fileString[3]), fileString[4],
+                        Double.parseDouble(fileString[5]),
+                        Double.parseDouble(fileString[6]),
+                        Double.parseDouble(fileString[7])));
+            }
+        }
+        return all_users;
     }
 
     public boolean sign_in_user(String username, String password){
