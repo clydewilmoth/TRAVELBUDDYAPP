@@ -156,6 +156,23 @@ public class Main extends JFrame {
         jframe.setVisible(true);
     }
 
+	private void profileCreate() {
+		profile = new JPanel(new FlowLayout());
+		ImageIcon png = png("profile.png", 30, 30);
+		JLabel jl = new JLabel(png);
+		String[] details = facade.getUserDetails(); // 6 bzw 7
+		JLabel jlTXT = new JLabel("Name: " + details[0]
+				               + "\nWohnort: " + details[1]
+				               + "\nPlz: " + details[2]
+				               + "\nAuto Name: " + details[3]
+				               + "\nAuto km/h: " + details[4]
+				               + "\nCO2/100km: " + details[5]
+				               + "\nFahrrad km/h: " + details[6]
+				               + "\nWetter: " + facade.current_weather());
+		profile.add(jl);
+		profile.add(jlTXT);
+	}
+
     private void errorMessageCreate() {
         errorMessage = new JPanel();
         JLabel jl = new JLabel("Daten sind falsch oder unvollständig!");
