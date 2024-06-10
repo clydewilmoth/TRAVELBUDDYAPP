@@ -133,7 +133,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "3");
-                jframe.setSize(new Dimension(500, 500));
+                jframe.setSize(new Dimension(500, 120));
                 // implementiere einlesen der textfelder des Panles
             }
         });
@@ -173,37 +173,71 @@ public class Main extends JFrame {
 
     private void registerNameCreate() {
         registerName = new JPanel();
-
+        JLabel jl = new JLabel("Name");
+        JTextField tf = new JTextField(10);
+        tf.setName("loginPasswordText");
+        registerName.add(jl);
+        registerName.add(tf);
     }
 
     private void registerPasswordCreate() {
         registerPassword = new JPanel();
-
+        JLabel jl = new JLabel("Passwort");
+        JTextField tf = new JTextField(10);
+        tf.setName("loginPasswordText");
+        registerPassword.add(jl);
+        registerPassword.add(tf);
     }
 
     private void registerOrtCreate() {
         registerOrt = new JPanel();
-
+        JLabel jl = new JLabel("Ort");
+        JTextField tf = new JTextField(10);
+        tf.setName("loginPasswordText");
+        registerOrt.add(jl);
+        registerOrt.add(tf);
     }
 
     private void registerPLZCreate() {
         registerPLZ = new JPanel();
-
+        JLabel jl = new JLabel("PLZ");
+        JTextField tf = new JTextField(10);
+        tf.setName("loginPasswordText");
+        registerPLZ.add(jl);
+        registerPLZ.add(tf);
     }
 
     private void registerCarSpeedCreate() {
         registerCarSpeed = new JPanel();
-
+        JLabel jl = new JLabel("Auto km/h");
+        JTextField tf = new JTextField(10);
+        tf.setName("loginPasswordText");
+        registerCarSpeed.add(jl);
+        registerCarSpeed.add(tf);
     }
 
     private void registerBikeSpeedCreate() {
         registerBikeSpeed = new JPanel();
-
+        JLabel jl = new JLabel("Bike km/h");
+        JTextField tf = new JTextField(10);
+        tf.setName("bikeSpeedText");
+        registerBikeSpeed.add(jl);
+        registerBikeSpeed.add(tf);
     }
 
     private void registerConfirmButtonCreate() {
         registerConfirmButton = new JButton();
-
+        registerConfirmButton = new JButton("Confirm");
+        registerConfirmButton.setPreferredSize(new Dimension(80, 20));
+        registerConfirmButton.setFocusable(false);
+        registerConfirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "4");
+                jframe.setSize(new Dimension(500, 500));
+                // implementiere einlesen der textfelder des Panles
+            }
+        });
     }
 
     private void searchPLZCreate() {
