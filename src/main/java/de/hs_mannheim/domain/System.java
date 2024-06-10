@@ -1,14 +1,13 @@
 package de.hs_mannheim.domain;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -39,9 +38,35 @@ public class System {
     public void set_current_user_bike_avg_kmh(double bike_avg_kmh){
         this.current_user.setBike_avg_kmh(bike_avg_kmh);
     }
+
+    public void encoding(String string){
+
+    }
     
-    public HashSet<User> get_all_user(){
-        return new HashSet<User>();
+    public HashSet<User> get_all_user() throws FileNotFoundException, IOException{
+        HashSet<User> all_users = new HashSet<>();
+        File file = new File("user_information.csv");
+        String[] fileString = new String[8];
+
+        if(file.exists() && file.isFile()){
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String path;
+
+            while((path = bufferedReader.readLine()) != null){
+                fileString = path.split(";");
+                fileString = (String[]) Arrays.stream(fileString)
+                                .map(string -> string.substring(0, string.length()-1))
+                                .toArray();
+                encoding(fileString[1]);
+                all_users.add(new User(fileString[0], fileString[1], fileString[2],
+                        Integer.parseInt(fileString[3]), fileString[4],
+                        Double.parseDouble(fileString[5]),
+                        Double.parseDouble(fileString[6]),
+                        Double.parseDouble(fileString[7])));
+            }
+        }
+        return all_users;
     }
 
     public boolean sign_in_user(String username, String password){
