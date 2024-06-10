@@ -12,16 +12,20 @@ import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONObject;
 
 public class System {
-    
+
     private User current_user = new User();
     private String api_key;
     private ArrayList<String> distances = new ArrayList<>();
+    private XSSFWorkbook workbook = new XSSFWorkbook();
 
     public System(String api_key) {
         this.api_key = api_key;
+        createSheet();
     }
 
     public void set_current_user_zip(String zip){
@@ -52,10 +56,21 @@ public class System {
         }
         string = Base64.encodeBase64String(binary_data);
     }
-    
+
+    public void createSheet(){
+        try
+        {
+            XSSFSheet sheet1 = workbook.createSheet("user_information");
+            FileOutputStream fileOut = new FileOutputStream("workbook.xlsx");
+            workbook.write(fileOut);
+            fileOut.close();
+        }
+        catch(Exception ex) {}
+    }
+
     public HashSet<User> get_all_user() throws FileNotFoundException, IOException{
         HashSet<User> all_users = new HashSet<>();
-        File file = new File("user_information.csv");
+        File file = new File("workbook.xlsx");
         String[] fileString = new String[8];
 
         if(file.exists() && file.isFile()){
