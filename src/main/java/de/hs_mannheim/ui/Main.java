@@ -13,9 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Main extends JFrame {
-    public static void main(String[] args) {
-        Main main = new Main("35a75437476f12302f72e55d368485db");
-    }
     private Application facade;
 
     private JFrame jframe;
@@ -90,13 +87,22 @@ public class Main extends JFrame {
         registerScreen.add(registerBikeSpeed);
         registerScreen.add(registerConfirmButton);
 
-        menu = new JPanel(new BorderLayout());
+        menu = new JPanel(null);
         searchPLZCreate();
         searchOrtCreate();
         searchConfirmButtonCreate();
         threeRandomDestinationsButtonCreate();
         logOutButtonCreate();
-        // muss noch konzepiert werden
+        searchPLZ.setBounds(160, 0, 200, 200);
+        searchOrt.setBounds(0, 0, 200, 200);
+        searchConfirmButton.setBounds(360, 5, 90, 20);
+        threeRandomDestinationsButton.setBounds(360, 40, 90, 20);
+        logOutButton.setBounds(380, 420, 90, 30);
+        menu.add(searchPLZ);
+        menu.add(searchOrt);
+        menu.add(searchConfirmButton);
+        menu.add(threeRandomDestinationsButton);
+        menu.add(logOutButton);
 
         panelLayout.add(logRegScreen, "1");
         panelLayout.add(loginScreen, "2");
@@ -242,27 +248,58 @@ public class Main extends JFrame {
 
     private void searchPLZCreate() {
         searchPLZ = new JPanel();
-
+        JLabel jl = new JLabel("PLZ");
+        JTextField tf = new JTextField(10);
+        tf.setName("plzSuche");
+        searchPLZ.add(jl);
+        searchPLZ.add(tf);
     }
 
     private void searchOrtCreate() {
         searchOrt = new JPanel();
-
+        JLabel jl = new JLabel("Ort");
+        JTextField tf = new JTextField(10);
+        tf.setName("ortSuche");
+        searchOrt.add(jl);
+        searchOrt.add(tf);
     }
 
     private void searchConfirmButtonCreate() {
-        searchConfirmButton = new JButton();
-
+        searchConfirmButton = new JButton("Suche");
+        searchConfirmButton.setPreferredSize(new Dimension(150, 50));
+        searchConfirmButton.setFocusable(false);
+        searchConfirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // implementiere Änderung vom Panel
+            }
+        });
     }
 
     private void threeRandomDestinationsButtonCreate() {
-        threeRandomDestinationsButton = new JButton();
-
+        threeRandomDestinationsButton = new JButton("Kurztrip");
+        threeRandomDestinationsButton.setPreferredSize(new Dimension(150, 50));
+        threeRandomDestinationsButton.setFocusable(false);
+        threeRandomDestinationsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // implementiere Änderung vom Panel
+            }
+        });
     }
 
     private void logOutButtonCreate() {
-        logOutButton = new JButton();
-
+        logOutButton = new JButton("Logout");
+        logOutButton.setPreferredSize(new Dimension(150, 50));
+        logOutButton.setFocusable(false);
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "1");
+                jframe.setSize(new Dimension(450, 120));
+                // implementiere Ausloggen im Backend
+            }
+        });
     }
 
 }
