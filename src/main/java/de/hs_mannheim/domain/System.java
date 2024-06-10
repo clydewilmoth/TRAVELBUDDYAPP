@@ -40,17 +40,17 @@ public class System {
         this.current_user.setBike_avg_kmh(bike_avg_kmh);
     }
 
-    public void decoding(String string){
+    public String decoding(String string){
         byte[] binary_data = Base64.decodeBase64(string);
-        string = new String(binary_data);
+        return new String(binary_data);
     }
 
-    public void encoding(String string){
+    public String encoding(String string){
         byte[] binary_data = new byte[string.length()];
         for(int i = 0; i < string.length(); i++){
             binary_data[i] = (byte) string.charAt(i);
         }
-        string = Base64.encodeBase64String(binary_data);
+        return Base64.encodeBase64String(binary_data);
     }
 
     public HashSet<User> get_all_user() throws FileNotFoundException, IOException{
@@ -65,7 +65,7 @@ public class System {
 
             while((path = bufferedReader.readLine()) != null){
                 fileString = path.split(";");
-                encoding(fileString[1]);
+                fileString[1] = encoding(fileString[1]);
                 all_users.add(new User(fileString[0], fileString[1], fileString[2],
                         Integer.parseInt(fileString[3]), fileString[4],
                         Double.parseDouble(fileString[5]),
