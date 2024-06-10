@@ -67,13 +67,13 @@ public class Main extends JFrame {
         logRegScreen.add(loginButton, BorderLayout.WEST);
         logRegScreen.add(registerButton, BorderLayout.EAST);
 
-        loginScreen = new JPanel(new BorderLayout());
+        loginScreen = new JPanel(new FlowLayout());
         loginNameCreate();
         loginPasswordCreate();
         loginConfirmButtonCreate();
-        loginScreen.add(loginName, BorderLayout.NORTH);
-        loginScreen.add(loginPassword, BorderLayout.CENTER);
-        loginScreen.add(loginConfirmButton, BorderLayout.SOUTH);
+        loginScreen.add(loginName);
+        loginScreen.add(loginPassword);
+        loginScreen.add(loginConfirmButton);
 
         registerScreen = new JPanel(new FlowLayout()); // flowLayout muss angepasst werden, um nicht scheiße auszusehen
         registerNameCreate();
@@ -118,7 +118,8 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "2");
-                jframe.setSize(new Dimension(500, 500));
+                jframe.setSize(new Dimension(500, 120));
+                // implementiere einlesen der textfelder des Panles
             }
         });
 
@@ -133,23 +134,41 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "3");
                 jframe.setSize(new Dimension(500, 500));
+                // implementiere einlesen der textfelder des Panles
             }
         });
     }
 
     private void loginNameCreate() {
         loginName = new JPanel();
-
+        JLabel jl = new JLabel("Name");
+        JTextField tf = new JTextField(10);
+        tf.setName("loginNameText");
+        loginName.add(jl);
+        loginName.add(tf);
     }
 
     private void loginPasswordCreate() {
         loginPassword = new JPanel();
-
+        JLabel jl = new JLabel("Passwort");
+        JTextField tf = new JTextField(10);
+        tf.setName("loginPasswordText");
+        loginPassword.add(jl);
+        loginPassword.add(tf);
     }
 
     private void loginConfirmButtonCreate() {
-        loginConfirmButton = new JButton();
-
+        loginConfirmButton = new JButton("Confirm");
+        loginConfirmButton.setPreferredSize(new Dimension(80, 20));
+        loginConfirmButton.setFocusable(false);
+        loginConfirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "4");
+                jframe.setSize(new Dimension(500, 500));
+                // implementiere einlesen der textfelder des Panles
+            }
+        });
     }
 
     private void registerNameCreate() {
