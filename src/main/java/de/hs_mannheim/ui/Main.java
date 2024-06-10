@@ -3,16 +3,19 @@ package de.hs_mannheim.ui;
 import de.hs_mannheim.facade.Application;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Main extends JFrame {
     public static void main(String[] args) {
         Main main = new Main("35a75437476f12302f72e55d368485db");
     }
-
     private Application facade;
 
     private JFrame jframe;
@@ -58,7 +61,7 @@ public class Main extends JFrame {
         panelLayout.setLayout(cardLayout);
         jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        logRegScreen = new JPanel(new BorderLayout());
+        logRegScreen = new JPanel(new FlowLayout());
         loginButtonCreate();
         registerButtonCreate();
         logRegScreen.add(loginButton, BorderLayout.WEST);
@@ -102,19 +105,36 @@ public class Main extends JFrame {
         cardLayout.show(panelLayout, "1");
         jframe.add(panelLayout);
         jframe.setResizable(false);
-        jframe.setSize(500, 500);
+        jframe.setSize(450, 140);
         jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
     }
 
     private void loginButtonCreate() {
-        loginButton = new JButton();
+        loginButton = new JButton("Login");
+        loginButton.setPreferredSize(new Dimension(150, 50));
+        loginButton.setFocusable(false);
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "2");
+                jframe.setSize(new Dimension(500, 500));
+            }
+        });
 
     }
 
     private void registerButtonCreate() {
-        registerButton = new JButton();
-
+        registerButton = new JButton("Register");
+        registerButton.setPreferredSize(new Dimension(150, 50));
+        registerButton.setFocusable(false);
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "3");
+                jframe.setSize(new Dimension(500, 500));
+            }
+        });
     }
 
     private void loginNameCreate() {
