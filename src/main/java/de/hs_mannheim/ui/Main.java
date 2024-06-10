@@ -340,9 +340,22 @@ public class Main extends JFrame {
         registerConfirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelLayout, "4");
-                jframe.setSize(new Dimension(500, 500));
-                // implementiere einlesen der textfelder des Panles
+                String nameTXT = getTextfieldContent(registerName, "registerNameText");
+                String passwordTXT = getTextfieldContent(registerPassword, "registerPasswordText");
+                String ortTXT = getTextfieldContent(registerName, "registerOrtText");
+                String plzTXT = getTextfieldContent(registerPassword, "registerPLZText");
+                String carNameTXT = getTextfieldContent(registerName, "registerCarNameText");
+                String carCO2TXT = getTextfieldContent(registerName, "registerCarCO2Text");
+                String carSpeedTXT = getTextfieldContent(registerPassword, "registerCarSpeedText");
+                String bikeSpeedTXT = getTextfieldContent(registerName, "registerBikeSpeedText");
+                if(sign_up_user(nameTXT, passwordTXT, ortTXT, plzTXT,
+                        carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
+                    cardLayout.show(panelLayout, "4");
+                    jframe.setSize(new Dimension(500, 500));
+                }
+                else{
+                    //mal gucken
+                }
             }
         });
     }
@@ -440,7 +453,7 @@ public class Main extends JFrame {
     private String getTextfieldContent(JPanel panel, String name) {
         for (Component component : panel.getComponents()) {
             if (component instanceof JTextField && name.equals(component.getName())) {
-                return component.getText();
+                return ((JTextField) component).getText();
             }
         }
         return null;
