@@ -115,6 +115,8 @@ public class System {
 
     public void sign_out_user(){
         this.distances = new ArrayList<>();
+
+        current_user = new User();
     }
 
     public boolean change_user_details(String username, String password, String hometown, int zip, 
