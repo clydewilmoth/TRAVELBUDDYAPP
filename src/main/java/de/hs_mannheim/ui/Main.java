@@ -12,6 +12,7 @@ public class Main extends JFrame {
     public static void main(String[] args) {
         Main main = new Main("35a75437476f12302f72e55d368485db");
     }
+
     private Application facade;
 
     private JFrame jframe;
@@ -60,117 +61,134 @@ public class Main extends JFrame {
         logRegScreen = new JPanel(new BorderLayout());
         loginButtonCreate();
         registerButtonCreate();
+        logRegScreen.add(loginButton, BorderLayout.WEST);
+        logRegScreen.add(registerButton, BorderLayout.EAST);
 
         loginScreen = new JPanel(new BorderLayout());
         loginNameCreate();
-        loginPasswortCreate();
+        loginPasswordCreate();
         loginConfirmButtonCreate();
+        loginScreen.add(loginName, BorderLayout.NORTH);
+        loginScreen.add(loginPassword, BorderLayout.CENTER);
+        loginScreen.add(loginConfirmButton, BorderLayout.SOUTH);
 
-        registerScreenCreate();
+        registerScreen = new JPanel(new FlowLayout()); // flowLayout muss angepasst werden, um nicht scheiße auszusehen
         registerNameCreate();
-        registerPasswortCreate();
+        registerPasswordCreate();
         registerOrtCreate();
         registerPLZCreate();
-        registerCarSpeed();
-        registerBikeSpeed();
-        registerConfirmButton();
+        registerCarSpeedCreate();
+        registerBikeSpeedCreate();
+        registerConfirmButtonCreate();
+        registerScreen.add(registerName);
+        registerScreen.add(registerPassword);
+        registerScreen.add(registerOrt);
+        registerScreen.add(registerCarSpeed);
+        registerScreen.add(registerBikeSpeed);
+        registerScreen.add(registerConfirmButton);
 
         menu = new JPanel(new BorderLayout());
         searchPLZCreate();
         searchOrtCreate();
-        searchConfirmButton();
+        searchConfirmButtonCreate();
         threeRandomDestinationsButtonCreate();
         logOutButtonCreate();
+        // muss noch konzepiert werden
 
+        panelLayout.add(logRegScreen, "1");
+        panelLayout.add(loginScreen, "2");
+        panelLayout.add(registerScreen, "3");
+        panelLayout.add(menu, "4");
+        cardLayout.show(panelLayout, "1");
+        jframe.add(panelLayout);
+        jframe.setResizable(false);
+        jframe.setSize(500, 500);
+        jframe.setLocationRelativeTo(null);
+        jframe.setVisible(true);
     }
 
     private void loginButtonCreate() {
-        // TODO Auto-generated method stub
+        loginButton = new JButton();
 
     }
 
     private void registerButtonCreate() {
-        // TODO Auto-generated method stub
+        registerButton = new JButton();
 
     }
 
     private void loginNameCreate() {
-        // TODO Auto-generated method stub
+        loginName = new JPanel();
 
     }
 
-    private void loginPasswortCreate() {
-        // TODO Auto-generated method stub
+    private void loginPasswordCreate() {
+        loginPassword = new JPanel();
 
     }
 
     private void loginConfirmButtonCreate() {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void registerScreenCreate() {
-        // TODO Auto-generated method stub
+        loginConfirmButton = new JButton();
 
     }
 
     private void registerNameCreate() {
-        // TODO Auto-generated method stub
+        registerName = new JPanel();
 
     }
 
-    private void registerPasswortCreate() {
-        // TODO Auto-generated method stub
+    private void registerPasswordCreate() {
+        registerPassword = new JPanel();
 
     }
 
     private void registerOrtCreate() {
-        // TODO Auto-generated method stub
+        registerOrt = new JPanel();
 
     }
 
     private void registerPLZCreate() {
-        // TODO Auto-generated method stub
+        registerPLZ = new JPanel();
 
     }
 
-    private void registerCarSpeed() {
-        // TODO Auto-generated method stub
+    private void registerCarSpeedCreate() {
+        registerCarSpeed = new JPanel();
 
     }
 
-    private void registerBikeSpeed() {
-        // TODO Auto-generated method stub
+    private void registerBikeSpeedCreate() {
+        registerBikeSpeed = new JPanel();
 
     }
 
-    private void registerConfirmButton() {
-        // TODO Auto-generated method stub
+    private void registerConfirmButtonCreate() {
+        registerConfirmButton = new JButton();
 
     }
 
     private void searchPLZCreate() {
-        // TODO Auto-generated method stub
+        searchPLZ = new JPanel();
 
     }
 
     private void searchOrtCreate() {
-        // TODO Auto-generated method stub
+        searchOrt = new JPanel();
 
     }
 
-    private void searchConfirmButton() {
-        // TODO Auto-generated method stub
+    private void searchConfirmButtonCreate() {
+        searchConfirmButton = new JButton();
 
     }
 
     private void threeRandomDestinationsButtonCreate() {
-        // TODO Auto-generated method stub
+        threeRandomDestinationsButton = new JButton();
 
     }
 
     private void logOutButtonCreate() {
-        // TODO Auto-generated method stub
+        logOutButton = new JButton();
 
     }
 
