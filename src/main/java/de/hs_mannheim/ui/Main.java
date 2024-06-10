@@ -13,11 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Main extends JFrame {
+    public static void main(String[] args) {
+        Main main = new Main("35a75437476f12302f72e55d368485db");
+    }
     private Application facade;
 
     private JFrame jframe;
     private CardLayout cardLayout;
     private JPanel panelLayout;
+
+    //Wird in mehreren Labels benutzt (reg und log)
+    private JPanel errorMessage; // mal gucken, vllt auch nicht
+    private JPanel profile; //wird nach registrieren oder login kreiert
 
     private JPanel logRegScreen;
     private JButton loginButton;
@@ -27,23 +34,26 @@ public class Main extends JFrame {
     private JPanel loginName;
     private JPanel loginPassword;
     private JButton loginConfirmButton;
+    private JButton loginZurückButton;
 
-    private JPanel registerScreen; // Backend muss PLZ und Ort prüfen, sonst kann die Entfernung in Zukunft nicht
-    // berechnet werden
+    private JPanel registerScreen; // Backend muss PLZ und Ort prüfen, sonst kann die Entfernung in Zukunft nicht berechnet werden
     private JPanel registerName;
     private JPanel registerPassword;
     private JPanel registerOrt;
     private JPanel registerPLZ;
+    private JPanel registerCarName;
     private JPanel registerCarSpeed;
+    private JPanel registerCarCO2;
     private JPanel registerBikeSpeed;
     private JButton registerConfirmButton;
-    private JLabel errorMessage; // mal gucken, vllt auch nicht
+    private JButton registerZurückButton;
 
     private JPanel menu;
     private JPanel searchPLZ;
     private JPanel searchOrt;
     private JButton searchConfirmButton;
-    private JButton threeRandomDestinationsButton;
+    private JButton randDestinationsCarButton;
+    private JButton randDestinationsBikeButton;
     private JButton logOutButton;
 
     public Main(String api_key) {
@@ -58,6 +68,8 @@ public class Main extends JFrame {
         panelLayout.setLayout(cardLayout);
         jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        errorMessageCreate();//wahrscheinlich muss individuell angepasst werden
+
         logRegScreen = new JPanel(new FlowLayout());
         loginButtonCreate();
         registerButtonCreate();
@@ -68,40 +80,52 @@ public class Main extends JFrame {
         loginNameCreate();
         loginPasswordCreate();
         loginConfirmButtonCreate();
+        loginZurückButtonCreate();
         loginScreen.add(loginName);
         loginScreen.add(loginPassword);
         loginScreen.add(loginConfirmButton);
+        loginScreen.add(loginZurückButton);
+        loginScreen.add(loginZurückButton);
 
         registerScreen = new JPanel(new FlowLayout()); // flowLayout muss angepasst werden, um nicht scheiße auszusehen
         registerNameCreate();
         registerPasswordCreate();
         registerOrtCreate();
         registerPLZCreate();
+        registerCarNameCreate();
         registerCarSpeedCreate();
+        registerCarCO2Create();
         registerBikeSpeedCreate();
         registerConfirmButtonCreate();
+        registerZurückButtonCreate();
         registerScreen.add(registerName);
         registerScreen.add(registerPassword);
         registerScreen.add(registerOrt);
+        registerScreen.add(registerPLZ);
         registerScreen.add(registerCarSpeed);
         registerScreen.add(registerBikeSpeed);
         registerScreen.add(registerConfirmButton);
+        registerScreen.add(registerZurückButton);
+        registerScreen.add(registerZurückButton);
 
         menu = new JPanel(null);
         searchPLZCreate();
         searchOrtCreate();
         searchConfirmButtonCreate();
-        threeRandomDestinationsButtonCreate();
+        randDestinationsCarButtonCreate();
+        randDestinationsBikeButtonCreate();
         logOutButtonCreate();
         searchPLZ.setBounds(160, 0, 200, 200);
         searchOrt.setBounds(0, 0, 200, 200);
         searchConfirmButton.setBounds(360, 5, 90, 20);
-        threeRandomDestinationsButton.setBounds(360, 40, 90, 20);
+        randDestinationsCarButton.setBounds(360, 40, 90, 20);
+        randDestinationsBikeButton.setBounds(360, 75, 90, 20);
         logOutButton.setBounds(380, 420, 90, 30);
         menu.add(searchPLZ);
         menu.add(searchOrt);
         menu.add(searchConfirmButton);
-        menu.add(threeRandomDestinationsButton);
+        menu.add(randDestinationsCarButton);
+        menu.add(randDestinationsBikeButton);
         menu.add(logOutButton);
 
         panelLayout.add(logRegScreen, "1");
@@ -116,6 +140,20 @@ public class Main extends JFrame {
         jframe.setVisible(true);
     }
 
+    private void profileCreate() {
+        profile = new JPanel();
+        JLabel jl = new JLabel("Profil");
+        searchOrt.add(jl);
+        //Backend soll DatenLiefern
+    }
+
+    private void errorMessageCreate() {
+        errorMessage = new JPanel();
+        JLabel jl = new JLabel("Daten sind falsch oder unvollständig!");
+        errorMessage.add(jl);
+    }
+
+
     private void loginButtonCreate() {
         loginButton = new JButton("Login");
         loginButton.setPreferredSize(new Dimension(150, 50));
@@ -124,8 +162,8 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "2");
-                jframe.setSize(new Dimension(500, 120));
-                // implementiere einlesen der textfelder des Panles
+                jframe.setSize(new Dimension(500, 180));
+                // implementiere einlesen der textfelder des Panels
             }
         });
 
@@ -139,7 +177,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "3");
-                jframe.setSize(new Dimension(500, 120));
+                jframe.setSize(new Dimension(520, 180));
                 // implementiere einlesen der textfelder des Panles
             }
         });
@@ -177,11 +215,24 @@ public class Main extends JFrame {
         });
     }
 
+    private void loginZurückButtonCreate() {
+        loginZurückButton = new JButton("Back");
+        loginZurückButton.setPreferredSize(new Dimension(80, 20));
+        loginZurückButton.setFocusable(false);
+        loginZurückButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "1");
+                jframe.setSize(new Dimension(450, 140));
+            }
+        });
+    }
+
     private void registerNameCreate() {
         registerName = new JPanel();
         JLabel jl = new JLabel("Name");
         JTextField tf = new JTextField(10);
-        tf.setName("loginPasswordText");
+        tf.setName("registerPasswordText");
         registerName.add(jl);
         registerName.add(tf);
     }
@@ -190,7 +241,7 @@ public class Main extends JFrame {
         registerPassword = new JPanel();
         JLabel jl = new JLabel("Passwort");
         JTextField tf = new JTextField(10);
-        tf.setName("loginPasswordText");
+        tf.setName("registerPasswordText");
         registerPassword.add(jl);
         registerPassword.add(tf);
     }
@@ -199,7 +250,7 @@ public class Main extends JFrame {
         registerOrt = new JPanel();
         JLabel jl = new JLabel("Ort");
         JTextField tf = new JTextField(10);
-        tf.setName("loginPasswordText");
+        tf.setName("registerOrtText");
         registerOrt.add(jl);
         registerOrt.add(tf);
     }
@@ -208,25 +259,43 @@ public class Main extends JFrame {
         registerPLZ = new JPanel();
         JLabel jl = new JLabel("PLZ");
         JTextField tf = new JTextField(10);
-        tf.setName("loginPasswordText");
+        tf.setName("registerPLZText");
         registerPLZ.add(jl);
         registerPLZ.add(tf);
+    }
+
+    private void registerCarNameCreate() {
+        registerCarName = new JPanel();
+        JLabel jl = new JLabel("Auto km/h");
+        JTextField tf = new JTextField(10);
+        tf.setName("registerCarNameText");
+        registerCarName.add(jl);
+        registerCarName.add(tf);
     }
 
     private void registerCarSpeedCreate() {
         registerCarSpeed = new JPanel();
         JLabel jl = new JLabel("Auto km/h");
         JTextField tf = new JTextField(10);
-        tf.setName("loginPasswordText");
+        tf.setName("registerCarSpeedText");
         registerCarSpeed.add(jl);
         registerCarSpeed.add(tf);
+    }
+
+    private void registerCarCO2Create() {
+        registerCarCO2 = new JPanel();
+        JLabel jl = new JLabel("Auto km/h");
+        JTextField tf = new JTextField(10);
+        tf.setName("registerCarCO2Text");
+        registerCarCO2.add(jl);
+        registerCarCO2.add(tf);
     }
 
     private void registerBikeSpeedCreate() {
         registerBikeSpeed = new JPanel();
         JLabel jl = new JLabel("Bike km/h");
         JTextField tf = new JTextField(10);
-        tf.setName("bikeSpeedText");
+        tf.setName("registerBikeSpeedText");
         registerBikeSpeed.add(jl);
         registerBikeSpeed.add(tf);
     }
@@ -242,6 +311,19 @@ public class Main extends JFrame {
                 cardLayout.show(panelLayout, "4");
                 jframe.setSize(new Dimension(500, 500));
                 // implementiere einlesen der textfelder des Panles
+            }
+        });
+    }
+
+    private void registerZurückButtonCreate() {
+        registerZurückButton = new JButton("Back");
+        registerZurückButton.setPreferredSize(new Dimension(80, 20));
+        registerZurückButton.setFocusable(false);
+        registerZurückButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "1");
+                jframe.setSize(new Dimension(450, 140));
             }
         });
     }
@@ -276,11 +358,23 @@ public class Main extends JFrame {
         });
     }
 
-    private void threeRandomDestinationsButtonCreate() {
-        threeRandomDestinationsButton = new JButton("Kurztrip");
-        threeRandomDestinationsButton.setPreferredSize(new Dimension(150, 50));
-        threeRandomDestinationsButton.setFocusable(false);
-        threeRandomDestinationsButton.addActionListener(new ActionListener() {
+    private void randDestinationsCarButtonCreate() { //Auto Icon hinzufügen
+        randDestinationsCarButton = new JButton("Kurztrip");
+        randDestinationsCarButton.setPreferredSize(new Dimension(150, 50));
+        randDestinationsCarButton.setFocusable(false);
+        randDestinationsCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // implementiere Änderung vom Panel
+            }
+        });
+    }
+
+    private void randDestinationsBikeButtonCreate() { //Fahrrad Icon hinzufügen
+        randDestinationsBikeButton = new JButton("Kurztrip");
+        randDestinationsBikeButton.setPreferredSize(new Dimension(150, 50));
+        randDestinationsBikeButton.setFocusable(false);
+        randDestinationsBikeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // implementiere Änderung vom Panel
