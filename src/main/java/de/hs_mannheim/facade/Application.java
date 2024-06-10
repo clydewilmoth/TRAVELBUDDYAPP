@@ -48,4 +48,7 @@ public class Application {
         return running_system.current_weather();
     }
 
+    public String[] get_getails(){
+        return System.get_details();
+    }
 }
