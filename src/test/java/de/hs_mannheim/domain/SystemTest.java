@@ -3,6 +3,7 @@ package de.hs_mannheim.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -84,6 +85,15 @@ public class SystemTest {
         assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_car().get(0).split(";")[0]).replace(" km", "")) > 150);
         // random_destinations_bike gibt nur destinations mit maximal 100 km Entfernung zurück
         assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_bike().get(0).split(";")[0]).replace(" km", "")) < 100);
+    }
+
+    @Test
+    public void get_all_user() {
+        assertEquals(1, current_system.get_all_user().size());
+
+        ArrayList<User> list = new ArrayList<>(current_system.get_all_user());
+        assertEquals(true, list.get(0).getPassword().equals("MTQwMURhbmllbA=="));
+        //Passwort unkodiert: 1401Daniel
     }
 
 }
