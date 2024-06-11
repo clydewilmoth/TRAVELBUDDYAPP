@@ -160,13 +160,13 @@ public class Main extends JFrame {
         profile = new JPanel(new FlowLayout());
         ImageIcon png = png("profile.png", 30, 30);
         JLabel jl = new JLabel(png);
-        String[] details = facade.getUserDetails(); // 6 bzw 7
+        String[] details = facade.getDetails(); // 6 bzw 7
         JLabel jlTXT = new JLabel("Name: " + details[0]
                 + "\nWohnort: " + details[1]
                 + "\nPlz: " + details[2]
                 + "\nAuto Name: " + details[3]
-                + "\nAuto km/h: " + details[4]
-                + "\nCO2/100km: " + details[5]
+                + "\nCO2/100km: " + details[4]
+                + "\nAuto km/h: " + details[5]
                 + "\nFahrrad km/h: " + details[6]
                 + "\nWetter: " + facade.current_weather());
         profile.add(jl);
@@ -348,7 +348,7 @@ public class Main extends JFrame {
                 String carCO2TXT = getTextfieldContent(registerName, "registerCarCO2Text");
                 String carSpeedTXT = getTextfieldContent(registerPassword, "registerCarSpeedText");
                 String bikeSpeedTXT = getTextfieldContent(registerName, "registerBikeSpeedText");
-                if(sign_up_user(nameTXT, passwordTXT, ortTXT, plzTXT,
+                if(facade.sign_up_user(nameTXT, passwordTXT, ortTXT, plzTXT,
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
                     cardLayout.show(panelLayout, "4");
                     jframe.setSize(new Dimension(500, 500));
