@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import java.util.ArrayList;
+
 public class Main extends JFrame {
     public static void main(String[] args) {
         Main main = new Main("35a75437476f12302f72e55d368485db");
@@ -189,7 +191,6 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "2");
                 jframe.setSize(new Dimension(400, 150));
-                // implementiere einlesen der textfelder des Panles
             }
         });
 
@@ -204,7 +205,6 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "3");
                 jframe.setSize(new Dimension(260, 390));
-                // implementiere einlesen der textfelder des Panles
             }
         });
     }
@@ -395,7 +395,13 @@ public class Main extends JFrame {
         searchConfirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // implementiere Änderung vom Panel
+                ArrayList<String> orte = facade.search(getTextfieldContent(searchPLZ_ORT, "ortSuche"));
+                for(String s : orte){
+                    String[] ortUndPLZ = s.split(";");
+                    String adress = ortUndPLZ[1] + ", " + ortUndPLZ[0];
+
+                    //erzeuge aus adresse einen Button
+                }
             }
         });
     }
