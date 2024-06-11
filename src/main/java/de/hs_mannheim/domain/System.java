@@ -81,6 +81,7 @@ public class System {
                         Double.parseDouble(fileString[7])));
             }
         } catch (Exception e) {
+        //
         }
     }
 
@@ -215,7 +216,9 @@ public class System {
                 writer.newLine();
             }
             writer.write(lines.getLast());
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        //
+        }
     }
 
     public void sign_out_user() {
@@ -244,6 +247,7 @@ public class System {
                     zip_set.add(line);
             }
         } catch (Exception e) {
+        //
         }
 
         return new ArrayList<>(zip_set);
@@ -316,6 +320,7 @@ public class System {
             weather = json.getJSONArray("weather").getJSONObject(0).getString("description");
             temperature = json.getJSONObject("main").getDouble("temp");
         } catch (Exception e) {
+        //
         }
 
         if (weather.equals(""))
@@ -390,6 +395,7 @@ public class System {
             temperature_day_3_4 = json.getJSONArray("list").getJSONObject(30).getJSONObject("main").getDouble("temp");
 
         } catch (Exception e) {
+        //
         }
 
         temperature_day_1.add(temperature_day_1_1);
@@ -449,6 +455,7 @@ public class System {
                 }
             }
         } catch (Exception e) {
+        //
         }
 
         InputStream inputStream2 = System.class.getResourceAsStream("/zip.csv");
@@ -471,12 +478,13 @@ public class System {
 
                 distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a));
 
-                result = Math.round((distance * 1.25) * 1000) / 1000.0;
+                result = Math.round(distance * 1.25 * 1000) / 1000.0;
 
                 this.all_destinations.put(line.split(";")[0],new Destination(line.split(";")[1],line.split(";")[0], result));
 
             }
         } catch (Exception e) {
+        //
         }
 
         return true;
@@ -492,15 +500,15 @@ public class System {
 
         String[] result = new String[2];
 
-        result[0] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh())) * 1000) / 1000.0) + " h";
-        result[1] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh())) * 1000) / 1000.0) + " h";
+        result[0] = "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh() * 1000) / 1000.0) + " h";
+        result[1] = "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh() * 1000) / 1000.0) + " h";
 
         return result;
     }
 
     public String calc_l_consumption(String destination_zip) {
 
-        return "" + (Math.round((Double.parseDouble(distance(destination_zip).replace(" km", "")) * (current_user.getCar_l_100km() / 100.0)) * 1000) / 1000.0) + " l";
+        return "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", "")) * current_user.getCar_l_100km() / 100.0 * 1000) / 1000.0) + " l";
 
     }
 }
