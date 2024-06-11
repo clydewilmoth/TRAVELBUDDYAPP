@@ -51,9 +51,6 @@ public class SystemTest {
 
         current_system.sign_in_user("David","123Esel");
         
-        current_system.set_current_user_car_avg_kmh(100);
-        current_system.set_current_user_bike_avg_kmh(20);
-        
         assertEquals("0.885 h", current_system.travel_time("60306")[0]); // Frankfurt mit Auto
         assertEquals("4.423 h", current_system.travel_time("60306")[1]); // Frankfurt mit Fahrrad
 
@@ -65,9 +62,6 @@ public class SystemTest {
     public void calc_l_consumption(){
 
         current_system.sign_in_user("David","123Esel");
-        
-        current_system.set_current_user_car_avg_kmh(100);
-        current_system.set_current_user_car_l_100km(10);
         
         assertEquals("8.846 l", current_system.calc_l_consumption("60306")); // Kraftstoffverbrauch nach Frankfurt
         assertEquals("58.111 l", current_system.calc_l_consumption("20095")); // Kraftstoffverbrauch nach Hamburg
@@ -138,6 +132,7 @@ public class SystemTest {
         assertEquals("Lukas",current_system.getDetails()[0]);
         current_system.sign_out_user();
         assertEquals("",current_system.getDetails()[0]);
+        assertEquals(true, current_system.sign_in_user("Lukas","123Esel"));
     }
 
     @Test
