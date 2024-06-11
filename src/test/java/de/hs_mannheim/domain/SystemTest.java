@@ -20,7 +20,7 @@ public class SystemTest {
     @Test
     public void current_weather(){
 
-        current_system.set_current_user_zip("68161");
+        current_system.sign_in_user("David","123Esel");
 
         assertNotEquals("Es ist ein Fehler aufgetreten!",current_system.current_weather());
     }
@@ -37,8 +37,8 @@ public class SystemTest {
 
     @Test
     public void distance(){
-
-        current_system.set_current_user_zip("68161");
+        
+        current_system.sign_in_user("David","123Esel");
         
         assertEquals("88.46 km", current_system.distance("60306")); // Frankfurt 
         assertEquals("581.109 km", current_system.distance("20095")); // Hamburg
@@ -49,7 +49,8 @@ public class SystemTest {
     @Test
     public void travel_time(){
 
-        current_system.set_current_user_zip("68161");
+        current_system.sign_in_user("David","123Esel");
+        
         current_system.set_current_user_car_avg_kmh(100);
         current_system.set_current_user_bike_avg_kmh(20);
         
@@ -63,7 +64,8 @@ public class SystemTest {
     @Test
     public void calc_l_consumption(){
 
-        current_system.set_current_user_zip("68161");
+        current_system.sign_in_user("David","123Esel");
+        
         current_system.set_current_user_car_avg_kmh(100);
         current_system.set_current_user_car_l_100km(10);
         
@@ -75,15 +77,17 @@ public class SystemTest {
     @Test
     public void random_destinations(){
 
-        current_system.set_current_user_zip("68161");
-     
-        assertEquals(3, current_system.random_destinations_car().size()); // random_destinations_car gibt genau 3 destinations zurück
-        assertEquals(3, current_system.random_destinations_bike().size()); // random destinations_bike gibt genau 3 destinations zurück
+        current_system.sign_in_user("David","123Esel");
+        ArrayList<String> random_destination_car = current_system.random_destinations_car();
+        ArrayList<String> random_destination_bike = current_system.random_destinations_bike();
+        
+        assertEquals(3, random_destination_car.size()); // random_destinations_car gibt genau 3 destinations zurück
+        assertEquals(3, random_destination_bike.size()); // random destinations_bike gibt genau 3 destinations zurück
 
         // random_destinations_car gibt nur destinations mit mindestens 150 km Entfernung zurück
-        assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_car().get(0).split(";")[0]).replace(" km", "")) > 150);
+        assertEquals(true, Double.parseDouble(current_system.distance(random_destination_car.get(0).split(";")[0]).replace(" km", "")) > 150);
         // random_destinations_bike gibt nur destinations mit maximal 100 km Entfernung zurück
-        assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_bike().get(0).split(";")[0]).replace(" km", "")) < 100);
+        assertEquals(true, Double.parseDouble(current_system.distance(random_destination_bike.get(0).split(";")[0]).replace(" km", "")) < 100);
     }
 
     @Test
@@ -144,10 +148,11 @@ public class SystemTest {
         assertEquals("Enes", current_system.getDetails()[0]);
 
     }
-    /*
-    Tests auf Basis von user_data.csv:  Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
-                                        David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;300.0;20.0 
-    */
+/*
+Tests auf Basis von user_data.csv:  
+Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
+David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;300.0;20.0 
+*/
 
 
 }

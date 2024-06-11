@@ -451,7 +451,9 @@ public class System {
         } catch (Exception e) {
         }
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+        InputStream inputStream2 = System.class.getResourceAsStream("/zip.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream2))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.replace("\"", "");
