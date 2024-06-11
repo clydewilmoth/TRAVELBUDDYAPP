@@ -79,7 +79,23 @@ public class System {
             }
         } catch (Exception e) {
         }
+
+        all_users.add(current_user);
+
         return all_users;
+    }
+
+    public ArrayList<String> all_user_toString(){
+
+        ArrayList<String> result = new ArrayList<>();
+        ArrayList<User> all_user = get_all_user();
+
+        for(User user : all_user){
+            result.add(getDetails()[0] + ";" + getDetails()[1] + ";" + getDetails()[2] + ";" + getDetails()[3]
+                    + ";" + getDetails()[4] + ";" + getDetails()[5] + ";" + getDetails()[6] + ";" + getDetails()[7]);
+        }
+
+        return result;
     }
 
     public boolean sign_in_user(String username, String password) {
@@ -127,6 +143,16 @@ public class System {
 
 
         return true;
+    }
+
+    public void write_to_file(ArrayList<String> lines, String file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < lines.size() - 1; i++) {
+                writer.write(lines.get(i));
+                writer.newLine();
+            }
+            writer.write(lines.getLast());
+        } catch (IOException e) {}
     }
 
     /*public boolean sign_up_user(String username, String password, String hometown, String zipS,
