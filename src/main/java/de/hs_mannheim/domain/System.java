@@ -103,10 +103,22 @@ public class System {
     public boolean sign_up_user(String username, String password, String hometown, String zipS,
                                 String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
 
-        int zip = Integer.parseInt(zipS);
-        double car_l_100km = Double.parseDouble(car_l_100kmS);
-        double car_avg_kmh = Double.parseDouble(car_avg_kmhS);
-        double bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+        int zip;
+        double car_l_100km;
+        double car_avg_kmh;
+        double bike_avg_kmh;
+    
+        try{
+            zip = Integer.parseInt(zipS);
+            car_l_100km = Double.parseDouble(car_l_100kmS);
+            car_avg_kmh = Double.parseDouble(car_avg_kmhS);
+            bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+        } catch (NumberFormatException n){
+            return false;
+        }
+
+        if(username.equals("")||password.equals("")||hometown.equals("")||zipS.equals(""))
+            return false;
 
         for(User user: this.all_user)
             if(user.getUsername().equals(username))

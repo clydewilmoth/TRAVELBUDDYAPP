@@ -5,11 +5,11 @@ public class User {
     private String username = "";
     private String password = "";
     private String hometown = "";
-    private int zip;
+    private int zip = 0;
     private String car_name = "";
-    private double car_l_100km;
-    private double car_avg_kmh;
-    private double bike_avg_kmh;
+    private double car_l_100km = 0;
+    private double car_avg_kmh = 0;
+    private double bike_avg_kmh = 0;
 
     public User(){}
 
