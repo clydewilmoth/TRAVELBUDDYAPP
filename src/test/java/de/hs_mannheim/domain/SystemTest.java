@@ -122,7 +122,7 @@ public class SystemTest {
 
     }
 
-    /*@Test
+    @Test
     public void sign_up_user(){
         // Username darf nicht doppelt vorkommen!
         assertEquals(false, current_system.sign_up_user("David","123Esel","Mannheim","68161","AMG","10","300","20"));
@@ -134,19 +134,20 @@ public class SystemTest {
         assertEquals("Lukas",current_system.getDetails()[0]);
         current_system.sign_out_user();
         assertEquals("",current_system.getDetails()[0]);
-    }*/
+    }
 
     @Test
     public void change_user_details(){
         
         current_system.sign_in_user("David", "123Esel");
-        current_system.change_user_details(null, null, null, null, null, null, null, null);
-        assertEquals(current_system, STR);
+        current_system.change_user_details("Enes", "Penis123", "Mannheim", "68161", "", "", "", "");
+        assertEquals("Enes", current_system.getDetails()[0]);
 
     }
-
-
-
+    /*
+    Tests auf Basis von user_data.csv:  Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
+                                        David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;300.0;20.0 
+    */
 
 
 }

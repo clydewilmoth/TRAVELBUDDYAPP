@@ -56,6 +56,20 @@ public class System {
         return Base64.encodeBase64String(binary_data);
     }
 
+    public static int parseInt(String s) throws NumberFormatException{
+        if(s.equals(""))
+            return 0;
+        else
+            return Integer.parseInt(s);
+    }
+
+    public static double parseDouble(String s) throws NumberFormatException {
+        if(s.equals(""))
+            return 0;
+        else
+            return Double.parseDouble(s);
+    }
+    
     public void get_all_user() {
         String[] fileString = new String[8];
 
@@ -109,10 +123,10 @@ public class System {
         double bike_avg_kmh;
     
         try{
-            zip = Integer.parseInt(zipS);
-            car_l_100km = Double.parseDouble(car_l_100kmS);
-            car_avg_kmh = Double.parseDouble(car_avg_kmhS);
-            bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+            zip = parseInt(zipS);
+            car_l_100km = parseDouble(car_l_100kmS);
+            car_avg_kmh = parseDouble(car_avg_kmhS);
+            bike_avg_kmh = parseDouble(bike_avg_kmhS);
         } catch (NumberFormatException n){
             return false;
         }
@@ -145,7 +159,7 @@ public class System {
 
         return true;
     }
-
+    
     public boolean change_user_details(String username, String password, String hometown, String zipS, 
                                     String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
         
@@ -155,10 +169,10 @@ public class System {
         double bike_avg_kmh;
         
         try{
-            zip = Integer.parseInt(zipS);
-            car_l_100km = Double.parseDouble(car_l_100kmS);
-            car_avg_kmh = Double.parseDouble(car_avg_kmhS);
-            bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+            zip = parseInt(zipS);
+            car_l_100km = parseDouble(car_l_100kmS);
+            car_avg_kmh = parseDouble(car_avg_kmhS);
+            bike_avg_kmh = parseDouble(bike_avg_kmhS);
         } catch (NumberFormatException n){
             return false;
         }
@@ -182,12 +196,15 @@ public class System {
         if(!bool)
             return false;
         
-        this.all_user.remove(this.current_user);
-        this.current_user = new User(username, password, hometown, zip, car_name, car_l_100km, car_avg_kmh, bike_avg_kmh);
+        
+        for(int i = 0; i< this.all_user.size(); i++)
+            if(this.all_user.get(i).getUsername().equals(current_user.getUsername()))
+                this.all_user.remove(i);
         
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
         write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
         
+        this.current_user = new User(username, password, hometown, zip, car_name, car_l_100km, car_avg_kmh, bike_avg_kmh);
         this.all_user.add(current_user);
 
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
