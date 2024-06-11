@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Base64;
@@ -17,6 +18,7 @@ public class System {
     private User current_user = new User();
     private ArrayList<User> all_user = new ArrayList<>();
     private String api_key;
+    private HashMap<String, Destination> all_destinations = new HashMap<String, Destination>();
     private ArrayList<String> distances = new ArrayList<>();
 
     public System(String api_key) {
@@ -25,7 +27,7 @@ public class System {
     }
 
     public void set_current_user_zip(String zip) {
-        this.current_user.setZip(Integer.parseInt(zip));
+        this.current_user.setZip(zip);
     }
 
     public void set_current_user_car_l_100km(double car_l_100km) {
@@ -56,13 +58,6 @@ public class System {
         return Base64.encodeBase64String(binary_data);
     }
 
-    public static int parseInt(String s) throws NumberFormatException{
-        if(s.equals(""))
-            return 0;
-        else
-            return Integer.parseInt(s);
-    }
-
     public static double parseDouble(String s) throws NumberFormatException {
         if(s.equals(""))
             return 0;
@@ -81,7 +76,7 @@ public class System {
                 fileString = path.split(";");
                 fileString[1] = decoding(fileString[1]);
                 this.all_user.add(new User(fileString[0], fileString[1], fileString[2],
-                        Integer.parseInt(fileString[3]), fileString[4],
+                        fileString[3], fileString[4],
                         Double.parseDouble(fileString[5]),
                         Double.parseDouble(fileString[6]),
                         Double.parseDouble(fileString[7])));
@@ -114,16 +109,14 @@ public class System {
         return false;
     }
 
-    public boolean sign_up_user(String username, String password, String hometown, String zipS,
+    public boolean sign_up_user(String username, String password, String hometown, String zip,
                                 String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
 
-        int zip;
         double car_l_100km;
         double car_avg_kmh;
         double bike_avg_kmh;
     
         try{
-            zip = parseInt(zipS);
             car_l_100km = parseDouble(car_l_100kmS);
             car_avg_kmh = parseDouble(car_avg_kmhS);
             bike_avg_kmh = parseDouble(bike_avg_kmhS);
@@ -131,14 +124,14 @@ public class System {
             return false;
         }
 
-        if(username.equals("")||password.equals("")||hometown.equals("")||zipS.equals(""))
+        if(username.equals("")||password.equals("")||hometown.equals("")||zip.equals(""))
             return false;
 
         for(User user: this.all_user)
             if(user.getUsername().equals(username))
                 return false;
 
-        ArrayList<String> mem = search(zipS);
+        ArrayList<String> mem = search(zip);
         boolean bool = false;
 
         for (String line: mem)
@@ -160,16 +153,14 @@ public class System {
         return true;
     }
     
-    public boolean change_user_details(String username, String password, String hometown, String zipS, 
+    public boolean change_user_details(String username, String password, String hometown, String zip, 
                                     String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
         
-        int zip;
         double car_l_100km;
         double car_avg_kmh;
         double bike_avg_kmh;
         
         try{
-            zip = parseInt(zipS);
             car_l_100km = parseDouble(car_l_100kmS);
             car_avg_kmh = parseDouble(car_avg_kmhS);
             bike_avg_kmh = parseDouble(bike_avg_kmhS);
@@ -177,14 +168,14 @@ public class System {
             return false;
         }
         
-        if(username.equals("")||password.equals("")||hometown.equals("")||zipS.equals(""))
+        if(username.equals("")||password.equals("")||hometown.equals("")||zip.equals(""))
             return false;
         
         for(User user: this.all_user)
         if(user.getUsername().equals(username))
             return false;
 
-        ArrayList<String> mem = search(zipS);
+        ArrayList<String> mem = search(zip);
         boolean bool = false;
 
         for (String line: mem)
@@ -232,9 +223,7 @@ public class System {
 
     public String[] getDetails(){
         return new String[]{current_user.getUsername(), current_user.getPassword(),
-                current_user.getHometown(), 
-                current_user.getZip()==0?"":String.valueOf(current_user.getZip()),
-                current_user.getCar_name(), 
+                current_user.getHometown(), current_user.getZip(), current_user.getCar_name(), 
                 current_user.getCar_l_100km()==0?"":String.valueOf(current_user.getCar_l_100km()),
                 current_user.getCar_avg_kmh()==0?"":String.valueOf(current_user.getCar_avg_kmh()), 
                 current_user.getBike_avg_kmh()==0?"":String.valueOf(current_user.getBike_avg_kmh())};
@@ -249,10 +238,9 @@ public class System {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = reader.readLine()) != null && zip_set.size() < 200) {
-                if (line.contains(hometown_or_zip)) {
-                    line = line.replace("\"", "");
+                line = line.replace("\"", "");
+                if (line.split(";")[0].contains(hometown_or_zip)||line.split(";")[1].contains(hometown_or_zip)) 
                     zip_set.add(line);
-                }
             }
         } catch (Exception e) {
         }

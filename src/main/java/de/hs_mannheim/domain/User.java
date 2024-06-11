@@ -5,7 +5,7 @@ public class User {
     private String username = "";
     private String password = "";
     private String hometown = "";
-    private int zip = 0;
+    private String zip = "";
     private String car_name = "";
     private double car_l_100km = 0;
     private double car_avg_kmh = 0;
@@ -13,7 +13,7 @@ public class User {
 
     public User(){}
 
-    public User(String username, String password, String hometown, int zip
+    public User(String username, String password, String hometown, String zip
                 , String car_name, double car_l_100km, double car_avg_kmh, double bike_avg_kmh){
         this.username = username;
         this.password = password;
@@ -49,11 +49,11 @@ public class User {
         this.hometown = hometown;
     }
 
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
