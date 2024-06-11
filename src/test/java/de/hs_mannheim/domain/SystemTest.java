@@ -140,6 +140,9 @@ public class SystemTest {
         assertEquals(false, current_system.sign_up_user("Lukas","123Esel","Mannheim","11105","AMG","10","300","20"));
         assertEquals(true, current_system.sign_up_user("Lukas","123Esel","Mannheim","68305","AMG","10","300","20"));
 
+        assertEquals("Lukas",current_system.getDetails()[0]);
+        current_system.sign_out_user();
+        assertEquals("",current_system.getDetails()[0]);
     }
 
 
