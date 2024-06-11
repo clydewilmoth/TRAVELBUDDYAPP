@@ -6,6 +6,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,8 +45,11 @@ public class System {
     }
 
     public String decoding(String string) {
-        byte[] binary_data = Base64.decodeBase64(string);
-        return new String(binary_data);
+        byte[] binary_data = new byte[string.length()];
+        for(int i = 0; i < string.length(); i++) {
+            binary_data[i] = (byte)string.charAt(i);
+        }
+        return new String(Base64.decodeBase64(binary_data));
     }
 
     public String encoding(String string) {
@@ -53,8 +60,8 @@ public class System {
         return Base64.encodeBase64String(binary_data);
     }
 
-    public HashSet<User> get_all_user() {
-        HashSet<User> all_users = new HashSet<>();
+    public ArrayList<User> get_all_user() {
+        ArrayList<User> all_users = new ArrayList<>();
         String[] fileString = new String[8];
 
         InputStream inputStream = System.class.getResourceAsStream("/user_data.csv");
@@ -89,9 +96,14 @@ public class System {
         return false;
     }
 
-    public boolean sign_up_user(String username, String password, String hometown, int zip,
-                                String car_name, double car_l_100km, double car_avg_kmh, double bike_avg_kmh) throws IOException {
-        ArrayList<User> mem = new ArrayList<>(get_all_user());
+    /*public boolean sign_up_user(String username, String password, String hometown, String zipS,
+                                String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS) throws IOException {
+        int zip = Integer.parseInt(zipS);
+        double car_l_100km = Double.parseDouble(car_l_100kmS);
+        double car_avg_kmh = Double.parseDouble(car_avg_kmhS);
+        double bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+
+        ArrayList<User> mem = get_all_user();
         ArrayList<String> user_names = new ArrayList<>();
 
         for (User user : mem) {
@@ -101,6 +113,8 @@ public class System {
             current_user = new User(username, password,
                     hometown, zip, car_name,
                     car_l_100km, car_avg_kmh, bike_avg_kmh);
+            mem.add(current_user);
+            user_names.add(current_user.getUsername());
 
             ArrayList<String> content = new ArrayList<>();
             for (User user : mem) {
@@ -111,24 +125,49 @@ public class System {
                         + ";" + user.getBike_avg_kmh());
             }
 
-            File file = new File("/user_data.csv");
+            Path resourcePath = Paths.get("src/main/resources/user_data.csv");
+            Path testResourcePath = Paths.get("src/test/resources/user_data.csv");
+
 
             try {
-                FileWriter fileWriter = new FileWriter(file, false);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                Files.createDirectories(resourcePath.getParent());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(resourcePath.toFile(),false), StandardCharsets.UTF_8)){
 
-                for (String line : content) {
-                    bufferedWriter.write(line);
-                    bufferedWriter.newLine();
+                for (int i = 0; i < content.size()-1; i++) {
+                    writer.write(content.get(i));
+                    writer.write("\n");
                 }
-                bufferedWriter.close();
+                writer.write(content.getLast());
+
             } catch (IOException e) {
             }
+
+            try {
+                Files.createDirectories(testResourcePath.getParent());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(testResourcePath.toFile()), StandardCharsets.UTF_8)){
+
+                for (int i = 0; i < content.size()-1; i++) {
+                    writer.write(content.get(i));
+                    writer.write("\n");
+                }
+                writer.write(content.getLast());
+
+            } catch (IOException e) {
+            }
+
 
             return true;
         }
         return false;
     }
+
+     */
 
     public void sign_out_user() {
         this.distances = new ArrayList<>();
@@ -136,9 +175,65 @@ public class System {
         current_user = new User();
     }
 
-    public boolean change_user_details(String username, String password, String hometown, int zip,
-                                       String car_name, double car_l_100km, double car_avg_kmh, double bike_avg_kmh) {
-        return true;
+    /*public void change_user_details(String username, String password, String hometown, String zipS,
+                                       String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS) throws IOException {
+
+        int zip = Integer.parseInt(zipS);
+        double car_l_100km = Double.parseDouble(car_l_100kmS);
+        double car_avg_kmh = Double.parseDouble(car_avg_kmhS);
+        double bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+
+        String new_user_details = username + ";" + password + ";" + hometown + ";" + zipS
+                + ";" + car_name + ";" + car_l_100kmS + ";" + car_avg_kmhS + ";" + bike_avg_kmhS;
+
+        File mainFile = new File("src/main/resources/user_data.csv");
+        File testFile = new File("src/test/resources/user_data.csv");
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(mainFile));
+        BufferedWriter writerTest = new BufferedWriter(new FileWriter(testFile));
+
+        InputStream inputStream = System.class.getResourceAsStream("/user_data.csv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(";");
+
+                if (row[0].equals(current_user.getUsername())) {
+                    writer.write(new_user_details);
+                    writerTest.write(new_user_details);
+                } else {
+                    writer.write(line);
+                    writerTest.write(line);
+                }
+                if(reader.readLine() != null){
+                    writer.write("\n");
+                    writer.write("\n");
+                }
+                    writer.write("\n");
+            }
+
+        } catch (Exception e) {}
+
+        writer.close();
+
+        current_user.setUsername(username);
+        current_user.setPassword(password);
+        current_user.setHometown(hometown);
+        current_user.setZip(zip);
+        current_user.setCar_name(car_name);
+        current_user.setCar_l_100km(car_l_100km);
+        current_user.setCar_avg_kmh(car_avg_kmh);
+        current_user.setBike_avg_kmh(bike_avg_kmh);
+    }
+
+     */
+
+    public String[] getDetails(){
+        return new String[]{current_user.getUsername(), current_user.getPassword(),
+                current_user.getHometown(), String.valueOf(current_user.getZip()),
+                current_user.getCar_name(), String.valueOf(current_user.getCar_l_100km()),
+                String.valueOf(current_user.getCar_avg_kmh()), String.valueOf(current_user.getCar_avg_kmh())};
     }
 
     public ArrayList<String> search(String hometown_or_zip) {

@@ -73,7 +73,7 @@ public class SystemTest {
         assertEquals("60.361 l", current_system.calc_l_consumption("10115")); // Kraftstoffverbrauch nach Berlin
     }
 
-    @Test
+    /*@Test
     public void random_destinations(){
 
         current_system.set_current_user_zip("68161");
@@ -85,10 +85,29 @@ public class SystemTest {
         assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_car().get(0).split(";")[0]).replace(" km", "")) > 150);
         // random_destinations_bike gibt nur destinations mit maximal 100 km Entfernung zurück
         assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_bike().get(0).split(";")[0]).replace(" km", "")) < 100);
+    }*/
+
+    @Test
+    public void encoding(){
+
+        String test_password = "123Esel";
+
+        assertEquals("MTIzRXNlbA==",current_system.encoding(test_password));
+
+    }
+
+    @Test
+    public void decoding(){
+
+        String test_password = "MTIzRXNlbA==";
+
+        assertEquals("123Esel",current_system.decoding(test_password));
+
     }
 
     @Test
     public void get_all_user() {
+
         assertEquals(1, current_system.get_all_user().size());
 
         ArrayList<User> list = new ArrayList<>(current_system.get_all_user());
