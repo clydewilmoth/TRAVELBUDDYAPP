@@ -146,12 +146,13 @@ public class SystemTest {
         current_system.sign_in_user("David", "123Esel");
         current_system.change_user_details("Enes", "Penis123", "Mannheim", "68161", "", "", "", "");
         assertEquals("Enes", current_system.getDetails()[0]);
-
+        current_system.change_user_details("David", "123Esel", "Mannheim", "68161", "AMG", "10", "100", "20");
+    
     }
 /*
 Tests auf Basis von user_data.csv:  
 Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
-David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;300.0;20.0 
+David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;100.0;20.0
 */
 
 
