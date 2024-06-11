@@ -19,7 +19,6 @@ public class System {
     private ArrayList<User> all_user = new ArrayList<>();
     private String api_key;
     private HashMap<String, Destination> all_destinations = new HashMap<String, Destination>();
-    private ArrayList<String> distances = new ArrayList<>();
 
     public System(String api_key) {
         this.api_key = api_key;
@@ -103,6 +102,8 @@ public class System {
                 current_user = new User(user.getUsername(), user.getPassword(),
                         user.getHometown(), user.getZip(), user.getCar_name(),
                         user.getCar_l_100km(), user.getCar_avg_kmh(), user.getBike_avg_kmh());
+
+                all_distances();
                 return true;
             }
         }
@@ -150,6 +151,7 @@ public class System {
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
         write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
 
+        all_distances();
         return true;
     }
     
@@ -201,6 +203,7 @@ public class System {
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
         write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
 
+        all_distances();
         return true;
 
     }
@@ -216,8 +219,6 @@ public class System {
     }
 
     public void sign_out_user() {
-        this.distances = new ArrayList<>();
-
         current_user = new User();
     }
 
@@ -250,33 +251,37 @@ public class System {
 
     public ArrayList<String> random_destinations_car() {
 
-        ArrayList<String> mem = new ArrayList<>();
+        ArrayList<Destination> mem = new ArrayList<>();
         ArrayList<String> result = new ArrayList<>();
+        int random = 0;
 
-        for (int i = 0; i < this.distances.size(); i++) {
-            if (Double.parseDouble(this.distances.get(i).split(";")[2]) > 150)
-                mem.add(this.distances.get(i));
+        for(Destination destination: this.all_destinations.values()){
+            if(destination.getDistance_from_user()>150)
+                mem.add(destination);
         }
 
-        for (int i = 0; i < 3; i++)
-            result.add(mem.get((int) (Math.random() * mem.size())));
-
+        for (int i = 0; i < 3; i++){
+            random = (int) (Math.random() * mem.size());
+            result.add(mem.get(random).getZip() + ";" + mem.get(random).getTown());
+        }
         return result;
     }
 
     public ArrayList<String> random_destinations_bike() {
 
-        ArrayList<String> mem = new ArrayList<>();
+        ArrayList<Destination> mem = new ArrayList<>();
         ArrayList<String> result = new ArrayList<>();
+        int random = 0;
 
-        for (int i = 0; i < this.distances.size(); i++) {
-            if (Double.parseDouble(this.distances.get(i).split(";")[2]) < 100)
-                mem.add(this.distances.get(i));
+        for(Destination destination: this.all_destinations.values()){
+            if(destination.getDistance_from_user()<100)
+                mem.add(destination);
         }
 
-        for (int i = 0; i < 3; i++)
-            result.add(mem.get((int) (Math.random() * mem.size())));
-
+        for (int i = 0; i < 3; i++){
+            random = (int) (Math.random() * mem.size());
+            result.add(mem.get(random).getZip() + ";" + mem.get(random).getTown());
+        }
         return result;
     }
 
@@ -438,7 +443,7 @@ public class System {
             while ((line = reader.readLine()) != null) {
                 line = line.replace("\"", "");
 
-                if (line.split(";")[0].equals("" + current_user.getZip())) {
+                if (line.split(";")[0].equals(current_user.getZip())) {
                     lon1 = Double.parseDouble(line.split(";")[2]);
                     lat1 = Double.parseDouble(line.split(";")[3]);
                 }
@@ -466,7 +471,7 @@ public class System {
 
                 result = Math.round((distance * 1.25) * 1000) / 1000.0;
 
-                this.all_destinations.put(line.split(";")[0],new Destination(line.split(";")[0], result));
+                this.all_destinations.put(line.split(";")[0],new Destination(line.split(";")[1],line.split(";")[0], result));
 
             }
         } catch (Exception e) {
@@ -477,19 +482,13 @@ public class System {
 
     public String distance(String destination_zip){
 
-        return "" + this.all_destinations.get(destination_zip) + " km";
+        return "" + this.all_destinations.get(destination_zip).getDistance_from_user() + " km";
 
     }
     
     public String[] travel_time(String destination_zip) {
 
         String[] result = new String[2];
-
-        if (distance(destination_zip).equals("Es ist ein Fehler aufgetreten!")) {
-            result[0] = "Es ist ein Fehler aufgetreten!";
-            result[1] = "Es ist ein Fehler aufgetreten!";
-            return result;
-        }
 
         result[0] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh())) * 1000) / 1000.0) + " h";
         result[1] = "" + (Math.round(((Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh())) * 1000) / 1000.0) + " h";
@@ -498,9 +497,6 @@ public class System {
     }
 
     public String calc_l_consumption(String destination_zip) {
-
-        if (distance(destination_zip).equals("Es ist ein Fehler aufgetreten!"))
-            return "Es ist ein Fehler aufgetreten!";
 
         return "" + (Math.round((Double.parseDouble(distance(destination_zip).replace(" km", "")) * (current_user.getCar_l_100km() / 100.0)) * 1000) / 1000.0) + " l";
 
