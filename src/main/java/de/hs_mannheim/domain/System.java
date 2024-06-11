@@ -108,7 +108,7 @@ public class System {
         double car_avg_kmh = Double.parseDouble(car_avg_kmhS);
         double bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
 
-        for(User user: all_user)
+        for(User user: this.all_user)
             if(user.getUsername().equals(username))
                 return false;
 
@@ -134,6 +134,57 @@ public class System {
         return true;
     }
 
+    public boolean change_user_details(String username, String password, String hometown, String zipS, 
+                                    String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
+        
+        int zip;
+        double car_l_100km;
+        double car_avg_kmh;
+        double bike_avg_kmh;
+        
+        try{
+            zip = Integer.parseInt(zipS);
+            car_l_100km = Double.parseDouble(car_l_100kmS);
+            car_avg_kmh = Double.parseDouble(car_avg_kmhS);
+            bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+        } catch (NumberFormatException n){
+            return false;
+        }
+        
+        if(username.equals("")||password.equals("")||hometown.equals("")||zipS.equals(""))
+            return false;
+        
+        for(User user: this.all_user)
+        if(user.getUsername().equals(username))
+            return false;
+
+        ArrayList<String> mem = search(zipS);
+        boolean bool = false;
+
+        for (String line: mem)
+            if(line.split(";")[1].equals(hometown)) {
+                bool = true;
+                break;
+        }
+
+        if(!bool)
+            return false;
+        
+        this.all_user.remove(this.current_user);
+        this.current_user = new User(username, password, hometown, zip, car_name, car_l_100km, car_avg_kmh, bike_avg_kmh);
+        
+        write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
+        write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
+        
+        this.all_user.add(current_user);
+
+        write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
+        write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
+
+        return true;
+
+    }
+    
     public void write_to_file(ArrayList<String> lines, String file) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < lines.size() - 1; i++) {
@@ -152,9 +203,12 @@ public class System {
 
     public String[] getDetails(){
         return new String[]{current_user.getUsername(), current_user.getPassword(),
-                current_user.getHometown(), String.valueOf(current_user.getZip()),
-                current_user.getCar_name(), String.valueOf(current_user.getCar_l_100km()),
-                String.valueOf(current_user.getCar_avg_kmh()), String.valueOf(current_user.getCar_avg_kmh())};
+                current_user.getHometown(), 
+                current_user.getZip()==0?"":String.valueOf(current_user.getZip()),
+                current_user.getCar_name(), 
+                current_user.getCar_l_100km()==0?"":String.valueOf(current_user.getCar_l_100km()),
+                current_user.getCar_avg_kmh()==0?"":String.valueOf(current_user.getCar_avg_kmh()), 
+                current_user.getBike_avg_kmh()==0?"":String.valueOf(current_user.getBike_avg_kmh())};
     }
 
     public ArrayList<String> search(String hometown_or_zip) {

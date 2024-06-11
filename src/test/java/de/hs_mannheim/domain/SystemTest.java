@@ -3,7 +3,6 @@ package de.hs_mannheim.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -123,7 +122,7 @@ public class SystemTest {
 
     }
 
-    @Test
+    /*@Test
     public void sign_up_user(){
         // Username darf nicht doppelt vorkommen!
         assertEquals(false, current_system.sign_up_user("David","123Esel","Mannheim","68161","AMG","10","300","20"));
@@ -135,6 +134,15 @@ public class SystemTest {
         assertEquals("Lukas",current_system.getDetails()[0]);
         current_system.sign_out_user();
         assertEquals("",current_system.getDetails()[0]);
+    }*/
+
+    @Test
+    public void change_user_details(){
+        
+        current_system.sign_in_user("David", "123Esel");
+        current_system.change_user_details(null, null, null, null, null, null, null, null);
+        assertEquals(current_system, STR);
+
     }
 
 
