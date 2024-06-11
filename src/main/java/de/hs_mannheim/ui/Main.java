@@ -6,14 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import java.util.ArrayList;
 
@@ -63,6 +56,8 @@ public class Main extends JFrame {
     private JButton randDestinationsBikeButton;
     private JPanel profile;
     private JButton logOutButton;
+    private JScrollPane jsp = new JScrollPane();
+    private JPanel destinationButtons = new JPanel();
 
     public Main(String api_key) {
         this.facade = new Application(api_key);
@@ -133,12 +128,14 @@ public class Main extends JFrame {
         randDestinationsCarButtonCreate();
         randDestinationsBikeButtonCreate();
         logOutButtonCreate();
+        jsp.add(destinationButtons);
         menuLabel.setBounds(180, -125, 300, 300);
         searchPLZ_ORT.setBounds(20, 50, 300, 100);
         searchConfirmButton.setBounds(346, 70, 110, 30);
         randDestinationsCarButton.setBounds(346, 115, 110, 30);
         randDestinationsBikeButton.setBounds(346, 160, 110, 30);
         logOutButton.setBounds(346, 420, 110, 30);
+        jsp.setBounds(50,50,300,400);
         menu.add(menuLabel);
         menu.add(searchPLZ_ORT);
         menu.add(searchConfirmButton);
@@ -396,12 +393,31 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> orte = facade.search(getTextfieldContent(searchPLZ_ORT, "ortSuche"));
+                JPanel destinationButtonsProxy = new JPanel(new FlowLayout());
                 for(String s : orte){
                     String[] ortUndPLZ = s.split(";");
-                    String adress = ortUndPLZ[1] + ", " + ortUndPLZ[0];
-
+                    String address = ortUndPLZ[1] + ", " + ortUndPLZ[0];
+                    JButton jb = new JButton(address);
+                    jb.setSize(100,20);
+                    jb.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            JFrame jf = new JFrame();
+                            JPanel jp = new JPanel(new FlowLayout());
+                            String[] details = facade.destination_details(ortUndPLZ[0]);
+                            for(String ss : details) {
+                                JLabel jl = new JLabel(ss);
+                                jp.add(jl);
+                            }
+                            jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                            jf.add(jp);
+                            jf.setSize(100,400);
+                        }
+                    });
                     //erzeuge aus adresse einen Button
                 }
+                destinationButtons = destinationButtonsProxy;
+                menu.revalidate();
             }
         });
     }
