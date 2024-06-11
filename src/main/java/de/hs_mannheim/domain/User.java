@@ -88,4 +88,9 @@ public class User {
     public void setBike_avg_kmh(double bike_avg_kmh) {
         this.bike_avg_kmh = bike_avg_kmh;
     }
+
+    public String toString(){
+        return this.username + ";" + System.encoding(this.password) + ";" + this.hometown + ";" + this.zip + ";" + this.car_name + ";"
+                            + this.car_l_100km + ";" + this.car_avg_kmh + ";" + this.bike_avg_kmh;
+    }
 }
