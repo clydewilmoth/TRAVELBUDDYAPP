@@ -16,15 +16,15 @@ public class Application {
         return true;
     }
 
-    public boolean sign_up_user(String username, String password, String hometown, int zip, 
-                                String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
+    public boolean sign_up_user(String username, String password, String hometown, String zip,
+                                String car_name, String car_co2_km, String car_avg_kmh, String bike_avg_kmh){
         return true;
     }
 
     public void sign_out_user(){}
 
-    public boolean change_user_details(String username, String password, String hometown, int zip, 
-                                String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
+    public boolean change_user_details(String username, String password, String hometown, String zip,
+                                String car_name, String car_co2_km, String car_avg_kmh, String bike_avg_kmh){
         return true;
     }
 
@@ -48,7 +48,7 @@ public class Application {
         return running_system.current_weather();
     }
 
-    public String[] get_getails(){
-        return System.get_details();
+    public String[] getDetails(){
+        return System.getDetails();
     }
 }
