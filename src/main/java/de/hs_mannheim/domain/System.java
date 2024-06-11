@@ -250,8 +250,6 @@ public class System {
 
     public ArrayList<String> random_destinations_car() {
 
-        calc_all_distances();
-
         ArrayList<String> mem = new ArrayList<>();
         ArrayList<String> result = new ArrayList<>();
 
@@ -267,8 +265,6 @@ public class System {
     }
 
     public ArrayList<String> random_destinations_bike() {
-
-        calc_all_distances();
 
         ArrayList<String> mem = new ArrayList<>();
         ArrayList<String> result = new ArrayList<>();
@@ -422,13 +418,18 @@ public class System {
                     + "Übermorgen: " + weather_day_2 + ": Minimum: " + temperature_day_2_low + " °C" + "; Maximum: " + temperature_day_2_high + " °C\n"
                     + "Überübermorgen: " + weather_day_3 + ": Minimum: " + temperature_day_3_low + " °C" + "; Maximum: " + temperature_day_3_high + " °C";
     }
-
-    public String distance(String destination_zip) {
+    
+    public boolean all_distances() {
 
         double lon1 = -1;
         double lon2 = -1;
         double lat1 = -1;
         double lat2 = -1;
+        double dLat;
+        double dLon;
+        double a;
+        double distance;
+        double result;
 
         InputStream inputStream = System.class.getResourceAsStream("/zip.csv");
 
@@ -436,11 +437,6 @@ public class System {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.replace("\"", "");
-
-                if (line.split(";")[0].equals(destination_zip)) {
-                    lon2 = Double.parseDouble(line.split(";")[2]);
-                    lat2 = Double.parseDouble(line.split(";")[3]);
-                }
 
                 if (line.split(";")[0].equals("" + current_user.getZip())) {
                     lon1 = Double.parseDouble(line.split(";")[2]);
@@ -450,40 +446,41 @@ public class System {
         } catch (Exception e) {
         }
 
-        if (lon1 == -1 || lon2 == -1 || lat1 == -1 || lat2 == -1)
-            return "Es ist ein Fehler aufgetreten!";
-
-        double dLat = lat2 - lat1;
-        double dLon = lon2 - lon1;
-
-        double a = Math.pow(Math.sin(Math.toRadians(dLat / 2.0)), 2) + Math.pow(Math.sin(Math.toRadians(dLon / 2.0)), 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-
-        double distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a));
-
-        return "" + (Math.round((distance * 1.25) * 1000) / 1000.0) + " km";
-
-    }
-
-    public void calc_all_distances() {
-
-        if (!this.distances.isEmpty())
-            return;
-
-        InputStream inputStream = System.class.getResourceAsStream("/zip.csv");
-
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = reader.readLine()) != null) {
-
                 line = line.replace("\"", "");
 
-                this.distances.add(line.split(";")[0] + ";" + line.split(";")[1] + ";" + Double.parseDouble(distance(line.split(";")[0]).replace(" km", "")));
+                lon2 = Double.parseDouble(line.split(";")[2]);
+                lat2 = Double.parseDouble(line.split(";")[3]);
+                
+                if (lon1 == -1 || lon2 == -1 || lat1 == -1 || lat2 == -1)
+                    return false;
+
+                dLat = lat2 - lat1;
+                dLon = lon2 - lon1;
+
+                a = Math.pow(Math.sin(Math.toRadians(dLat / 2.0)), 2) + Math.pow(Math.sin(Math.toRadians(dLon / 2.0)), 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+
+                distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a));
+
+                result = Math.round((distance * 1.25) * 1000) / 1000.0;
+
+                this.all_destinations.put(line.split(";")[0],new Destination(line.split(";")[0], result));
 
             }
         } catch (Exception e) {
         }
+
+        return true;
     }
 
+    public String distance(String destination_zip){
+
+        return "" + this.all_destinations.get(destination_zip) + " km";
+
+    }
+    
     public String[] travel_time(String destination_zip) {
 
         String[] result = new String[2];

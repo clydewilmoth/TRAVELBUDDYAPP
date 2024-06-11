@@ -5,6 +5,10 @@ public class Destination {
     private String zip;
     private double distance_from_user;
     
+    public Destination(String zip, double distance_from_user) {
+        this.zip = zip;
+        this.distance_from_user = distance_from_user;
+    }
     public String getZip() {
         return zip;
     }
