@@ -96,6 +96,38 @@ public class System {
         return false;
     }
 
+    public boolean sign_up_user(String username, String password, String hometown, String zipS,
+                                String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
+
+        int zip = Integer.parseInt(zipS);
+        double car_l_100km = Double.parseDouble(car_l_100kmS);
+        double car_avg_kmh = Double.parseDouble(car_avg_kmhS);
+        double bike_avg_kmh = Double.parseDouble(bike_avg_kmhS);
+
+        ArrayList<User> all_user = get_all_user();
+
+        for(User user: all_user)
+            if(user.getUsername().equals(username))
+                return false;
+
+        ArrayList<String> mem = search(zipS);
+        boolean bool = false;
+
+        for (String line: mem)
+            if(line.split(";")[1].equals(hometown)) {
+                bool = true;
+                break;
+            }
+
+        if(!bool)
+            return false;
+
+        current_user = new User(username, password, hometown, zip, car_name, car_l_100km, car_avg_kmh, bike_avg_kmh);
+
+
+
+        return true;
+    }
 
     /*public boolean sign_up_user(String username, String password, String hometown, String zipS,
                                 String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS) throws IOException {
