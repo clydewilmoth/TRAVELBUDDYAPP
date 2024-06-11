@@ -124,10 +124,15 @@ public class SystemTest {
     @Test
     public void sign_out_user() {
 
-        current_system.sign_in_user("Daniel", "1401Daniel");
+        assertEquals(true, current_system.sign_in_user("David", "123Esel"));
+        assertEquals("David",current_system.getDetails()[0]);
         current_system.sign_out_user();
         assertEquals("",current_system.getDetails()[0]);
 
     }
+
+
+
+
 
 }
