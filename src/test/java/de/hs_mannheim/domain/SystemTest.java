@@ -121,4 +121,13 @@ public class SystemTest {
 
     }
 
+    @Test
+    public void sign_out_user() {
+
+        current_system.sign_in_user("Daniel", "1401Daniel");
+        current_system.sign_out_user();
+        assertEquals("",current_system.getDetails()[0]);
+
+    }
+
 }
