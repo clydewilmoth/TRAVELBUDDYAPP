@@ -86,4 +86,68 @@ public class SystemTest {
         assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_bike().get(0).split(";")[0]).replace(" km", "")) < 100);
     }
 
+    @Test
+    public void encoding(){
+
+        String test_password = "123Esel";
+
+        assertEquals("MTIzRXNlbA==",System.encoding(test_password));
+
+    }
+
+    @Test
+    public void decoding(){
+
+        String test_password = "MTIzRXNlbA==";
+
+        assertEquals("123Esel",System.decoding(test_password));
+
+    }
+    
+    @Test
+    public void sign_in_user() {
+
+        assertEquals(true, current_system.sign_in_user("Daniel", "1401Daniel"));
+        assertEquals("Daniel",current_system.getDetails()[0]);
+
+    }
+
+    @Test
+    public void sign_out_user() {
+
+        assertEquals(true, current_system.sign_in_user("David", "123Esel"));
+        assertEquals("David",current_system.getDetails()[0]);
+        current_system.sign_out_user();
+        assertEquals("",current_system.getDetails()[0]);
+
+    }
+
+    @Test
+    public void sign_up_user(){
+        // Username darf nicht doppelt vorkommen!
+        assertEquals(false, current_system.sign_up_user("David","123Esel","Mannheim","68161","AMG","10","300","20"));
+        assertEquals(true, current_system.sign_up_user("Selim","Penis69","Mannheim","68161","AMG","10","300","20"));
+        // PLZ muss mit Stadt übereinstimmen
+        assertEquals(false, current_system.sign_up_user("Lukas","123Esel","Mannheim","11105","AMG","10","300","20"));
+        assertEquals(true, current_system.sign_up_user("Lukas","123Esel","Mannheim","68305","AMG","10","300","20"));
+
+        assertEquals("Lukas",current_system.getDetails()[0]);
+        current_system.sign_out_user();
+        assertEquals("",current_system.getDetails()[0]);
+    }
+
+    @Test
+    public void change_user_details(){
+        
+        current_system.sign_in_user("David", "123Esel");
+        current_system.change_user_details("Enes", "Penis123", "Mannheim", "68161", "", "", "", "");
+        assertEquals("Enes", current_system.getDetails()[0]);
+
+    }
+    /*
+    Tests auf Basis von user_data.csv:  Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
+                                        David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;300.0;20.0 
+    */
+
+
 }
