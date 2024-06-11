@@ -51,4 +51,8 @@ public class Application {
     public String[] getDetails(){
         return System.getDetails();
     }
+
+    public String distnace(String zip){
+        return running_system.distance(zip);
+    }
 }
