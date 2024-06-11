@@ -82,8 +82,8 @@ public class System {
         return all_users;
     }
 
-    public boolean sign_in_user(String username, String password) throws IOException {
-        ArrayList<User> mem = new ArrayList<>(get_all_user());
+    public boolean sign_in_user(String username, String password) {
+        ArrayList<User> mem = get_all_user();
 
         for (User user : mem) {
             if (user.getUsername().equals(username) && decoding(user.getPassword()).equals(password)) {
