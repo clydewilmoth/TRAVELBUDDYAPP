@@ -113,4 +113,12 @@ public class SystemTest {
         assertEquals(true, current_system.get_all_user().get(1).getPassword().equals("MTIzRXNlbA=="));
     }
 
+    @Test
+    public void sign_in_user() {
+
+        assertEquals(true, current_system.sign_in_user("Daniel", "1401Daniel"));
+        assertEquals("Daniel",current_system.getDetails()[0]);
+
+    }
+
 }
