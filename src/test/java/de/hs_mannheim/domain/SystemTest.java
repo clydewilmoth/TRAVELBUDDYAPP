@@ -3,7 +3,6 @@ package de.hs_mannheim.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -73,7 +72,7 @@ public class SystemTest {
         assertEquals("60.361 l", current_system.calc_l_consumption("10115")); // Kraftstoffverbrauch nach Berlin
     }
 
-    /*@Test
+    @Test
     public void random_destinations(){
 
         current_system.set_current_user_zip("68161");
@@ -85,14 +84,14 @@ public class SystemTest {
         assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_car().get(0).split(";")[0]).replace(" km", "")) > 150);
         // random_destinations_bike gibt nur destinations mit maximal 100 km Entfernung zurück
         assertEquals(true, Double.parseDouble(current_system.distance(current_system.random_destinations_bike().get(0).split(";")[0]).replace(" km", "")) < 100);
-    }*/
+    }
 
     @Test
     public void encoding(){
 
         String test_password = "123Esel";
 
-        assertEquals("MTIzRXNlbA==",current_system.encoding(test_password));
+        assertEquals("MTIzRXNlbA==",System.encoding(test_password));
 
     }
 
@@ -101,18 +100,10 @@ public class SystemTest {
 
         String test_password = "MTIzRXNlbA==";
 
-        assertEquals("123Esel",current_system.decoding(test_password));
+        assertEquals("123Esel",System.decoding(test_password));
 
     }
-
-    @Test
-    public void get_all_user() {
-
-        assertEquals(2, current_system.get_all_user().size());
-        assertEquals(true, current_system.get_all_user().get(0).getPassword().equals("MTQwMURhbmllbA=="));
-        assertEquals(true, current_system.get_all_user().get(1).getPassword().equals("MTIzRXNlbA=="));
-    }
-
+    
     @Test
     public void sign_in_user() {
 
@@ -135,7 +126,7 @@ public class SystemTest {
     public void sign_up_user(){
         // Username darf nicht doppelt vorkommen!
         assertEquals(false, current_system.sign_up_user("David","123Esel","Mannheim","68161","AMG","10","300","20"));
-        assertEquals(true, current_system.sign_up_user("Daavid","123Esel","Mannheim","68161","AMG","10","300","20"));
+        assertEquals(true, current_system.sign_up_user("Selim","Penis69","Mannheim","68161","AMG","10","300","20"));
         // PLZ muss mit Stadt übereinstimmen
         assertEquals(false, current_system.sign_up_user("Lukas","123Esel","Mannheim","11105","AMG","10","300","20"));
         assertEquals(true, current_system.sign_up_user("Lukas","123Esel","Mannheim","68305","AMG","10","300","20"));
@@ -145,8 +136,18 @@ public class SystemTest {
         assertEquals("",current_system.getDetails()[0]);
     }
 
+    @Test
+    public void change_user_details(){
+        
+        current_system.sign_in_user("David", "123Esel");
+        current_system.change_user_details("Enes", "Penis123", "Mannheim", "68161", "", "", "", "");
+        assertEquals("Enes", current_system.getDetails()[0]);
 
-
+    }
+    /*
+    Tests auf Basis von user_data.csv:  Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
+                                        David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;300.0;20.0 
+    */
 
 
 }

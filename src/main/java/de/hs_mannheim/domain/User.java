@@ -5,11 +5,11 @@ public class User {
     private String username = "";
     private String password = "";
     private String hometown = "";
-    private int zip;
+    private int zip = 0;
     private String car_name = "";
-    private double car_l_100km;
-    private double car_avg_kmh;
-    private double bike_avg_kmh;
+    private double car_l_100km = 0;
+    private double car_avg_kmh = 0;
+    private double bike_avg_kmh = 0;
 
     public User(){}
 
@@ -87,5 +87,10 @@ public class User {
 
     public void setBike_avg_kmh(double bike_avg_kmh) {
         this.bike_avg_kmh = bike_avg_kmh;
+    }
+
+    public String toString(){
+        return this.username + ";" + System.encoding(this.password) + ";" + this.hometown + ";" + this.zip + ";" + this.car_name + ";"
+                            + this.car_l_100km + ";" + this.car_avg_kmh + ";" + this.bike_avg_kmh;
     }
 }
