@@ -13,19 +13,21 @@ public class Application {
     }
 
     public boolean sign_in_user(String username, String password){
-        return true;
+        return running_system.sign_in_user(username, password);
     }
 
-    public boolean sign_up_user(String username, String password, String hometown, int zip, 
-                                String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
-        return true;
+    public boolean sign_up_user(String username, String password, String hometown, String zip,
+                                String car_name, String car_co2_km, String car_avg_kmh, String bike_avg_kmh){
+        return running_system.sign_up_user(username, password, hometown, zip, car_name, car_co2_km, car_avg_kmh, bike_avg_kmh);
     }
 
-    public void sign_out_user(){}
+    public void sign_out_user(){
+        running_system.sign_out_user();
+    }
 
-    public boolean change_user_details(String username, String password, String hometown, int zip, 
-                                String car_name, double car_co2_km, double car_avg_kmh, double bike_avg_kmh){
-        return true;
+    public boolean change_user_details(String username, String password, String hometown, String zip,
+                                String car_name, String car_co2_km, String car_avg_kmh, String bike_avg_kmh){
+        return running_system.change_user_details(username, password, hometown, zip, car_name, car_co2_km, car_avg_kmh, bike_avg_kmh);
     }
 
     public ArrayList<String> search(String hometown_or_zip){
@@ -47,5 +49,14 @@ public class Application {
     public String current_weather(){
         return running_system.current_weather();
     }
+
+    public String[] getDetails(){
+        return running_system.getDetails();
+    }
+
+    public String distance(String zip){
+        return running_system.distance(zip);
+    }
+
 
 }
