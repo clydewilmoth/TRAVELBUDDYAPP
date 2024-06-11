@@ -108,11 +108,9 @@ public class SystemTest {
     @Test
     public void get_all_user() {
 
-        assertEquals(1, current_system.get_all_user().size());
-
-        ArrayList<User> list = new ArrayList<>(current_system.get_all_user());
-        assertEquals(true, list.get(0).getPassword().equals("MTQwMURhbmllbA=="));
-        //Passwort unkodiert: 1401Daniel
+        assertEquals(2, current_system.get_all_user().size());
+        assertEquals(true, current_system.get_all_user().get(0).getPassword().equals("MTQwMURhbmllbA=="));
+        assertEquals(true, current_system.get_all_user().get(1).getPassword().equals("MTIzRXNlbA=="));
     }
 
 }
