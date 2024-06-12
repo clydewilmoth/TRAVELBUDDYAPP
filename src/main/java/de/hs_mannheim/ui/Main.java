@@ -136,12 +136,14 @@ public class Main extends JFrame {
         randDestinationsBikeButton.setBounds(346, 160, 110, 30);
         logOutButton.setBounds(346, 420, 110, 30);
         jsp.setBounds(50,50,300,400);
+
         menu.add(menuLabel);
         menu.add(searchPLZ_ORT);
         menu.add(searchConfirmButton);
         menu.add(randDestinationsCarButton);
         menu.add(randDestinationsBikeButton);
         menu.add(logOutButton);
+
 
         panelLayout.add(logRegScreen, "1");
         panelLayout.add(loginScreen, "2");
@@ -156,20 +158,39 @@ public class Main extends JFrame {
     }
 
     private void profileCreate() {
-        profile = new JPanel(new FlowLayout());
-        ImageIcon png = png("profile.png", 30, 30);
+        JPanel jp = new JPanel(null);
+        ImageIcon png = png("/profile.png", 40, 40);
         JLabel jl = new JLabel(png);
-        String[] details = facade.getDetails(); // 6 bzw 7
-        JLabel jlTXT = new JLabel("Name: " + details[0]
-                + "\nWohnort: " + details[1]
-                + "\nPlz: " + details[2]
-                + "\nAuto Name: " + details[3]
-                + "\nCO2/100km: " + details[4]
-                + "\nAuto km/h: " + details[5]
-                + "\nFahrrad km/h: " + details[6]
-                + "\nWetter: " + facade.current_weather());
-        profile.add(jl);
-        profile.add(jlTXT);
+        String[] details = facade.getDetails();
+        JLabel jlName = new JLabel("Name: " + details[0]);
+        JLabel jlWohnort = new JLabel("Wohnort: " + details[2]);
+        JLabel jlPLZ = new JLabel("Plz: " + details[3]);
+        JLabel jlAutoName = new JLabel("nAuto Name: " + details[4]);
+        JLabel jlCO2 = new JLabel("CO2/100km: " + details[5]);
+        JLabel jlAutoKMH = new JLabel( "Auto km/h: " + details[6]);
+        JLabel jlFahrradKMH = new JLabel( "Fahrrad km/h: " + details[7]);
+        JLabel jlWetter = new JLabel("Wetter: " + facade.current_weather());
+        jl.setBounds(60,0, 60,60);
+        jlName.setBounds(15,30, 200,60);
+        jlWohnort.setBounds(15,47, 200,60);
+        jlPLZ.setBounds(15,64, 200,60);
+        jlAutoName.setBounds(15,81, 200,60);
+        jlCO2.setBounds(15,98, 200,60);
+        jlAutoKMH.setBounds(15,115, 200,60);
+        jlFahrradKMH.setBounds(15,132, 200,60);
+        jlWetter.setBounds(15,149, 200,60);
+
+        jp.add(jl);
+        jp.add(jlName);
+        jp.add(jlWohnort);
+        jp.add(jlPLZ);
+        jp.add(jlAutoName);
+        jp.add(jlCO2);
+        jp.add(jlAutoKMH);
+        jp.add(jlFahrradKMH);
+        jp.add(jlWetter);
+
+        profile = jp;
     }
 
     private void errorMessageCreate() {
@@ -234,6 +255,11 @@ public class Main extends JFrame {
                 String nameTXT = getTextfieldContent(loginName, "loginNameText");
                 String passwordTXT = getTextfieldContent(loginPassword, "loginPasswordText");
                 if(facade.sign_in_user(nameTXT, passwordTXT)) {
+                    profileCreate();
+                    profile.setBounds(280, 190, 200,200);
+                    menu.add(profile);
+                    menu.revalidate();
+                    menu.repaint();
                     cardLayout.show(panelLayout, "4");
                     jframe.setSize(new Dimension(500, 500));
                 }
@@ -261,7 +287,7 @@ public class Main extends JFrame {
         registerName = new JPanel();
         JLabel jl = new JLabel("                   Name");
         JTextField tf = new JTextField(10);
-        tf.setName("registerPasswordText");
+        tf.setName("registerNameText");
         registerName.add(jl);
         registerName.add(tf);
     }
@@ -339,14 +365,19 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String nameTXT = getTextfieldContent(registerName, "registerNameText");
                 String passwordTXT = getTextfieldContent(registerPassword, "registerPasswordText");
-                String ortTXT = getTextfieldContent(registerName, "registerOrtText");
-                String plzTXT = getTextfieldContent(registerPassword, "registerPLZText");
-                String carNameTXT = getTextfieldContent(registerName, "registerCarNameText");
-                String carCO2TXT = getTextfieldContent(registerName, "registerCarCO2Text");
-                String carSpeedTXT = getTextfieldContent(registerPassword, "registerCarSpeedText");
-                String bikeSpeedTXT = getTextfieldContent(registerName, "registerBikeSpeedText");
+                String ortTXT = getTextfieldContent(registerOrt, "registerOrtText");
+                String plzTXT = getTextfieldContent(registerPLZ, "registerPLZText");
+                String carNameTXT = getTextfieldContent(registerCarName, "registerCarNameText");
+                String carCO2TXT = getTextfieldContent(registerCarCO2, "registerCarCO2Text");
+                String carSpeedTXT = getTextfieldContent(registerCarSpeed, "registerCarSpeedText");
+                String bikeSpeedTXT = getTextfieldContent(registerBikeSpeed, "registerBikeSpeedText");
                 if(facade.sign_up_user(nameTXT, passwordTXT, ortTXT, plzTXT,
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
+                    profileCreate();
+                    profile.setBounds(280, 190, 200,200);
+                    menu.add(profile);
+                    menu.revalidate();
+                    menu.repaint();
                     cardLayout.show(panelLayout, "4");
                     jframe.setSize(new Dimension(500, 500));
                 }
@@ -384,7 +415,7 @@ public class Main extends JFrame {
         searchConfirmButton.setPreferredSize(new Dimension(150, 80));
         searchConfirmButton.setFocusable(false);
 
-        ImageIcon icon = png("lupe.png", 20, 20);
+        ImageIcon icon = png("/lupe.png", 20, 20);
         searchConfirmButton.setIcon(icon);
         searchConfirmButton.setText(" Suche");
         searchConfirmButton.setIconTextGap(3);
@@ -427,7 +458,7 @@ public class Main extends JFrame {
         randDestinationsCarButton.setPreferredSize(new Dimension(150, 80));
         randDestinationsCarButton.setFocusable(false);
 
-        ImageIcon icon = png("auto.png", 20, 20);
+        ImageIcon icon = png("/auto.png", 20, 20);
         randDestinationsCarButton.setIcon(icon);
         randDestinationsCarButton.setText("Kurztrip");
         randDestinationsCarButton.setIconTextGap(3);
@@ -445,7 +476,7 @@ public class Main extends JFrame {
         randDestinationsBikeButton.setPreferredSize(new Dimension(150, 80));
         randDestinationsBikeButton.setFocusable(false);
 
-        ImageIcon icon = png("fahrrad.png", 20, 20);
+        ImageIcon icon = png("/fahrrad.png", 20, 20);
         randDestinationsBikeButton.setIcon(icon);
         randDestinationsBikeButton.setText("Kurztrip");
         randDestinationsBikeButton.setIconTextGap(3);
@@ -465,9 +496,10 @@ public class Main extends JFrame {
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menu.remove(profile);
+                facade.sign_out_user();
                 cardLayout.show(panelLayout, "1");
-                jframe.setSize(new Dimension(450, 120));
-                // implementiere Ausloggen im Backend
+                jframe.setSize(new Dimension(450, 160));
             }
         });
     }
