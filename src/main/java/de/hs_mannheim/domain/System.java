@@ -356,7 +356,7 @@ public class System {
         if (weather.equals(""))
             return "Es ist ein Fehler aufgetreten!";
         else
-            return weather + ": " + temperature + " °C";
+            return weather + "\n" + temperature + "°C";
 
     }
 
