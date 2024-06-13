@@ -171,7 +171,10 @@ public class System {
             return false;
         }
         
-        if(username.equals("")||password.equals("")||hometown.equals("")||zip.equals(""))
+        if(!current_user.getPassword().equals(password))
+            return false;
+
+        if(username.equals("")||hometown.equals("")||zip.equals(""))
             return false;
         
         for(User user: this.all_user)
