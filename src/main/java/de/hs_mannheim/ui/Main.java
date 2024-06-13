@@ -39,6 +39,7 @@ public class Main extends JFrame {
     private JPanel registerScreen; // Backend muss PLZ und Ort prüfen, sonst kann die Entfernung in Zukunft nicht berechnet werden
     private JPanel registerName;
     private JPanel registerPassword;
+    private JPanel registerPasswordTwo;
     private JPanel registerOrt;
     private JPanel registerPLZ;
     private JPanel registerCarName;
@@ -100,6 +101,7 @@ public class Main extends JFrame {
         registerLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         registerNameCreate();
         registerPasswordCreate();
+        registerPasswordTwoCreate();
         registerOrtCreate();
         registerPLZCreate();
         registerCarNameCreate();
@@ -111,6 +113,7 @@ public class Main extends JFrame {
         registerScreen.add(registerLabel);
         registerScreen.add(registerName);
         registerScreen.add(registerPassword);
+        registerScreen.add(registerPasswordTwo);
         registerScreen.add(registerOrt);
         registerScreen.add(registerPLZ);
         registerScreen.add(registerCarName);
@@ -163,12 +166,12 @@ public class Main extends JFrame {
         JLabel jl = new JLabel(png);
         String[] details = facade.getDetails();
         JLabel jlName = new JLabel("Name: " + details[0]);
-        JLabel jlWohnort = new JLabel("Wohnort: " + details[2]);
-        JLabel jlPLZ = new JLabel("Plz: " + details[3]);
-        JLabel jlAutoName = new JLabel("nAuto Name: " + details[4]);
-        JLabel jlCO2 = new JLabel("CO2/100km: " + details[5]);
-        JLabel jlAutoKMH = new JLabel( "Auto km/h: " + details[6]);
-        JLabel jlFahrradKMH = new JLabel( "Fahrrad km/h: " + details[7]);
+        JLabel jlWohnort = new JLabel("Wohnort: " + details[1]);
+        JLabel jlPLZ = new JLabel("Plz: " + details[2]);
+        JLabel jlAutoName = new JLabel("nAuto Name: " + details[3]);
+        JLabel jlCO2 = new JLabel("CO2/100km: " + details[4]);
+        JLabel jlAutoKMH = new JLabel( "Auto km/h: " + details[5]);
+        JLabel jlFahrradKMH = new JLabel( "Fahrrad km/h: " + details[6]);
         JLabel jlWetter = new JLabel("Wetter: " + facade.current_weather());
         jl.setBounds(60,0, 60,60);
         jlName.setBounds(15,30, 200,60);
@@ -222,7 +225,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "3");
-                jframe.setSize(new Dimension(260, 390));
+                jframe.setSize(new Dimension(260, 430));
             }
         });
     }
@@ -301,6 +304,15 @@ public class Main extends JFrame {
         registerPassword.add(tf);
     }
 
+    private void registerPasswordTwoCreate() {
+        registerPasswordTwo = new JPanel();
+        JLabel jl = new JLabel("    Passwort best.");
+        JTextField tf = new JTextField(10);
+        tf.setName("registerPasswordTwoText");
+        registerPasswordTwo.add(jl);
+        registerPasswordTwo.add(tf);
+    }
+
     private void registerOrtCreate() {
         registerOrt = new JPanel();
         JLabel jl = new JLabel("                        Ort");
@@ -365,13 +377,14 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String nameTXT = getTextfieldContent(registerName, "registerNameText");
                 String passwordTXT = getTextfieldContent(registerPassword, "registerPasswordText");
+                String passwordTXTTwo = getTextfieldContent(registerPasswordTwo, "registerPasswordTwoText");
                 String ortTXT = getTextfieldContent(registerOrt, "registerOrtText");
                 String plzTXT = getTextfieldContent(registerPLZ, "registerPLZText");
                 String carNameTXT = getTextfieldContent(registerCarName, "registerCarNameText");
                 String carCO2TXT = getTextfieldContent(registerCarCO2, "registerCarCO2Text");
                 String carSpeedTXT = getTextfieldContent(registerCarSpeed, "registerCarSpeedText");
                 String bikeSpeedTXT = getTextfieldContent(registerBikeSpeed, "registerBikeSpeedText");
-                if(facade.sign_up_user(nameTXT, passwordTXT, ortTXT, plzTXT,
+                if(facade.sign_up_user(nameTXT, passwordTXT, passwordTXTTwo, ortTXT, plzTXT,
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
                     profileCreate();
                     profile.setBounds(280, 190, 200,200);
