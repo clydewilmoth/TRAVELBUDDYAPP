@@ -14,6 +14,8 @@ public class SystemTest {
     @Test
     public void weather_forecast(){
 
+        current_system.sign_in_user("David","123Esel");
+
         assertNotEquals("Es ist ein Fehler aufgetreten!",current_system.weather_forecast("68161"));
     }
 
