@@ -226,8 +226,8 @@ public class System {
     }
 
     public String[] getDetails(){
-        return new String[]{current_user.getUsername(), current_user.getPassword(),
-                current_user.getHometown(), current_user.getZip(), current_user.getCar_name(), 
+        return new String[]{current_user.getUsername(), current_user.getHometown(), 
+                current_user.getZip(), current_user.getCar_name(), 
                 current_user.getCar_l_100km()==0?"":String.valueOf(current_user.getCar_l_100km()),
                 current_user.getCar_avg_kmh()==0?"":String.valueOf(current_user.getCar_avg_kmh()), 
                 current_user.getBike_avg_kmh()==0?"":String.valueOf(current_user.getBike_avg_kmh())};
