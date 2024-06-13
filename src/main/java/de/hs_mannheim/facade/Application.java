@@ -16,9 +16,9 @@ public class Application {
         return running_system.sign_in_user(username, password);
     }
 
-    public boolean sign_up_user(String username, String password, String hometown, String zip,
+    public boolean sign_up_user(String username, String password, String password_authentication, String hometown, String zip,
                                 String car_name, String car_co2_km, String car_avg_kmh, String bike_avg_kmh){
-        return running_system.sign_up_user(username, password, hometown, zip, car_name, car_co2_km, car_avg_kmh, bike_avg_kmh);
+        return running_system.sign_up_user(username, password, password_authentication, hometown, zip, car_name, car_co2_km, car_avg_kmh, bike_avg_kmh);
     }
 
     public void sign_out_user(){

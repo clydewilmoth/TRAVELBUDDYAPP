@@ -111,7 +111,7 @@ public class System {
         return false;
     }
 
-    public boolean sign_up_user(String username, String password, String hometown, String zip,
+    public boolean sign_up_user(String username, String password, String password_authentication, String hometown, String zip,
                                 String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
 
         double car_l_100km;
@@ -127,6 +127,9 @@ public class System {
         }
 
         if(username.equals("")||password.equals("")||hometown.equals("")||zip.equals(""))
+            return false;
+
+        if(!password.equals(password_authentication))
             return false;
 
         for(User user: this.all_user)

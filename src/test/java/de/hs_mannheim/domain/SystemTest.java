@@ -123,11 +123,11 @@ public class SystemTest {
     @Test
     public void sign_up_user(){
         // Username darf nicht doppelt vorkommen!
-        assertEquals(false, current_system.sign_up_user("David","123Esel","Mannheim","68161","AMG","10","300","20"));
-        assertEquals(true, current_system.sign_up_user("Selim","Penis69","Mannheim","68161","AMG","10","300","20"));
+        assertEquals(false, current_system.sign_up_user("David","123Esel","123Esel","Mannheim","68161","AMG","10","300","20"));
+        assertEquals(true, current_system.sign_up_user("Selim","Penis69","Penis69","Mannheim","68161","AMG","10","300","20"));
         // PLZ muss mit Stadt übereinstimmen
-        assertEquals(false, current_system.sign_up_user("Lukas","123Esel","Mannheim","11105","AMG","10","300","20"));
-        assertEquals(true, current_system.sign_up_user("Lukas","123Esel","Mannheim","68305","AMG","10","300","20"));
+        assertEquals(false, current_system.sign_up_user("Lukas","123Esel","123Esel","Mannheim","11105","AMG","10","300","20"));
+        assertEquals(true, current_system.sign_up_user("Lukas","123Esel","123Esel","Mannheim","68305","AMG","10","300","20"));
 
         assertEquals("Lukas",current_system.getDetails()[0]);
         current_system.sign_out_user();
