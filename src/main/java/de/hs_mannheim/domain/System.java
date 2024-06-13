@@ -346,7 +346,7 @@ public class System {
 
             HttpResponse<String> get_response = http_client.send(get_request, BodyHandlers.ofString());
 
-            JSONObject json = new JSONObject(((String) get_response.body()).substring(0, ((String) get_response.body()).length()));
+            JSONObject json = new JSONObject(get_response.body());
             weather = json.getJSONArray("weather").getJSONObject(0).getString("description");
             temperature = json.getJSONObject("main").getDouble("temp");
         } catch (Exception e) {
@@ -356,12 +356,12 @@ public class System {
         if (weather.equals(""))
             return "Es ist ein Fehler aufgetreten!";
         else
-            return weather + ": " + temperature + " °C";
+            return weather + "\n" + temperature + "°C";
 
     }
 
     public String weather_forecast(String destination_zip) {
-
+        
         String weather_day_1 = "";
         String weather_day_2 = "";
         String weather_day_3 = "";
@@ -370,6 +370,7 @@ public class System {
         double temperature_day_1_2 = 1;
         double temperature_day_1_3 = 1;
         double temperature_day_1_4 = 1;
+        double temperature_day_1_5 = 1;
 
         TreeSet<Double> temperature_day_1 = new TreeSet<>();
         double temperature_day_1_high = 1;
@@ -379,6 +380,7 @@ public class System {
         double temperature_day_2_2 = 1;
         double temperature_day_2_3 = 1;
         double temperature_day_2_4 = 1;
+        double temperature_day_2_5 = 1;
 
         TreeSet<Double> temperature_day_2 = new TreeSet<>();
         double temperature_day_2_high = 1;
@@ -388,11 +390,15 @@ public class System {
         double temperature_day_3_2 = 1;
         double temperature_day_3_3 = 1;
         double temperature_day_3_4 = 1;
+        double temperature_day_3_5 = 1;
 
         TreeSet<Double> temperature_day_3 = new TreeSet<>();
         double temperature_day_3_high = 1;
         double temperature_day_3_low = 1;
 
+        String day1date = "";
+        String day2date = "";
+        String day3date = "";
 
         try {
             HttpClient http_client = HttpClient.newHttpClient();
@@ -404,25 +410,88 @@ public class System {
 
             HttpResponse<String> get_response = http_client.send(get_request, BodyHandlers.ofString());
 
-            JSONObject json = new JSONObject(((String) get_response.body()).substring(0, ((String) get_response.body()).length()));
-            weather_day_1 = json.getJSONArray("list").getJSONObject(11).getJSONArray("weather").getJSONObject(0).getString("description");
-            weather_day_2 = json.getJSONArray("list").getJSONObject(19).getJSONArray("weather").getJSONObject(0).getString("description");
-            weather_day_3 = json.getJSONArray("list").getJSONObject(27).getJSONArray("weather").getJSONObject(0).getString("description");
+            JSONObject json = new JSONObject(get_response.body()); 
 
-            temperature_day_1_1 = json.getJSONArray("list").getJSONObject(8).getJSONObject("main").getDouble("temp");
-            temperature_day_1_2 = json.getJSONArray("list").getJSONObject(10).getJSONObject("main").getDouble("temp");
-            temperature_day_1_3 = json.getJSONArray("list").getJSONObject(12).getJSONObject("main").getDouble("temp");
-            temperature_day_1_4 = json.getJSONArray("list").getJSONObject(14).getJSONObject("main").getDouble("temp");
+            int day1_1 = 0;
+            int day1_2 = 0;
+            int day1_3 = 0;
+            int day1_4 = 0;
+            int day1_5 = 0;
+            int day2_1 = 0;
+            int day2_2 = 0;
+            int day2_3 = 0;
+            int day2_4 = 0;
+            int day2_5 = 0;
+            int day3_1 = 0;
+            int day3_2 = 0;
+            int day3_3 = 0;
+            int day3_4 = 0;
+            int day3_5 = 0;
+            
+            for(int i = 0; i<40; i++){
+                
+                if(json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")){
+                    day1_1 = i + 3;         // 9 Uhr
+                    day1_2 = day1_1 + 1;    // 12 Uhr
+                    day1_3 = day1_2 + 1;    // 15 Uhr
+                    day1_4 = day1_3 + 1;    // 18 Uhr
+                    day1_5 = day1_4 + 1;    // 21 Uhr
+                    break;
+                }
+            }
 
-            temperature_day_2_1 = json.getJSONArray("list").getJSONObject(16).getJSONObject("main").getDouble("temp");
-            temperature_day_2_2 = json.getJSONArray("list").getJSONObject(18).getJSONObject("main").getDouble("temp");
-            temperature_day_2_3 = json.getJSONArray("list").getJSONObject(20).getJSONObject("main").getDouble("temp");
-            temperature_day_2_4 = json.getJSONArray("list").getJSONObject(22).getJSONObject("main").getDouble("temp");
+            for(int i = day1_5; i<40; i++){
 
-            temperature_day_3_1 = json.getJSONArray("list").getJSONObject(24).getJSONObject("main").getDouble("temp");
-            temperature_day_3_2 = json.getJSONArray("list").getJSONObject(26).getJSONObject("main").getDouble("temp");
-            temperature_day_3_3 = json.getJSONArray("list").getJSONObject(28).getJSONObject("main").getDouble("temp");
-            temperature_day_3_4 = json.getJSONArray("list").getJSONObject(30).getJSONObject("main").getDouble("temp");
+                if(json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")){
+                    day2_1 = i + 3;         // 9 Uhr
+                    day2_2 = day2_1 + 1;    // 12 Uhr
+                    day2_3 = day2_2 + 1;    // 15 Uhr
+                    day2_4 = day2_3 + 1;    // 18 Uhr
+                    day2_5 = day2_4 + 1;    // 21 Uhr
+                    break;
+                }
+            }
+
+            for(int i = day2_5 + 1; i<40; i++){
+
+                if(json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")){
+                    day3_1 = i + 3;         // 9 Uhr
+                    day3_2 = day3_1 + 1;    // 12 Uhr
+                    day3_3 = day3_2 + 1;    // 15 Uhr
+                    day3_4 = day3_3 + 1;    // 18 Uhr
+                    day3_5 = day3_4 + 1;    // 21 Uhr
+                    break;
+                }
+            }
+
+            day1date = json.getJSONArray("list").getJSONObject(day1_1).getString("dt_txt").split(" ")[0];
+            day1date = day1date.split("-")[2] + "." + day1date.split("-")[1] + "." + day1date.split("-")[0];
+            day2date = json.getJSONArray("list").getJSONObject(day2_1).getString("dt_txt").split(" ")[0];
+            day2date = day2date.split("-")[2] + "." + day2date.split("-")[1] + "." + day2date.split("-")[0];
+            day3date = json.getJSONArray("list").getJSONObject(day3_1).getString("dt_txt").split(" ")[0];
+            day3date = day3date.split("-")[2] + "." + day3date.split("-")[1] + "." + day3date.split("-")[0];
+
+            weather_day_1 = json.getJSONArray("list").getJSONObject(day1_3).getJSONArray("weather").getJSONObject(0).getString("description");
+            weather_day_2 = json.getJSONArray("list").getJSONObject(day2_3).getJSONArray("weather").getJSONObject(0).getString("description");
+            weather_day_3 = json.getJSONArray("list").getJSONObject(day3_3).getJSONArray("weather").getJSONObject(0).getString("description");
+            
+            temperature_day_1_1 = json.getJSONArray("list").getJSONObject(day1_1).getJSONObject("main").getDouble("temp");
+            temperature_day_1_2 = json.getJSONArray("list").getJSONObject(day1_2).getJSONObject("main").getDouble("temp");
+            temperature_day_1_3 = json.getJSONArray("list").getJSONObject(day1_3).getJSONObject("main").getDouble("temp");
+            temperature_day_1_4 = json.getJSONArray("list").getJSONObject(day1_4).getJSONObject("main").getDouble("temp");
+            temperature_day_1_5 = json.getJSONArray("list").getJSONObject(day1_5).getJSONObject("main").getDouble("temp");
+            
+            temperature_day_2_1 = json.getJSONArray("list").getJSONObject(day2_1).getJSONObject("main").getDouble("temp");
+            temperature_day_2_2 = json.getJSONArray("list").getJSONObject(day2_2).getJSONObject("main").getDouble("temp");
+            temperature_day_2_3 = json.getJSONArray("list").getJSONObject(day2_3).getJSONObject("main").getDouble("temp");
+            temperature_day_2_4 = json.getJSONArray("list").getJSONObject(day2_4).getJSONObject("main").getDouble("temp");
+            temperature_day_2_5 = json.getJSONArray("list").getJSONObject(day2_5).getJSONObject("main").getDouble("temp");
+
+            temperature_day_3_1 = json.getJSONArray("list").getJSONObject(day3_1).getJSONObject("main").getDouble("temp");
+            temperature_day_3_2 = json.getJSONArray("list").getJSONObject(day3_2).getJSONObject("main").getDouble("temp");
+            temperature_day_3_3 = json.getJSONArray("list").getJSONObject(day3_3).getJSONObject("main").getDouble("temp");
+            temperature_day_3_4 = json.getJSONArray("list").getJSONObject(day3_4).getJSONObject("main").getDouble("temp");
+            temperature_day_3_5 = json.getJSONArray("list").getJSONObject(day3_5).getJSONObject("main").getDouble("temp");
 
         } catch (Exception e) {
         //
@@ -432,6 +501,7 @@ public class System {
         temperature_day_1.add(temperature_day_1_2);
         temperature_day_1.add(temperature_day_1_3);
         temperature_day_1.add(temperature_day_1_4);
+        temperature_day_1.add(temperature_day_1_5);
 
         temperature_day_1_high = (double) temperature_day_1.toArray()[temperature_day_1.size() - 1];
         temperature_day_1_low = (double) temperature_day_1.toArray()[0];
@@ -440,24 +510,26 @@ public class System {
         temperature_day_2.add(temperature_day_2_2);
         temperature_day_2.add(temperature_day_2_3);
         temperature_day_2.add(temperature_day_2_4);
+        temperature_day_2.add(temperature_day_2_5);
 
-        temperature_day_2_high = (double) temperature_day_2.toArray()[temperature_day_1.size() - 1];
+        temperature_day_2_high = (double) temperature_day_2.toArray()[temperature_day_2.size() - 1];
         temperature_day_2_low = (double) temperature_day_2.toArray()[0];
 
         temperature_day_3.add(temperature_day_3_1);
         temperature_day_3.add(temperature_day_3_2);
         temperature_day_3.add(temperature_day_3_3);
         temperature_day_3.add(temperature_day_3_4);
+        temperature_day_3.add(temperature_day_3_5);
 
-        temperature_day_3_high = (double) temperature_day_3.toArray()[temperature_day_1.size() - 1];
+        temperature_day_3_high = (double) temperature_day_3.toArray()[temperature_day_2.size() - 1];
         temperature_day_3_low = (double) temperature_day_3.toArray()[0];
 
         if (weather_day_1.equals("") || weather_day_2.equals("") || weather_day_3.equals(""))
             return "Es ist ein Fehler aufgetreten!";
         else
-            return "Morgen: " + weather_day_1 + ": Minimum: " + temperature_day_1_low + " °C" + "; Maximum: " + temperature_day_1_high + " °C\n"
-                    + "Übermorgen: " + weather_day_2 + ": Minimum: " + temperature_day_2_low + " °C" + "; Maximum: " + temperature_day_2_high + " °C\n"
-                    + "Überübermorgen: " + weather_day_3 + ": Minimum: " + temperature_day_3_low + " °C" + "; Maximum: " + temperature_day_3_high + " °C";
+            return day1date + "\n" + weather_day_1 + "\nH: " + temperature_day_1_high + "°C" + " T: " + temperature_day_1_low + "°C\n\n"
+                    + day2date + "\n" + weather_day_2 + "\nH: " + temperature_day_2_high + "°C" + " T: " + temperature_day_2_low + "°C\n\n"
+                    + day3date + "\n" + weather_day_3 + "\nH: " + temperature_day_3_high + "°C" + " T: " + temperature_day_3_low + "°C";
     }
     
     public boolean all_distances() {
