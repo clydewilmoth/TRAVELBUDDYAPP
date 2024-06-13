@@ -51,9 +51,6 @@ public class SystemTest {
 
         current_system.sign_in_user("David","123Esel");
         
-        current_system.set_current_user_car_avg_kmh(100);
-        current_system.set_current_user_bike_avg_kmh(20);
-        
         assertEquals("0.885 h", current_system.travel_time("60306")[0]); // Frankfurt mit Auto
         assertEquals("4.423 h", current_system.travel_time("60306")[1]); // Frankfurt mit Fahrrad
 
@@ -65,9 +62,6 @@ public class SystemTest {
     public void calc_l_consumption(){
 
         current_system.sign_in_user("David","123Esel");
-        
-        current_system.set_current_user_car_avg_kmh(100);
-        current_system.set_current_user_car_l_100km(10);
         
         assertEquals("8.846 l", current_system.calc_l_consumption("60306")); // Kraftstoffverbrauch nach Frankfurt
         assertEquals("58.111 l", current_system.calc_l_consumption("20095")); // Kraftstoffverbrauch nach Hamburg
@@ -129,29 +123,44 @@ public class SystemTest {
     @Test
     public void sign_up_user(){
         // Username darf nicht doppelt vorkommen!
-        assertEquals(false, current_system.sign_up_user("David","123Esel","Mannheim","68161","AMG","10","300","20"));
-        assertEquals(true, current_system.sign_up_user("Selim","Penis69","Mannheim","68161","AMG","10","300","20"));
+        assertEquals(false, current_system.sign_up_user("David","123Esel","123Esel","Mannheim","68161","AMG","10","300","20"));
+        assertEquals(true, current_system.sign_up_user("Selim","Penis69","Penis69","Mannheim","68161","AMG","10","300","20"));
         // PLZ muss mit Stadt übereinstimmen
-        assertEquals(false, current_system.sign_up_user("Lukas","123Esel","Mannheim","11105","AMG","10","300","20"));
-        assertEquals(true, current_system.sign_up_user("Lukas","123Esel","Mannheim","68305","AMG","10","300","20"));
+        assertEquals(false, current_system.sign_up_user("Lukas","123Esel","123Esel","Mannheim","11105","AMG","10","300","20"));
+        assertEquals(true, current_system.sign_up_user("Lukas","123Esel","123Esel","Mannheim","68305","AMG","10","300","20"));
 
         assertEquals("Lukas",current_system.getDetails()[0]);
         current_system.sign_out_user();
         assertEquals("",current_system.getDetails()[0]);
+        assertEquals(true, current_system.sign_in_user("Lukas","123Esel"));
     }
 
     @Test
     public void change_user_details(){
         
         current_system.sign_in_user("David", "123Esel");
-        current_system.change_user_details("Enes", "Penis123", "Mannheim", "68161", "", "", "", "");
+        current_system.change_user_details("Enes", "123Esel", "Mannheim", "68161", "", "", "", "");
         assertEquals("Enes", current_system.getDetails()[0]);
+        current_system.change_user_details("David", "123Esel", "Mannheim", "68161", "AMG", "10", "100", "20");
+    
+    }
+
+    @Test
+    public void change_user_password(){
+
+        current_system.sign_in_user("David", "123Esel");
+        assertEquals(true, current_system.change_user_password("123Esel", "Pizza69", "Pizza69"));
+        assertEquals(true, current_system.change_user_password("Pizza69", "123Esel", "123Esel"));
+        assertEquals(true, current_system.change_user_details("Enes", "123Esel", "Mannheim", "68161", "", "", "", ""));
+        current_system.change_user_details("David", "123Esel", "Mannheim", "68161", "AMG", "10", "100", "20");
+
+        ;
 
     }
 /*
 Tests auf Basis von user_data.csv:  
 Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
-David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;300.0;20.0 
+David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;100.0;20.0
 */
 
 
