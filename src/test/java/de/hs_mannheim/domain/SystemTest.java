@@ -139,10 +139,23 @@ public class SystemTest {
     public void change_user_details(){
         
         current_system.sign_in_user("David", "123Esel");
-        current_system.change_user_details("Enes", "Penis123", "Mannheim", "68161", "", "", "", "");
+        current_system.change_user_details("Enes", "123Esel", "Mannheim", "68161", "", "", "", "");
         assertEquals("Enes", current_system.getDetails()[0]);
         current_system.change_user_details("David", "123Esel", "Mannheim", "68161", "AMG", "10", "100", "20");
     
+    }
+
+    @Test
+    public void change_user_password(){
+
+        current_system.sign_in_user("David", "123Esel");
+        assertEquals(true, current_system.change_user_password("123Esel", "Pizza69", "Pizza69"));
+        assertEquals(true, current_system.change_user_password("Pizza69", "123Esel", "123Esel"));
+        assertEquals(true, current_system.change_user_details("Enes", "123Esel", "Mannheim", "68161", "", "", "", ""));
+        current_system.change_user_details("David", "123Esel", "Mannheim", "68161", "AMG", "10", "100", "20");
+
+        ;
+
     }
 /*
 Tests auf Basis von user_data.csv:  

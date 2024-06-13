@@ -30,6 +30,10 @@ public class Application {
         return running_system.change_user_details(username, password, hometown, zip, car_name, car_co2_km, car_avg_kmh, bike_avg_kmh);
     }
 
+    public boolean change_user_password(String old_password, String new_password, String new_password_authentication){
+        return running_system.change_user_password(old_password, new_password, new_password_authentication);
+    }
+
     public ArrayList<String> search(String hometown_or_zip){
         return running_system.search(hometown_or_zip);
     }

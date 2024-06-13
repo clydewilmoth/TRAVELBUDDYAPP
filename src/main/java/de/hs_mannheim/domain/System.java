@@ -212,6 +212,30 @@ public class System {
 
     }
     
+    public boolean change_user_password(String old_password, String new_password, String new_password_authentication){
+        if(!this.current_user.getPassword().equals(old_password))
+            return false;
+        
+        if(!new_password.equals(new_password_authentication))
+            return false;    
+        
+        for(int i = 0; i< this.all_user.size(); i++)
+            if(this.all_user.get(i).getUsername().equals(current_user.getUsername()))
+                this.all_user.remove(i);
+        
+        write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
+        write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
+        
+        this.current_user.setPassword(new_password);
+        this.all_user.add(current_user);
+
+        write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
+        write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
+        
+        return true;
+
+    }
+    
     public void write_to_file(ArrayList<String> lines, String file) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < lines.size() - 1; i++) {
