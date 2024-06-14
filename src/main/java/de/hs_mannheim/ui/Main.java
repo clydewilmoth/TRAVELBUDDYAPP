@@ -472,7 +472,7 @@ public class Main extends JFrame {
                 if(facade.sign_up_user(nameTXT, passwordTXT, passwordTXTTwo, ortTXT, plzTXT,
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
                     profileCreate();
-                    profile.setBounds(280, 190, 200,200);
+                    profile.setBounds(280, 168, 200,200);
                     menu.add(profile);
                     menu.revalidate();
                     menu.repaint();
@@ -691,7 +691,7 @@ public class Main extends JFrame {
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
                     menu.remove(profile);
                     profileCreate();
-                    profile.setBounds(280, 190, 200,200);
+                    profile.setBounds(280, 168, 200,200);
                     menu.add(profile);
                     menu.revalidate();
                     menu.repaint();
