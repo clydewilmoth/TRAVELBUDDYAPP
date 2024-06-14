@@ -33,7 +33,7 @@ public class Main extends JFrame {
     private JPanel loginName;
     private JPanel loginPassword;
     private JButton loginConfirmButton;
-    private JButton loginZurückButton;
+    private JButton loginBackButton;
 
     private JLabel registerLabel;
     private JPanel registerScreen; // Backend muss PLZ und Ort prüfen, sonst kann die Entfernung in Zukunft nicht berechnet werden
@@ -56,9 +56,23 @@ public class Main extends JFrame {
     private JButton randDestinationsCarButton;
     private JButton randDestinationsBikeButton;
     private JPanel profile;
+    private JButton changeDetailsButton;
     private JButton logOutButton;
     private JScrollPane jsp = new JScrollPane();
     private JPanel destinationButtons = new JPanel();
+
+    private JPanel changeDetails;
+    private JLabel changeDetailsLabel;
+    private JPanel changeName;
+    private JPanel checkChangePassword;
+    private JPanel changeOrt;
+    private JPanel changePLZ;
+    private JPanel changeCarName;
+    private JPanel changeCarSpeed;
+    private JPanel changeCarCO2;
+    private JPanel changeBikeSpeed;
+    private JButton changeConfirmButton;
+    private JButton changeBackButton;
 
     public Main(String api_key) {
         this.facade = new Application(api_key);
@@ -92,7 +106,7 @@ public class Main extends JFrame {
         loginScreen.add(loginName);
         loginScreen.add(loginPassword);
         loginScreen.add(loginConfirmButton);
-        loginScreen.add(loginZurückButton);
+        loginScreen.add(loginBackButton);
 
         registerScreen = new JPanel(new FlowLayout()); // flowLayout muss angepasst werden, um nicht scheiße auszusehen
         registerLabel = new JLabel("Registrieren");
@@ -129,13 +143,15 @@ public class Main extends JFrame {
         randDestinationsCarButtonCreate();
         randDestinationsBikeButtonCreate();
         logOutButtonCreate();
+        changeDetailsButtonCreate();
         jsp.add(destinationButtons);
         menuLabel.setBounds(180, -125, 300, 300);
         searchPLZ_ORT.setBounds(20, 50, 300, 100);
         searchConfirmButton.setBounds(346, 70, 110, 30);
-        randDestinationsCarButton.setBounds(346, 115, 110, 30);
-        randDestinationsBikeButton.setBounds(346, 160, 110, 30);
-        logOutButton.setBounds(346, 420, 110, 30);
+        randDestinationsCarButton.setBounds(346, 105, 110, 30);
+        randDestinationsBikeButton.setBounds(346, 140, 110, 30);
+        logOutButton.setBounds(340, 430, 130, 30);
+        changeDetailsButton.setBounds(340, 398, 130, 30);
         jsp.setBounds(50,50,300,400);
 
         menu.add(menuLabel);
@@ -144,12 +160,38 @@ public class Main extends JFrame {
         menu.add(randDestinationsCarButton);
         menu.add(randDestinationsBikeButton);
         menu.add(logOutButton);
+        menu.add(changeDetailsButton);
 
+        changeDetails = new JPanel(new FlowLayout());
+        changeDetailsLabel = new JLabel("Daten ändern");
+        changeDetailsLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        changeNameCreate();
+        checkChangePasswordCreate();
+        changeOrtCreate();
+        changePLZCreate();
+        changeCarNameCreate();
+        changeCarSpeedCreate();
+        changeCarCO2Create();
+        changeBikeSpeedCreate();
+        changeConfirmButtonCreate();
+        changeBackButtonCreate();
+        changeDetails.add(changeDetailsLabel);
+        changeDetails.add(checkChangePassword);
+        changeDetails.add(changeName);
+        changeDetails.add(changeOrt);
+        changeDetails.add(changePLZ);
+        changeDetails.add(changeCarName);
+        changeDetails.add(changeCarCO2);
+        changeDetails.add(changeCarSpeed);
+        changeDetails.add(changeBikeSpeed);
+        changeDetails.add(changeBackButton);
+        changeDetails.add(changeConfirmButton);
 
         panelLayout.add(logRegScreen, "1");
         panelLayout.add(loginScreen, "2");
         panelLayout.add(registerScreen, "3");
         panelLayout.add(menu, "4");
+        panelLayout.add(changeDetails, "5");
         cardLayout.show(panelLayout, "1");
         jframe.add(panelLayout);
         jframe.setResizable(false);
@@ -166,7 +208,7 @@ public class Main extends JFrame {
         JLabel jlName = new JLabel("Name: " + details[0]);
         JLabel jlWohnort = new JLabel("Wohnort: " + details[1]);
         JLabel jlPLZ = new JLabel("Plz: " + details[2]);
-        JLabel jlAutoName = new JLabel("nAuto Name: " + details[3]);
+        JLabel jlAutoName = new JLabel("Auto Name: " + details[3]);
         JLabel jlCO2 = new JLabel("CO2/100km: " + details[4]);
         JLabel jlAutoKMH = new JLabel( "Auto km/h: " + details[5]);
         JLabel jlFahrradKMH = new JLabel( "Fahrrad km/h: " + details[6]);
@@ -274,7 +316,7 @@ public class Main extends JFrame {
                 String passwordTXT = getTextfieldContent(loginPassword, "loginPasswordText");
                 if(facade.sign_in_user(nameTXT, passwordTXT)) {
                     profileCreate();
-                    profile.setBounds(280, 190, 200,200);
+                    profile.setBounds(280, 168, 200,200);
                     menu.add(profile);
                     menu.revalidate();
                     menu.repaint();
@@ -289,10 +331,10 @@ public class Main extends JFrame {
     }
 
     private void loginZurückButtonCreate() {
-        loginZurückButton = new JButton("Back");
-        loginZurückButton.setPreferredSize(new Dimension(80, 20));
-        loginZurückButton.setFocusable(false);
-        loginZurückButton.addActionListener(new ActionListener() {
+        loginBackButton = new JButton("Back");
+        loginBackButton.setPreferredSize(new Dimension(80, 20));
+        loginBackButton.setFocusable(false);
+        loginBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "1");
@@ -513,6 +555,137 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // implementiere Änderung vom Panel
+            }
+        });
+    }
+
+    private void changeDetailsButtonCreate() {
+        changeDetailsButton = new JButton("Daten ändern");
+        changeDetailsButton.setPreferredSize(new Dimension(150, 50));
+        changeDetailsButton.setFocusable(false);
+        changeDetailsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "5");
+                jframe.setSize(new Dimension(260, 394));
+            }
+        });
+    }
+
+    public void checkChangePasswordCreate(){
+        checkChangePassword = new JPanel();
+        JLabel jl = new JLabel("Passwort bestätigen");
+        JTextField tf = new JTextField(10);
+        tf.setName("checkChangePasswordText");
+        checkChangePassword.add(jl);
+        checkChangePassword.add(tf);
+    }
+
+    public void changeNameCreate(){
+        changeName = new JPanel();
+        JLabel jl = new JLabel("                          Name");
+        JTextField tf = new JTextField(10);
+        tf.setName("changeNameText");
+        changeName.add(jl);
+        changeName.add(tf);
+    }
+
+    public void changeOrtCreate(){
+        changeOrt = new JPanel();
+        JLabel jl = new JLabel("                             Ort");
+        JTextField tf = new JTextField(10);
+        tf.setName("changeOrtText");
+        changeOrt.add(jl);
+        changeOrt.add(tf);
+    }
+
+    public void changePLZCreate(){
+        changePLZ = new JPanel();
+        JLabel jl = new JLabel("                            PLZ");
+        JTextField tf = new JTextField(10);
+        tf.setName("changePLZText");
+        changePLZ.add(jl);
+        changePLZ.add(tf);
+    }
+
+    public void changeCarNameCreate(){
+        changeCarName = new JPanel();
+        JLabel jl = new JLabel("                 Auto Name");
+        JTextField tf = new JTextField(10);
+        tf.setName("changeCarNameText");
+        changeCarName.add(jl);
+        changeCarName.add(tf);
+    }
+
+    public void changeCarCO2Create(){
+        changeCarCO2 = new JPanel();
+        JLabel jl = new JLabel("                   Auto CO2");
+        JTextField tf = new JTextField(10);
+        tf.setName("changeCarCO2Text");
+        changeCarCO2.add(jl);
+        changeCarCO2.add(tf);
+    }
+
+    public void changeCarSpeedCreate(){
+        changeCarSpeed = new JPanel();
+        JLabel jl = new JLabel("           Auto Geschw.");
+        JTextField tf = new JTextField(10);
+        tf.setName("changeCarSpeedText");
+        changeCarSpeed.add(jl);
+        changeCarSpeed.add(tf);
+    }
+
+    public void changeBikeSpeedCreate(){
+        changeBikeSpeed = new JPanel();
+        JLabel jl = new JLabel("      Fahrrad Geschw.");
+        JTextField tf = new JTextField(10);
+        tf.setName("changeBikeSpeedText");
+        changeBikeSpeed.add(jl);
+        changeBikeSpeed.add(tf);
+    }
+
+    public void changeConfirmButtonCreate(){
+        changeConfirmButton = new JButton("Confirm");
+        changeConfirmButton.setSize(80, 20);
+        changeConfirmButton.setFocusable(false);
+        changeConfirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nameTXT = getTextfieldContent(changeName, "changeNameText");
+                String passwordTXT = getTextfieldContent(checkChangePassword, "checkChangePasswordText");
+                String ortTXT = getTextfieldContent(changeOrt, "changeOrtText");
+                String plzTXT = getTextfieldContent(changePLZ, "changePLZText");
+                String carNameTXT = getTextfieldContent(changeCarName, "changeCarNameText");
+                String carCO2TXT = getTextfieldContent(changeCarCO2, "changeCarCO2Text");
+                String carSpeedTXT = getTextfieldContent(changeCarSpeed, "changeCarSpeedText");
+                String bikeSpeedTXT = getTextfieldContent(changeBikeSpeed, "changeBikeSpeedText");
+                if(facade.change_user_details(nameTXT, passwordTXT, ortTXT, plzTXT,
+                        carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
+                    menu.remove(profile);
+                    profileCreate();
+                    profile.setBounds(280, 190, 200,200);
+                    menu.add(profile);
+                    menu.revalidate();
+                    menu.repaint();
+                    cardLayout.show(panelLayout, "4");
+                    jframe.setSize(new Dimension(500, 500));
+                }
+                else{
+                    errorMessageCreate();
+                }
+            }
+        });
+    }
+
+    public void changeBackButtonCreate(){
+        changeBackButton = new JButton("Zurück");
+        changeBackButton.setSize(80, 20);
+        changeBackButton.setFocusable(false);
+        changeBackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "4");
+                jframe.setSize(new Dimension(500, 500));
             }
         });
     }
