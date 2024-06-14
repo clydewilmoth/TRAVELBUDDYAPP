@@ -180,10 +180,12 @@ public class System {
         if(username.equals("")||hometown.equals("")||zip.equals(""))
             return false;
         
-        for(User user: this.all_user)
-        if(user.getUsername().equals(username))
-            return false;
-
+        if(!current_user.getUsername().equals(username)){
+            for(User user: this.all_user)
+                if(user.getUsername().equals(username))
+                    return false;
+        }
+        
         ArrayList<String> mem = search(zip);
         boolean bool = false;
 
@@ -191,7 +193,7 @@ public class System {
             if(line.split(";")[1].equals(hometown)) {
                 bool = true;
                 break;
-        }
+            }
 
         if(!bool)
             return false;
