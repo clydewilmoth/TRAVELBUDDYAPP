@@ -21,7 +21,7 @@ public class Main extends JFrame {
     private JPanel panelLayout;
 
     //Wird in mehreren Labels benutzt (reg und log)
-    private JPanel errorMessage; // mal gucken, vllt auch nicht
+    private JFrame errorMessage; // mal gucken, vllt auch nicht
 
     private JLabel mainMenuLabel;
     private JPanel logRegScreen;
@@ -71,8 +71,6 @@ public class Main extends JFrame {
         panelLayout = new JPanel(cardLayout);
         panelLayout.setLayout(cardLayout);
         jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-        errorMessageCreate();//wahrscheinlich muss individuell angepasst werden
 
         logRegScreen = new JPanel(new FlowLayout());
         mainMenuLabel = new JLabel("              Hauptmenü             ");
@@ -197,9 +195,26 @@ public class Main extends JFrame {
     }
 
     private void errorMessageCreate() {
-        errorMessage = new JPanel();
-        JLabel jl = new JLabel("Daten sind falsch oder unvollständig!");
-        errorMessage.add(jl);
+        errorMessage = new JFrame();
+        errorMessage.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        JPanel jp = new JPanel(new FlowLayout());
+        JLabel jl = new JLabel("Daten falsch oder unvollständig!");
+        JButton jb = new JButton("OK");
+        jb.setFocusable(false);
+
+        jb.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                errorMessage.dispose();
+            }
+        });
+        jp.add(BorderLayout.CENTER, jl);
+        jp.add(BorderLayout.SOUTH, jb);
+        errorMessage.add(jp);
+        errorMessage.setSize(240, 100);
+        errorMessage.setResizable(false);
+        errorMessage.setVisible(true);
+        errorMessage.setLocationRelativeTo(null);
     }
 
 
@@ -267,7 +282,7 @@ public class Main extends JFrame {
                     jframe.setSize(new Dimension(500, 500));
                 }
                 else{
-                    //vllt zukünftig implementiert
+                    errorMessageCreate();
                 }
             }
         });
@@ -395,7 +410,7 @@ public class Main extends JFrame {
                     jframe.setSize(new Dimension(500, 500));
                 }
                 else{
-                    //mal gucken
+                    errorMessageCreate();
                 }
             }
         });
