@@ -56,10 +56,19 @@ public class Main extends JFrame {
     private JButton randDestinationsCarButton;
     private JButton randDestinationsBikeButton;
     private JPanel profile;
+    private JButton changePasswordButton;
     private JButton changeDetailsButton;
     private JButton logOutButton;
     private JScrollPane jsp = new JScrollPane();
     private JPanel destinationButtons = new JPanel();
+
+    private JPanel changePassword;
+    private JLabel changePasswordLabel;
+    private JPanel changePasswordOldPassword;
+    private JPanel changePasswordNewPassword;
+    private JPanel changePasswordConfirmNewPassword;
+    private JButton changePasswordBackButton;
+    private JButton changePasswordConfirmButton;
 
     private JPanel changeDetails;
     private JLabel changeDetailsLabel;
@@ -144,6 +153,7 @@ public class Main extends JFrame {
         randDestinationsBikeButtonCreate();
         logOutButtonCreate();
         changeDetailsButtonCreate();
+        changePasswordButtonCreate();
         jsp.add(destinationButtons);
         menuLabel.setBounds(180, -125, 300, 300);
         searchPLZ_ORT.setBounds(20, 50, 300, 100);
@@ -152,6 +162,7 @@ public class Main extends JFrame {
         randDestinationsBikeButton.setBounds(346, 140, 110, 30);
         logOutButton.setBounds(340, 430, 130, 30);
         changeDetailsButton.setBounds(340, 398, 130, 30);
+        changePasswordButton.setBounds(340, 366, 130, 30);
         jsp.setBounds(50,50,300,400);
 
         menu.add(menuLabel);
@@ -161,6 +172,22 @@ public class Main extends JFrame {
         menu.add(randDestinationsBikeButton);
         menu.add(logOutButton);
         menu.add(changeDetailsButton);
+        menu.add(changePasswordButton);
+
+        changePassword = new JPanel(new FlowLayout());
+        changePasswordLabel = new JLabel("Password ändern");
+        changePasswordLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+        changePasswordOldPasswordCreate();
+        changePasswordNewPasswordCreate();
+        changePasswordConfirmNewPasswordCreate();
+        changePasswordBackButtonCreate();
+        changePasswordConfirmButtonCreate();
+        changePassword.add(changePasswordLabel);
+        changePassword.add(changePasswordOldPassword);
+        changePassword.add(changePasswordNewPassword);
+        changePassword.add(changePasswordConfirmNewPassword);
+        changePassword.add(changePasswordBackButton);
+        changePassword.add(changePasswordConfirmButton);
 
         changeDetails = new JPanel(new FlowLayout());
         changeDetailsLabel = new JLabel("Daten ändern");
@@ -192,6 +219,7 @@ public class Main extends JFrame {
         panelLayout.add(registerScreen, "3");
         panelLayout.add(menu, "4");
         panelLayout.add(changeDetails, "5");
+        panelLayout.add(changePassword, "6");
         cardLayout.show(panelLayout, "1");
         jframe.add(panelLayout);
         jframe.setResizable(false);
@@ -686,6 +714,80 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "4");
                 jframe.setSize(new Dimension(500, 500));
+            }
+        });
+    }
+
+    public void changePasswordButtonCreate(){
+        changePasswordButton = new JButton("Passwort ändern");
+        changePasswordButton.setPreferredSize(new Dimension(150, 50));
+        changePasswordButton.setFocusable(false);
+        changePasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "6");
+                jframe.setSize(new Dimension(260, 215));
+            }
+        });
+    }
+
+    public void changePasswordOldPasswordCreate(){
+        changePasswordOldPassword = new JPanel();
+        JLabel jl = new JLabel("           Altes Passwort");
+        JTextField tf = new JTextField(10);
+        tf.setName("changePasswordOldPasswordText");
+        changePasswordOldPassword.add(jl);
+        changePasswordOldPassword.add(tf);
+    }
+
+    public void changePasswordNewPasswordCreate(){
+        changePasswordNewPassword = new JPanel();
+        JLabel jl = new JLabel("           Neue Passowrt");
+        JTextField tf = new JTextField(10);
+        tf.setName("changePasswordNewPasswordText");
+        changePasswordNewPassword.add(jl);
+        changePasswordNewPassword.add(tf);
+    }
+
+    public void changePasswordConfirmNewPasswordCreate(){
+        changePasswordConfirmNewPassword = new JPanel();
+        JLabel jl = new JLabel("Best. neues Passwort");
+        JTextField tf = new JTextField(10);
+        tf.setName("changePasswordConfirmNewPasswordText");
+        changePasswordConfirmNewPassword.add(jl);
+        changePasswordConfirmNewPassword.add(tf);
+    }
+
+    public void changePasswordBackButtonCreate(){
+        changePasswordBackButton = new JButton("Zurück");
+        changePasswordBackButton.setSize(80, 20);
+        changePasswordBackButton.setFocusable(false);
+        changePasswordBackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelLayout, "4");
+                jframe.setSize(new Dimension(500, 500));
+            }
+        });
+    }
+
+    public void changePasswordConfirmButtonCreate(){
+        changePasswordConfirmButton = new JButton("Confirm");
+        changePasswordConfirmButton.setSize(80, 20);
+        changePasswordConfirmButton.setFocusable(false);
+        changePasswordConfirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String passwordOldTXT = getTextfieldContent(changePasswordOldPassword, "changePasswordOldPasswordText");
+                String passwordNewTXT = getTextfieldContent(changePasswordNewPassword, "changePasswordNewPasswordText");
+                String passwordConfirmNewTXT = getTextfieldContent(changePasswordConfirmNewPassword, "changePasswordConfirmNewPasswordText");
+                if(facade.change_user_password(passwordOldTXT, passwordNewTXT, passwordConfirmNewTXT)){
+                    cardLayout.show(panelLayout, "4");
+                    jframe.setSize(new Dimension(500, 500));
+                }
+                else{
+                    errorMessageCreate();
+                }
             }
         });
     }
