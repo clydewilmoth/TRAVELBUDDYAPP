@@ -59,7 +59,7 @@ public class Main extends JFrame {
     private JButton changePasswordButton;
     private JButton changeDetailsButton;
     private JButton logOutButton;
-    private JScrollPane jsp = new JScrollPane();
+    private JScrollPane jsp;
     private JPanel destinationButtons = new JPanel();
 
     private JPanel changePassword;
@@ -154,7 +154,6 @@ public class Main extends JFrame {
         logOutButtonCreate();
         changeDetailsButtonCreate();
         changePasswordButtonCreate();
-        jsp.add(destinationButtons);
         menuLabel.setBounds(180, -125, 300, 300);
         searchPLZ_ORT.setBounds(20, 50, 300, 100);
         searchConfirmButton.setBounds(346, 70, 110, 30);
@@ -163,7 +162,6 @@ public class Main extends JFrame {
         logOutButton.setBounds(340, 430, 130, 30);
         changeDetailsButton.setBounds(340, 398, 130, 30);
         changePasswordButton.setBounds(340, 366, 130, 30);
-        jsp.setBounds(50,50,300,400);
 
         menu.add(menuLabel);
         menu.add(searchPLZ_ORT);
@@ -522,34 +520,72 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> orte = facade.search(getTextfieldContent(searchPLZ_ORT, "ortSuche"));
-                JPanel destinationButtonsProxy = new JPanel(new FlowLayout());
-                for(String s : orte){
-                    String[] ortUndPLZ = s.split(";");
-                    String address = ortUndPLZ[1] + ", " + ortUndPLZ[0];
-                    JButton jb = new JButton(address);
-                    jb.setSize(100,20);
-                    jb.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            JFrame jf = new JFrame();
-                            JPanel jp = new JPanel(new FlowLayout());
-                            String[] details = facade.destination_details(ortUndPLZ[0]);
-                            for(String ss : details) {
-                                JLabel jl = new JLabel(ss);
-                                jp.add(jl);
+                JPanel destinationButtonsProxy = new JPanel();
+                destinationButtonsProxy.setLayout(new BoxLayout(destinationButtonsProxy, BoxLayout.Y_AXIS));
+                if (orte.size() > 0) {
+                    for (String s : orte) {
+                        String[] ortUndPLZ = s.split(";");
+                        String plz = ortUndPLZ[0];
+                        String address = ortUndPLZ[1] + "," + plz + "    " + facade.distance(plz);
+                        JButton jb = new JButton(address);
+                        jb.setPreferredSize(new Dimension(290, 40));
+                        jb.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JFrame jf = new JFrame();
+                                JPanel jp = new JPanel(new FlowLayout());
+                                String[] details = facade.destination_details(plz);
+                                for (String ss : details) {
+                                    JLabel jl = new JLabel(ss);
+                                    jp.add(jl);
+                                }
+                                jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                                jf.add(jp);
+                                jf.setSize(100, 400);
+                                jf.setVisible(true);
                             }
-                            jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                            jf.add(jp);
-                            jf.setSize(100,400);
-                        }
-                    });
-                    //erzeuge aus adresse einen Button
+                        });
+                        destinationButtonsProxy.add(jb);
+                    }
+                    destinationButtons = destinationButtonsProxy;
+                    destinationButtons.revalidate();
+                    destinationButtons.repaint();
+                    try {
+                        menu.remove(jsp);
+                    } catch (Exception jspNotYetIncluded) {
+                    }
+                    jsp = new JScrollPane(destinationButtons);
+                    jsp.setBounds(40, 110, 244, 336);
+                    jsp.revalidate();
+                    jsp.repaint();
+                    menu.add(jsp);
+                    menu.revalidate();
+                    menu.repaint();
                 }
-                destinationButtons = destinationButtonsProxy;
-                menu.revalidate();
+                else {
+                    destinationButtonsProxy = new JPanel();
+                    JLabel jl = new JLabel("Kein Ergebnis");
+                    jl.setFont(new Font("Arial", Font.PLAIN, 38));
+                    destinationButtonsProxy.add(jl);
+                    destinationButtons = destinationButtonsProxy;
+                    destinationButtons.revalidate();
+                    destinationButtons.repaint();
+                    try {
+                        menu.remove(jsp);
+                    } catch (Exception jspNotYetIncluded) {
+                    }
+                    jsp = new JScrollPane(destinationButtons);
+                    jsp.setBounds(40, 110, 244, 336);
+                    jsp.revalidate();
+                    jsp.repaint();
+                    menu.add(jsp);
+                    menu.revalidate();
+                    menu.repaint();
+                }
             }
         });
     }
+
 
     private void randDestinationsCarButtonCreate() { //Auto Icon hinzufügen
         randDestinationsCarButton = new JButton();
@@ -805,6 +841,12 @@ public class Main extends JFrame {
                 jframe.setSize(new Dimension(450, 160));
             }
         });
+    }
+
+    public void jspCreate(){
+        jsp = new JScrollPane();
+        jsp.setSize(100,100);
+
     }
 
     private String getTextfieldContent(JPanel panel, String name) {
