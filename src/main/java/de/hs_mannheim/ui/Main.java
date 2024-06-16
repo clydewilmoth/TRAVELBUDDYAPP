@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Main extends JFrame {
     public static void main(String[] args) {
-        Main main = new Main("35a75437476f12302f72e55d368485db");
+        new Main("35a75437476f12302f72e55d368485db");
     }
     
     private Application facade;
@@ -194,17 +194,16 @@ public class Main extends JFrame {
         changeDetailsLabel = new JLabel("Daten ändern");
         changeDetailsLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         changeNameCreate();
-        checkChangePasswordCreate();
         changeOrtCreate();
         changePLZCreate();
         changeCarNameCreate();
         changeCarSpeedCreate();
         changeCarCO2Create();
         changeBikeSpeedCreate();
+        checkChangePasswordCreate();
         changeConfirmButtonCreate();
         changeBackButtonCreate();
         changeDetails.add(changeDetailsLabel);
-        changeDetails.add(checkChangePassword);
         changeDetails.add(changeName);
         changeDetails.add(changeOrt);
         changeDetails.add(changePLZ);
@@ -212,6 +211,7 @@ public class Main extends JFrame {
         changeDetails.add(changeCarCO2);
         changeDetails.add(changeCarSpeed);
         changeDetails.add(changeBikeSpeed);
+        changeDetails.add(checkChangePassword);
         changeDetails.add(changeBackButton);
         changeDetails.add(changeConfirmButton);
 
@@ -893,7 +893,7 @@ public class Main extends JFrame {
 
     public void checkChangePasswordCreate(){
         checkChangePassword = new JPanel();
-        JLabel jl = new JLabel("Passwort bestätigen");
+        JLabel jl = new JLabel("Passwortbestätigung");
         JTextField tf = new JTextField(10);
         tf.setName("checkChangePasswordText");
         checkChangePassword.add(jl);
