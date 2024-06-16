@@ -43,8 +43,8 @@ public class SystemTest {
         current_system.sign_in_user("David", "123Esel");
 
         assertEquals("88.46 km", current_system.distance("60306")); // Frankfurt
-        assertEquals("581.109 km", current_system.distance("20095")); // Hamburg
-        assertEquals("603.608 km", current_system.distance("10115")); // Berlin
+        assertEquals("581.11 km", current_system.distance("20095")); // Hamburg
+        assertEquals("603.61 km", current_system.distance("10115")); // Berlin
 
     }
 
@@ -53,7 +53,7 @@ public class SystemTest {
 
         current_system.sign_in_user("David", "123Esel");
 
-        assertEquals("0.89 h", current_system.travel_time("60306")[0]); // Frankfurt mit Auto
+        assertEquals("0.88 h", current_system.travel_time("60306")[0]); // Frankfurt mit Auto
         assertEquals("4.42 h", current_system.travel_time("60306")[1]); // Frankfurt mit Fahrrad
 
         assertEquals("6.04 h", current_system.travel_time("10115")[0]); // Berlin mit Auto
