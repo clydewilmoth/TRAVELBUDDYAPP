@@ -600,7 +600,7 @@ public class Main extends JFrame {
 
                                 jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                                 jf.add(jp);
-                                jf.setSize(280, 270);
+                                jf.setSize(320, 270);
                                 jf.setResizable(false);
                                 jf.setVisible(true);
                             }
@@ -675,15 +675,62 @@ public class Main extends JFrame {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 JFrame jf = new JFrame();
-                                JPanel jp = new JPanel(new FlowLayout());
+                                JPanel jp = new JPanel();
+                                jp.setLayout(null);
                                 String[] details = facade.destination_details(plz);
-                                for (String ss : details) {
-                                    JLabel jl = new JLabel(ss);
-                                    jp.add(jl);
+                                JLabel jlAddress = new JLabel("Zieladresse:");
+                                JLabel jlAddressText = new JLabel(address);
+                                JLabel jlWettervorhersage = new JLabel("Wettervorhersage:");
+                                JLabel jlWettervorhersageTextOne = new JLabel(details[0]);
+                                JLabel jlWettervorhersageTextTwo = new JLabel(details[1]);
+                                JLabel jlWettervorhersageTextThree = new JLabel(details[2]);
+                                JLabel jlEntfernung = new JLabel("Entfernung:");
+                                JLabel jlEntfernungText = new JLabel(details[3]);
+                                JLabel jlReisedauerUndKraftstoffverbrauch = new JLabel("Reisedauer und Kraftstoffverbrauch Auto:");
+                                JLabel jlAutoDauerText = new JLabel(details[4]);
+                                JLabel jlAutoVerbrauchText = new JLabel(details[5]);
+                                JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
+                                JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
+                                if(details[4].equals("")){
+                                    jlAutoDauerText.setText("---");
                                 }
+                                if(details[5].equals("")){
+                                    jlAutoVerbrauchText.setText("---");
+                                }
+                                if(details[6].equals("")){
+                                    jlReisedauerMitFahrradText.setText("---");
+                                }
+                                jlAddress.setBounds(4, 0, 300, 20);
+                                jlAddressText.setBounds(4, 12, 300, 20);
+                                jlWettervorhersage.setBounds(4, 45, 300, 20);
+                                jlWettervorhersageTextOne.setBounds(4, 57, 300, 20);
+                                jlWettervorhersageTextTwo.setBounds(4, 69, 300, 20);
+                                jlWettervorhersageTextThree.setBounds(4, 81, 300, 20);
+                                jlEntfernung.setBounds(4, 108, 300, 20);
+                                jlEntfernungText.setBounds(4, 120, 300, 20);
+                                jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 300, 20);
+                                jlAutoDauerText.setBounds(4, 159, 300, 20);
+                                jlAutoVerbrauchText.setBounds(4, 171, 300, 20);
+                                jlReisedauerMitFahrrad.setBounds(4, 198, 300, 20);
+                                jlReisedauerMitFahrradText.setBounds(4, 210, 300, 20);
+                                jp.add(jlAddress);
+                                jp.add(jlAddressText);
+                                jp.add(jlWettervorhersage);
+                                jp.add(jlWettervorhersageTextOne);
+                                jp.add(jlWettervorhersageTextTwo);
+                                jp.add(jlWettervorhersageTextThree);
+                                jp.add(jlEntfernung);
+                                jp.add(jlEntfernungText);
+                                jp.add(jlReisedauerUndKraftstoffverbrauch);
+                                jp.add(jlAutoDauerText);
+                                jp.add(jlAutoVerbrauchText);
+                                jp.add(jlReisedauerMitFahrrad);
+                                jp.add(jlReisedauerMitFahrradText);
+
                                 jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                                 jf.add(jp);
-                                jf.setSize(200, 200);
+                                jf.setSize(320, 270);
+                                jf.setResizable(false);
                                 jf.setVisible(true);
                             }
                         });
@@ -733,15 +780,62 @@ public class Main extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             JFrame jf = new JFrame();
-                            JPanel jp = new JPanel(new FlowLayout());
+                            JPanel jp = new JPanel();
+                            jp.setLayout(null);
                             String[] details = facade.destination_details(plz);
-                            for (String ss : details) {
-                                JLabel jl = new JLabel(ss);
-                                jp.add(jl);
+                            JLabel jlAddress = new JLabel("Zieladresse:");
+                            JLabel jlAddressText = new JLabel(address);
+                            JLabel jlWettervorhersage = new JLabel("Wettervorhersage:");
+                            JLabel jlWettervorhersageTextOne = new JLabel(details[0]);
+                            JLabel jlWettervorhersageTextTwo = new JLabel(details[1]);
+                            JLabel jlWettervorhersageTextThree = new JLabel(details[2]);
+                            JLabel jlEntfernung = new JLabel("Entfernung:");
+                            JLabel jlEntfernungText = new JLabel(details[3]);
+                            JLabel jlReisedauerUndKraftstoffverbrauch = new JLabel("Reisedauer und Kraftstoffverbrauch Auto:");
+                            JLabel jlAutoDauerText = new JLabel(details[4]);
+                            JLabel jlAutoVerbrauchText = new JLabel(details[5]);
+                            JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
+                            JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
+                            if(details[4].equals("")){
+                                jlAutoDauerText.setText("---");
                             }
+                            if(details[5].equals("")){
+                                jlAutoVerbrauchText.setText("---");
+                            }
+                            if(details[6].equals("")){
+                                jlReisedauerMitFahrradText.setText("---");
+                            }
+                            jlAddress.setBounds(4, 0, 300, 20);
+                            jlAddressText.setBounds(4, 12, 300, 20);
+                            jlWettervorhersage.setBounds(4, 45, 300, 20);
+                            jlWettervorhersageTextOne.setBounds(4, 57, 300, 20);
+                            jlWettervorhersageTextTwo.setBounds(4, 69, 300, 20);
+                            jlWettervorhersageTextThree.setBounds(4, 81, 300, 20);
+                            jlEntfernung.setBounds(4, 108, 300, 20);
+                            jlEntfernungText.setBounds(4, 120, 300, 20);
+                            jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 300, 20);
+                            jlAutoDauerText.setBounds(4, 159, 300, 20);
+                            jlAutoVerbrauchText.setBounds(4, 171, 300, 20);
+                            jlReisedauerMitFahrrad.setBounds(4, 198, 300, 20);
+                            jlReisedauerMitFahrradText.setBounds(4, 210, 300, 20);
+                            jp.add(jlAddress);
+                            jp.add(jlAddressText);
+                            jp.add(jlWettervorhersage);
+                            jp.add(jlWettervorhersageTextOne);
+                            jp.add(jlWettervorhersageTextTwo);
+                            jp.add(jlWettervorhersageTextThree);
+                            jp.add(jlEntfernung);
+                            jp.add(jlEntfernungText);
+                            jp.add(jlReisedauerUndKraftstoffverbrauch);
+                            jp.add(jlAutoDauerText);
+                            jp.add(jlAutoVerbrauchText);
+                            jp.add(jlReisedauerMitFahrrad);
+                            jp.add(jlReisedauerMitFahrradText);
+
                             jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                             jf.add(jp);
-                            jf.setSize(200, 200);
+                            jf.setSize(320, 270);
+                            jf.setResizable(false);
                             jf.setVisible(true);
                         }
                     });
