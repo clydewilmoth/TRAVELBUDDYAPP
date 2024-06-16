@@ -527,10 +527,45 @@ public class Main extends JFrame {
                                 JPanel jp = new JPanel();
                                 jp.setLayout(null);
                                 String[] details = facade.destination_details(plz);
-
-
-
-
+                                JLabel jlAddress = new JLabel("Zieladresse:");
+                                JLabel jlAddressText = new JLabel(address);
+                                JLabel jlWettervorhersage = new JLabel("Wettervorhersage:");
+                                JLabel jlWettervorhersageTextOne = new JLabel(details[0]);
+                                JLabel jlWettervorhersageTextTwo = new JLabel(details[1]);
+                                JLabel jlWettervorhersageTextThree = new JLabel(details[2]);
+                                JLabel jlEntfernung = new JLabel("Entfernung:");
+                                JLabel jlEntfernungText = new JLabel(details[3]);
+                                JLabel jlReisedauerUndKraftstoffverbrauch = new JLabel("Reisedauer und Kraftstoffverbrauch Auto:");
+                                JLabel jlAutoDauer = new JLabel(details[4]);
+                                JLabel jlAutoVerbrauch = new JLabel(details[5]);
+                                JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
+                                JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
+                                jlAddress.setBounds(4, 6, 100, 100);
+                                jlAddressText.setBounds(4, 16, 100, 100);
+                                jlWettervorhersage.setBounds(4, 36, 100, 100);
+                                jlWettervorhersageTextOne.setBounds(4, 46, 100, 100);
+                                jlWettervorhersageTextTwo.setBounds(4, 56, 100, 100);
+                                jlWettervorhersageTextThree.setBounds(4, 66, 100, 100);
+                                jlEntfernung.setBounds(4, 86, 100, 100);
+                                jlEntfernungText.setBounds(4, 96, 100, 100);
+                                jlReisedauerUndKraftstoffverbrauch.setBounds(4, 116, 100, 100);
+                                jlAutoDauer.setBounds(4, 126, 100, 100);
+                                jlAutoVerbrauch.setBounds(4, 136, 100, 100);
+                                jlReisedauerMitFahrrad.setBounds(4, 156, 100, 100);
+                                jlReisedauerMitFahrradText.setBounds(4, 166, 100, 100);
+                                jp.add(jlAddress);
+                                jp.add(jlAddressText);
+                                jp.add(jlWettervorhersage);
+                                jp.add(jlWettervorhersageTextOne);
+                                jp.add(jlWettervorhersageTextTwo);
+                                jp.add(jlWettervorhersageTextThree);
+                                jp.add(jlEntfernung);
+                                jp.add(jlEntfernungText);
+                                jp.add(jlReisedauerUndKraftstoffverbrauch);
+                                jp.add(jlAutoDauer);
+                                jp.add(jlAutoVerbrauch);
+                                jp.add(jlReisedauerMitFahrrad);
+                                jp.add(jlReisedauerMitFahrradText);
 
                                 jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                                 jf.add(jp);
