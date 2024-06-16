@@ -325,13 +325,13 @@ public class System {
     public String[] destination_details(String destination_zip) {
         String[] result = new String[7];
 
-        result[1] = weather_forecast(destination_zip)[0]; // Wettervorhersage für die nächsten 3 Tage
-        result[2] = weather_forecast(destination_zip)[1];
-        result[3] = weather_forecast(destination_zip)[2];
-        result[4] = distance(destination_zip); // Entfernung
-        result[5] = travel_time(destination_zip)[0]; // Reisedauer Auto
-        result[6] = calc_l_consumption(destination_zip); // Kraftstoffverbrauch Auto
-        result[7] = travel_time(destination_zip)[1]; // Reisedauer Fahrrad
+        result[0] = weather_forecast(destination_zip)[0]; // Wettervorhersage für die nächsten 3 Tage
+        result[1] = weather_forecast(destination_zip)[1];
+        result[2] = weather_forecast(destination_zip)[2];
+        result[3] = distance(destination_zip); // Entfernung
+        result[4] = travel_time(destination_zip)[0]; // Reisedauer Auto
+        result[5] = calc_l_consumption(destination_zip); // Kraftstoffverbrauch Auto
+        result[6] = travel_time(destination_zip)[1]; // Reisedauer Fahrrad
 
         return result;
     }
