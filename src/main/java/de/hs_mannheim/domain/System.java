@@ -279,7 +279,8 @@ public class System {
             String line;
             while ((line = reader.readLine()) != null && zip_set.size() < 200) {
                 line = line.replace("\"", "");
-                if (line.split(";")[0].contains(hometown_or_zip) || line.split(";")[1].contains(hometown_or_zip))
+                if (line.split(";")[0].toUpperCase().startsWith(hometown_or_zip.toUpperCase()) 
+                    || line.split(";")[1].toUpperCase().startsWith(hometown_or_zip.toUpperCase()))
                     zip_set.add(line);
             }
         } catch (Exception e) {
