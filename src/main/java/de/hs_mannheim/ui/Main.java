@@ -762,6 +762,24 @@ public class Main extends JFrame {
         changeDetailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String[] details = facade.getDetails();
+                JTextField detailsText = findTextFieldByName(changeName, "changeNameText");
+                detailsText.setText(details[0]);
+                detailsText = findTextFieldByName(changeOrt, "changeOrtText");
+                detailsText.setText(details[1]);
+                detailsText = findTextFieldByName(changePLZ, "changePLZText");
+                detailsText.setText(details[2]);
+                detailsText = findTextFieldByName(changeCarName, "changeCarNameText");
+                detailsText.setText(details[3]);
+                detailsText = findTextFieldByName(changeCarCO2, "changeCarCO2Text");
+                detailsText.setText(details[4]);
+                detailsText = findTextFieldByName(changeCarSpeed, "changeCarSpeedText");
+                detailsText.setText(details[5]);
+                detailsText = findTextFieldByName(changeBikeSpeed, "changeBikeSpeedText");
+                detailsText.setText(details[6]);
+                detailsText = findTextFieldByName(checkChangePassword, "checkChangePasswordText");
+                detailsText.setText("");
+
                 cardLayout.show(panelLayout, "5");
                 jframe.setSize(new Dimension(260, 394));
             }
@@ -869,22 +887,6 @@ public class Main extends JFrame {
                 else{
                     errorMessageCreate();
                 }
-                JTextField clear = findTextFieldByName(changeName, "changeNameText");
-                clear.setText("");
-                clear = findTextFieldByName(checkChangePassword, "checkChangePasswordText");
-                clear.setText("");
-                clear = findTextFieldByName(changeOrt, "changeOrtText");
-                clear.setText("");
-                clear = findTextFieldByName(changePLZ, "changePLZText");
-                clear.setText("");
-                clear = findTextFieldByName(changeCarName, "changeCarNameText");
-                clear.setText("");
-                clear = findTextFieldByName(changeCarCO2, "changeCarCO2Text");
-                clear.setText("");
-                clear = findTextFieldByName(changeCarSpeed, "changeCarSpeedText");
-                clear.setText("");
-                clear = findTextFieldByName(changeBikeSpeed, "changeBikeSpeedText");
-                clear.setText("");
             }
         });
     }
@@ -994,6 +996,22 @@ public class Main extends JFrame {
                 cardLayout.show(panelLayout, "1");
                 jframe.setSize(new Dimension(450, 160));
                 JTextField clear = findTextFieldByName(searchPLZ_ORT, "ortSuche");
+                clear.setText("");
+                clear = findTextFieldByName(changeName, "changeNameText");
+                clear.setText("");
+                clear = findTextFieldByName(checkChangePassword, "checkChangePasswordText");
+                clear.setText("");
+                clear = findTextFieldByName(changeOrt, "changeOrtText");
+                clear.setText("");
+                clear = findTextFieldByName(changePLZ, "changePLZText");
+                clear.setText("");
+                clear = findTextFieldByName(changeCarName, "changeCarNameText");
+                clear.setText("");
+                clear = findTextFieldByName(changeCarCO2, "changeCarCO2Text");
+                clear.setText("");
+                clear = findTextFieldByName(changeCarSpeed, "changeCarSpeedText");
+                clear.setText("");
+                clear = findTextFieldByName(changeBikeSpeed, "changeBikeSpeedText");
                 clear.setText("");
             }
         });
