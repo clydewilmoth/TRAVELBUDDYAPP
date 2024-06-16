@@ -84,8 +84,10 @@ public class Main extends JFrame {
     private JButton changeBackButton;
 
     public Main(String api_key) {
-        this.facade = new Application(api_key);
-        initialize();
+        SwingUtilities.invokeLater(() -> {
+            this.facade = new Application(api_key);
+            initialize();
+        });
     }
 
     public void initialize() {
@@ -231,33 +233,27 @@ public class Main extends JFrame {
         ImageIcon png = png("/profile.png", 40, 40);
         JLabel jl = new JLabel(png);
         String[] details = facade.getDetails();
-        JLabel jlName = new JLabel("Name: " + details[0]);
-        JLabel jlWohnort = new JLabel("Wohnort: " + details[1]);
-        JLabel jlPLZ = new JLabel("Plz: " + details[2]);
-        JLabel jlAutoName = new JLabel("Auto Name: " + details[3]);
-        JLabel jlCO2 = new JLabel("CO2/100km: " + details[4]);
-        JLabel jlAutoKMH = new JLabel( "Auto km/h: " + details[5]);
-        JLabel jlFahrradKMH = new JLabel( "Fahrrad km/h: " + details[6]);
-        JLabel jlWetter = new JLabel("Wetter: " + facade.current_weather());
-        jl.setBounds(60,0, 60,60);
-        jlName.setBounds(15,30, 200,60);
-        jlWohnort.setBounds(15,47, 200,60);
-        jlPLZ.setBounds(15,64, 200,60);
-        jlAutoName.setBounds(15,81, 200,60);
-        jlCO2.setBounds(15,98, 200,60);
-        jlAutoKMH.setBounds(15,115, 200,60);
-        jlFahrradKMH.setBounds(15,132, 200,60);
-        jlWetter.setBounds(15,149, 200,60);
+        JLabel jlName = new JLabel("Nutzername:");
+        JLabel jlNameText = new JLabel(details[0]);
+        JLabel jlWohnort = new JLabel("Zieladresse:");
+        JLabel jlWohnortText = new JLabel(details[2] + "," + details[1]);
+        JLabel jlWetter = new JLabel("Wettervorhersage:");
+        JLabel jlWetterText = new JLabel(facade.current_weather());
+        jl.setBounds(90,0, 60,60);
+        jlName.setBounds(60,30, 200,60);
+        jlNameText.setBounds(60,44, 200,60);
+        jlWohnort.setBounds(60,70, 200,60);
+        jlWohnortText.setBounds(60,84, 200,60);
+        jlWetter.setBounds(60,110, 200,60);
+        jlWetterText.setBounds(60,124, 200,60);
 
         jp.add(jl);
         jp.add(jlName);
+        jp.add(jlNameText);
         jp.add(jlWohnort);
-        jp.add(jlPLZ);
-        jp.add(jlAutoName);
-        jp.add(jlCO2);
-        jp.add(jlAutoKMH);
-        jp.add(jlFahrradKMH);
+        jp.add(jlWohnortText);
         jp.add(jlWetter);
+        jp.add(jlWetterText);
 
         profile = jp;
     }
@@ -270,12 +266,7 @@ public class Main extends JFrame {
         JButton jb = new JButton("OK");
         jb.setFocusable(false);
 
-        jb.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                errorMessage.dispose();
-            }
-        });
+        jb.addActionListener(e -> errorMessage.dispose());
         jp.add(BorderLayout.CENTER, jl);
         jp.add(BorderLayout.SOUTH, jb);
         errorMessage.add(jp);
@@ -533,19 +524,23 @@ public class Main extends JFrame {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 JFrame jf = new JFrame();
-                                JPanel jp = new JPanel(new FlowLayout());
+                                JPanel jp = new JPanel();
+                                jp.setLayout(null);
                                 String[] details = facade.destination_details(plz);
-                                for (String ss : details) {
-                                    JLabel jl = new JLabel(ss);
-                                    jp.add(jl);
-                                }
+
+
+
+
+
                                 jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                                 jf.add(jp);
-                                jf.setSize(100, 400);
+                                jf.setSize(300, 300);
                                 jf.setVisible(true);
                             }
                         });
                         destinationButtonsProxy.add(jb);
+                        JLabel placeholder = new JLabel("");
+                        destinationButtonsProxy.add(placeholder);
                     }
                     destinationButtons = destinationButtonsProxy;
                     destinationButtons.revalidate();
@@ -555,7 +550,7 @@ public class Main extends JFrame {
                     } catch (Exception jspNotYetIncluded) {
                     }
                     jsp = new JScrollPane(destinationButtons);
-                    jsp.setBounds(40, 110, 244, 336);
+                    jsp.setBounds(40, 110, 256, 336);
                     jsp.revalidate();
                     jsp.repaint();
                     menu.add(jsp);
@@ -600,7 +595,47 @@ public class Main extends JFrame {
         randDestinationsCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // implementiere Änderung vom Panel
+                ArrayList<String> orte = facade.random_destinations_car();
+                JPanel destinationButtonsProxy = new JPanel();
+                destinationButtonsProxy.setLayout(new BoxLayout(destinationButtonsProxy, BoxLayout.Y_AXIS));
+                    for (String s : orte) {
+                        String[] ortUndPLZ = s.split(";");
+                        String plz = ortUndPLZ[0];
+                        String address = ortUndPLZ[1] + "," + plz + "    " + facade.distance(plz);
+                        JButton jb = new JButton(address);
+                        jb.setPreferredSize(new Dimension(290, 40));
+                        jb.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JFrame jf = new JFrame();
+                                JPanel jp = new JPanel(new FlowLayout());
+                                String[] details = facade.destination_details(plz);
+                                for (String ss : details) {
+                                    JLabel jl = new JLabel(ss);
+                                    jp.add(jl);
+                                }
+                                jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                                jf.add(jp);
+                                jf.setSize(200, 200);
+                                jf.setVisible(true);
+                            }
+                        });
+                        destinationButtonsProxy.add(jb);
+                    }
+                    destinationButtons = destinationButtonsProxy;
+                    destinationButtons.revalidate();
+                    destinationButtons.repaint();
+                    try {
+                        menu.remove(jsp);
+                    } catch (Exception jspNotYetIncluded) {
+                    }
+                    jsp = new JScrollPane(destinationButtons);
+                    jsp.setBounds(40, 110, 244, 336);
+                    jsp.revalidate();
+                    jsp.repaint();
+                    menu.add(jsp);
+                    menu.revalidate();
+                    menu.repaint();
             }
         });
     }
@@ -618,7 +653,47 @@ public class Main extends JFrame {
         randDestinationsBikeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // implementiere Änderung vom Panel
+                ArrayList<String> orte = facade.random_destinations_bike();
+                JPanel destinationButtonsProxy = new JPanel();
+                destinationButtonsProxy.setLayout(new BoxLayout(destinationButtonsProxy, BoxLayout.Y_AXIS));
+                for (String s : orte) {
+                    String[] ortUndPLZ = s.split(";");
+                    String plz = ortUndPLZ[0];
+                    String address = ortUndPLZ[1] + "," + plz + "    " + facade.distance(plz);
+                    JButton jb = new JButton(address);
+                    jb.setPreferredSize(new Dimension(290, 40));
+                    jb.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            JFrame jf = new JFrame();
+                            JPanel jp = new JPanel(new FlowLayout());
+                            String[] details = facade.destination_details(plz);
+                            for (String ss : details) {
+                                JLabel jl = new JLabel(ss);
+                                jp.add(jl);
+                            }
+                            jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                            jf.add(jp);
+                            jf.setSize(200, 200);
+                            jf.setVisible(true);
+                        }
+                    });
+                    destinationButtonsProxy.add(jb);
+                }
+                destinationButtons = destinationButtonsProxy;
+                destinationButtons.revalidate();
+                destinationButtons.repaint();
+                try {
+                    menu.remove(jsp);
+                } catch (Exception jspNotYetIncluded) {
+                }
+                jsp = new JScrollPane(destinationButtons);
+                jsp.setBounds(40, 110, 244, 336);
+                jsp.revalidate();
+                jsp.repaint();
+                menu.add(jsp);
+                menu.revalidate();
+                menu.repaint();
             }
         });
     }
@@ -841,12 +916,6 @@ public class Main extends JFrame {
                 jframe.setSize(new Dimension(450, 160));
             }
         });
-    }
-
-    public void jspCreate(){
-        jsp = new JScrollPane();
-        jsp.setSize(100,100);
-
     }
 
     private String getTextfieldContent(JPanel panel, String name) {
