@@ -555,11 +555,11 @@ public class System {
             result[1] = "Es ist ein Fehler aufgetreten!";
             result[2] = "Es ist ein Fehler aufgetreten!";
         } else {
-            result[0] = day1date + " " + weather_day_1 + " H: " + temperature_day_1_high + "°C" + " T: "
+            result[0] = day1date + ": " + weather_day_1 + " H: " + temperature_day_1_high + "°C" + " T: "
                     + temperature_day_1_low + "°C";
-            result[1] = day2date + " " + weather_day_2 + " H: " + temperature_day_2_high + "°C" + " T: "
+            result[1] = day2date + ": " + weather_day_2 + " H: " + temperature_day_2_high + "°C" + " T: "
                     + temperature_day_2_low + "°C";
-            result[2] = day3date + " " + weather_day_3 + " H: " + temperature_day_3_high + "°C" + " T: "
+            result[2] = day3date + ": " + weather_day_3 + " H: " + temperature_day_3_high + "°C" + " T: "
                     + temperature_day_3_low + "°C";
         }
 
