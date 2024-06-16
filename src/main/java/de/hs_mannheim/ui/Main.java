@@ -48,7 +48,7 @@ public class Main extends JFrame {
     private JPanel registerCarCO2;
     private JPanel registerBikeSpeed;
     private JButton registerConfirmButton;
-    private JButton registerZurückButton;
+    private JButton registerBackButton;
 
     private JLabel menuLabel;
     private JPanel menu;
@@ -133,7 +133,7 @@ public class Main extends JFrame {
         registerCarCO2Create();
         registerBikeSpeedCreate();
         registerConfirmButtonCreate();
-        registerZurückButtonCreate();
+        registerBackButtonCreate();
         registerScreen.add(registerLabel);
         registerScreen.add(registerName);
         registerScreen.add(registerPassword);
@@ -145,10 +145,10 @@ public class Main extends JFrame {
         registerScreen.add(registerCarCO2);
         registerScreen.add(registerBikeSpeed);
         registerScreen.add(registerConfirmButton);
-        registerScreen.add(registerZurückButton);
+        registerScreen.add(registerBackButton);
 
         menu = new JPanel(null);
-        menuLabel = new JLabel("Gugl Maps");
+        menuLabel = new JLabel("Travel-Buddy-App");
         menuLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         searchPLZ_ORTCreate();
         searchConfirmButtonCreate();
@@ -236,9 +236,9 @@ public class Main extends JFrame {
         String[] details = facade.getDetails();
         JLabel jlName = new JLabel("Nutzername:");
         JLabel jlNameText = new JLabel(details[0]);
-        JLabel jlWohnort = new JLabel("Zieladresse:");
-        JLabel jlWohnortText = new JLabel(details[2] + "," + details[1]);
-        JLabel jlWetter = new JLabel("Wettervorhersage:");
+        JLabel jlWohnort = new JLabel("Adresse:");
+        JLabel jlWohnortText = new JLabel(details[1] + ", " + details[2]);
+        JLabel jlWetter = new JLabel("Aktuelles Wetter:");
         JLabel jlWetterText = new JLabel(facade.current_weather());
         jl.setBounds(90,0, 60,60);
         jlName.setBounds(60,30, 200,60);
@@ -279,7 +279,7 @@ public class Main extends JFrame {
 
 
     private void loginButtonCreate() {
-        loginButton = new JButton("Login");
+        loginButton = new JButton("Einloggen");
         loginButton.setPreferredSize(new Dimension(150, 50));
         loginButton.setFocusable(false);
         loginButton.addActionListener(new ActionListener() {
@@ -293,7 +293,7 @@ public class Main extends JFrame {
     }
 
     private void registerButtonCreate() {
-        registerButton = new JButton("Register");
+        registerButton = new JButton("Registrieren");
         registerButton.setPreferredSize(new Dimension(150, 50));
         registerButton.setFocusable(false);
         registerButton.addActionListener(new ActionListener() {
@@ -307,7 +307,7 @@ public class Main extends JFrame {
 
     private void loginNameCreate() {
         loginName = new JPanel();
-        JLabel jl = new JLabel("Name");
+        JLabel jl = new JLabel("Nutzername");
         JTextField tf = new JTextField(10);
         tf.setName("loginNameText");
         loginName.add(jl);
@@ -324,7 +324,7 @@ public class Main extends JFrame {
     }
 
     private void loginConfirmButtonCreate() {
-        loginConfirmButton = new JButton("Confirm");
+        loginConfirmButton = new JButton("Bestätigen");
         loginConfirmButton.setPreferredSize(new Dimension(80, 20));
         loginConfirmButton.setFocusable(false);
         loginConfirmButton.addActionListener(new ActionListener() {
@@ -353,7 +353,7 @@ public class Main extends JFrame {
     }
 
     private void loginZurückButtonCreate() {
-        loginBackButton = new JButton("Back");
+        loginBackButton = new JButton("Zurück");
         loginBackButton.setPreferredSize(new Dimension(80, 20));
         loginBackButton.setFocusable(false);
         loginBackButton.addActionListener(new ActionListener() {
@@ -367,7 +367,7 @@ public class Main extends JFrame {
 
     private void registerNameCreate() {
         registerName = new JPanel();
-        JLabel jl = new JLabel("                   Name");
+        JLabel jl = new JLabel("                   Nutzername");
         JTextField tf = new JTextField(10);
         tf.setName("registerNameText");
         registerName.add(jl);
@@ -385,7 +385,7 @@ public class Main extends JFrame {
 
     private void registerPasswordTwoCreate() {
         registerPasswordTwo = new JPanel();
-        JLabel jl = new JLabel("    Passwort best.");
+        JLabel jl = new JLabel("    Passwort bestätigen");
         JTextField tf = new JTextField(10);
         tf.setName("registerPasswordTwoText");
         registerPasswordTwo.add(jl);
@@ -394,7 +394,7 @@ public class Main extends JFrame {
 
     private void registerOrtCreate() {
         registerOrt = new JPanel();
-        JLabel jl = new JLabel("                        Ort");
+        JLabel jl = new JLabel("                        Heimatort");
         JTextField tf = new JTextField(10);
         tf.setName("registerOrtText");
         registerOrt.add(jl);
@@ -403,7 +403,7 @@ public class Main extends JFrame {
 
     private void registerPLZCreate() {
         registerPLZ = new JPanel();
-        JLabel jl = new JLabel("                       PLZ");
+        JLabel jl = new JLabel("                       Postleitzahl");
         JTextField tf = new JTextField(10);
         tf.setName("registerPLZText");
         registerPLZ.add(jl);
@@ -421,7 +421,7 @@ public class Main extends JFrame {
 
     private void registerCarSpeedCreate() {
         registerCarSpeed = new JPanel();
-        JLabel jl = new JLabel("             Auto km/h");
+        JLabel jl = new JLabel("             Auto Durchschnittsgeschwindigkeit in km/h");
         JTextField tf = new JTextField(10);
         tf.setName("registerCarSpeedText");
         registerCarSpeed.add(jl);
@@ -430,7 +430,7 @@ public class Main extends JFrame {
 
     private void registerCarCO2Create() {
         registerCarCO2 = new JPanel();
-        JLabel jl = new JLabel("Verbrauch/100km");
+        JLabel jl = new JLabel("Kraftstoffverbrauch in l/100km");
         JTextField tf = new JTextField(10);
         tf.setName("registerCarCO2Text");
         registerCarCO2.add(jl);
@@ -439,7 +439,7 @@ public class Main extends JFrame {
 
     private void registerBikeSpeedCreate() {
         registerBikeSpeed = new JPanel();
-        JLabel jl = new JLabel("             Bike km/h");
+        JLabel jl = new JLabel("             Fahrrad Durchschnittsgeschwindigkeit in km/h");
         JTextField tf = new JTextField(10);
         tf.setName("registerBikeSpeedText");
         registerBikeSpeed.add(jl);
@@ -448,7 +448,7 @@ public class Main extends JFrame {
 
     private void registerConfirmButtonCreate() {
         registerConfirmButton = new JButton();
-        registerConfirmButton = new JButton("Confirm");
+        registerConfirmButton = new JButton("Bestätigen");
         registerConfirmButton.setPreferredSize(new Dimension(80, 20));
         registerConfirmButton.setFocusable(false);
         registerConfirmButton.addActionListener(new ActionListener() {
@@ -498,11 +498,11 @@ public class Main extends JFrame {
         });
     }
 
-    private void registerZurückButtonCreate() {
-        registerZurückButton = new JButton("Back");
-        registerZurückButton.setPreferredSize(new Dimension(80, 20));
-        registerZurückButton.setFocusable(false);
-        registerZurückButton.addActionListener(new ActionListener() {
+    private void registerBackButtonCreate() {
+        registerBackButton = new JButton("Zurück");
+        registerBackButton.setPreferredSize(new Dimension(80, 20));
+        registerBackButton.setFocusable(false);
+        registerBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "1");
@@ -513,7 +513,7 @@ public class Main extends JFrame {
 
     private void searchPLZ_ORTCreate() {
         searchPLZ_ORT = new JPanel();
-        JLabel jl = new JLabel("Plz oder Ort");
+        JLabel jl = new JLabel("Postleitzahl oder Ort");
         JTextField tf = new JTextField(28);
         tf.setName("ortSuche");
         searchPLZ_ORT.add(jl);
@@ -540,8 +540,8 @@ public class Main extends JFrame {
                     for (String s : orte) {
                         String[] ortUndPLZ = s.split(";");
                         String plz = ortUndPLZ[0];
-                        String address = ortUndPLZ[1] + "," + plz + "    " + facade.distance(plz);
-                        JButton jb = new JButton(address);
+                        String address = plz + ", " + ortUndPLZ[1];
+                        JButton jb = new JButton(address + ": " + facade.distance(plz));
                         jb.setPreferredSize(new Dimension(290, 40));
                         jb.addActionListener(new ActionListener() {
                             @Override
@@ -563,14 +563,14 @@ public class Main extends JFrame {
                                 JLabel jlAutoVerbrauchText = new JLabel(details[5]);
                                 JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
                                 JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
-                                if(details[4].equals("")){
-                                    jlAutoDauerText.setText("---");
-                                }
-                                if(details[5].equals("")){
-                                    jlAutoVerbrauchText.setText("---");
+                                if(details[4].equals("")&&details[5].equals("")){
+                                    jlReisedauerUndKraftstoffverbrauch.setText("");
+                                    jlAutoDauerText.setText("");
+                                    jlAutoVerbrauchText.setText("");
                                 }
                                 if(details[6].equals("")){
-                                    jlReisedauerMitFahrradText.setText("---");
+                                    jlReisedauerMitFahrrad.setText("");
+                                    jlReisedauerMitFahrradText.setText("");
                                 }
                                 jlAddress.setBounds(4, 0, 300, 20);
                                 jlAddressText.setBounds(4, 12, 300, 20);
@@ -669,8 +669,8 @@ public class Main extends JFrame {
                     for (String s : orte) {
                         String[] ortUndPLZ = s.split(";");
                         String plz = ortUndPLZ[0];
-                        String address = ortUndPLZ[1] + "," + plz + "    " + facade.distance(plz);
-                        JButton jb = new JButton(address);
+                        String address = plz + ", " + ortUndPLZ[1];
+                        JButton jb = new JButton(address + ": " + facade.distance(plz));
                         jb.setPreferredSize(new Dimension(290, 40));
                         jb.addActionListener(new ActionListener() {
                             @Override
@@ -679,7 +679,7 @@ public class Main extends JFrame {
                                 JPanel jp = new JPanel();
                                 jp.setLayout(null);
                                 String[] details = facade.destination_details(plz);
-                                JLabel jlAddress = new JLabel("Zieladresse:");
+                                JLabel jlAddress = new JLabel("Adresse:");
                                 JLabel jlAddressText = new JLabel(address);
                                 JLabel jlWettervorhersage = new JLabel("Wettervorhersage:");
                                 JLabel jlWettervorhersageTextOne = new JLabel(details[0]);
@@ -687,19 +687,19 @@ public class Main extends JFrame {
                                 JLabel jlWettervorhersageTextThree = new JLabel(details[2]);
                                 JLabel jlEntfernung = new JLabel("Entfernung:");
                                 JLabel jlEntfernungText = new JLabel(details[3]);
-                                JLabel jlReisedauerUndKraftstoffverbrauch = new JLabel("Reisedauer und Kraftstoffverbrauch Auto:");
+                                JLabel jlReisedauerUndKraftstoffverbrauch = new JLabel("Reisedauer und Kraftstoffverbrauch mit Auto:");
                                 JLabel jlAutoDauerText = new JLabel(details[4]);
                                 JLabel jlAutoVerbrauchText = new JLabel(details[5]);
                                 JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
                                 JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
-                                if(details[4].equals("")){
-                                    jlAutoDauerText.setText("---");
-                                }
-                                if(details[5].equals("")){
-                                    jlAutoVerbrauchText.setText("---");
+                                if(details[4].equals("")&&details[5].equals("")){
+                                    jlReisedauerUndKraftstoffverbrauch.setText("");
+                                    jlAutoDauerText.setText("");
+                                    jlAutoVerbrauchText.setText("");
                                 }
                                 if(details[6].equals("")){
-                                    jlReisedauerMitFahrradText.setText("---");
+                                    jlReisedauerMitFahrrad.setText("");
+                                    jlReisedauerMitFahrradText.setText("");
                                 }
                                 jlAddress.setBounds(4, 0, 300, 20);
                                 jlAddressText.setBounds(4, 12, 300, 20);
@@ -774,8 +774,8 @@ public class Main extends JFrame {
                 for (String s : orte) {
                     String[] ortUndPLZ = s.split(";");
                     String plz = ortUndPLZ[0];
-                    String address = ortUndPLZ[1] + "," + plz + "    " + facade.distance(plz);
-                    JButton jb = new JButton(address);
+                    String address = plz + ", " + ortUndPLZ[1];
+                    JButton jb = new JButton(address + ": " + facade.distance(plz));
                     jb.setPreferredSize(new Dimension(290, 40));
                     jb.addActionListener(new ActionListener() {
                         @Override
@@ -797,14 +797,14 @@ public class Main extends JFrame {
                             JLabel jlAutoVerbrauchText = new JLabel(details[5]);
                             JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
                             JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
-                            if(details[4].equals("")){
-                                jlAutoDauerText.setText("---");
-                            }
-                            if(details[5].equals("")){
-                                jlAutoVerbrauchText.setText("---");
+                            if(details[4].equals("")&&details[5].equals("")){
+                                jlReisedauerUndKraftstoffverbrauch.setText("");
+                                jlAutoDauerText.setText("");
+                                jlAutoVerbrauchText.setText("");
                             }
                             if(details[6].equals("")){
-                                jlReisedauerMitFahrradText.setText("---");
+                                jlReisedauerMitFahrrad.setText("");
+                                jlReisedauerMitFahrradText.setText("");
                             }
                             jlAddress.setBounds(4, 0, 300, 20);
                             jlAddressText.setBounds(4, 12, 300, 20);
@@ -861,7 +861,7 @@ public class Main extends JFrame {
     }
 
     private void changeDetailsButtonCreate() {
-        changeDetailsButton = new JButton("Daten ändern");
+        changeDetailsButton = new JButton("Nutzerdaten ändern");
         changeDetailsButton.setPreferredSize(new Dimension(150, 50));
         changeDetailsButton.setFocusable(false);
         changeDetailsButton.addActionListener(new ActionListener() {
@@ -902,7 +902,7 @@ public class Main extends JFrame {
 
     public void changeNameCreate(){
         changeName = new JPanel();
-        JLabel jl = new JLabel("                          Name");
+        JLabel jl = new JLabel("                          Nutzername");
         JTextField tf = new JTextField(10);
         tf.setName("changeNameText");
         changeName.add(jl);
@@ -911,7 +911,7 @@ public class Main extends JFrame {
 
     public void changeOrtCreate(){
         changeOrt = new JPanel();
-        JLabel jl = new JLabel("                             Ort");
+        JLabel jl = new JLabel("                             Heimatort");
         JTextField tf = new JTextField(10);
         tf.setName("changeOrtText");
         changeOrt.add(jl);
@@ -920,7 +920,7 @@ public class Main extends JFrame {
 
     public void changePLZCreate(){
         changePLZ = new JPanel();
-        JLabel jl = new JLabel("                            PLZ");
+        JLabel jl = new JLabel("                            Postleitzahl");
         JTextField tf = new JTextField(10);
         tf.setName("changePLZText");
         changePLZ.add(jl);
@@ -938,7 +938,7 @@ public class Main extends JFrame {
 
     public void changeCarCO2Create(){
         changeCarCO2 = new JPanel();
-        JLabel jl = new JLabel("                   Auto CO2");
+        JLabel jl = new JLabel("                   Kraftstoffverbrauch Auto in l/100km ");
         JTextField tf = new JTextField(10);
         tf.setName("changeCarCO2Text");
         changeCarCO2.add(jl);
@@ -947,7 +947,7 @@ public class Main extends JFrame {
 
     public void changeCarSpeedCreate(){
         changeCarSpeed = new JPanel();
-        JLabel jl = new JLabel("           Auto Geschw.");
+        JLabel jl = new JLabel("           Auto Durchschnittseschwindigkeit in km/h");
         JTextField tf = new JTextField(10);
         tf.setName("changeCarSpeedText");
         changeCarSpeed.add(jl);
@@ -956,7 +956,7 @@ public class Main extends JFrame {
 
     public void changeBikeSpeedCreate(){
         changeBikeSpeed = new JPanel();
-        JLabel jl = new JLabel("      Fahrrad Geschw.");
+        JLabel jl = new JLabel("      Fahrrad Durchschnittseschwindigkeit in km/h");
         JTextField tf = new JTextField(10);
         tf.setName("changeBikeSpeedText");
         changeBikeSpeed.add(jl);
@@ -964,7 +964,7 @@ public class Main extends JFrame {
     }
 
     public void changeConfirmButtonCreate(){
-        changeConfirmButton = new JButton("Confirm");
+        changeConfirmButton = new JButton("Bestätigen");
         changeConfirmButton.setSize(80, 20);
         changeConfirmButton.setFocusable(false);
         changeConfirmButton.addActionListener(new ActionListener() {
@@ -1024,7 +1024,7 @@ public class Main extends JFrame {
 
     public void changePasswordOldPasswordCreate(){
         changePasswordOldPassword = new JPanel();
-        JLabel jl = new JLabel("           Altes Passwort");
+        JLabel jl = new JLabel("           Aktuelles Passwort");
         JTextField tf = new JTextField(10);
         tf.setName("changePasswordOldPasswordText");
         changePasswordOldPassword.add(jl);
@@ -1033,7 +1033,7 @@ public class Main extends JFrame {
 
     public void changePasswordNewPasswordCreate(){
         changePasswordNewPassword = new JPanel();
-        JLabel jl = new JLabel("           Neue Passowrt");
+        JLabel jl = new JLabel("           Neues Passwort");
         JTextField tf = new JTextField(10);
         tf.setName("changePasswordNewPasswordText");
         changePasswordNewPassword.add(jl);
@@ -1042,7 +1042,7 @@ public class Main extends JFrame {
 
     public void changePasswordConfirmNewPasswordCreate(){
         changePasswordConfirmNewPassword = new JPanel();
-        JLabel jl = new JLabel("Best. neues Passwort");
+        JLabel jl = new JLabel("Neues Passwort bestätigen");
         JTextField tf = new JTextField(10);
         tf.setName("changePasswordConfirmNewPasswordText");
         changePasswordConfirmNewPassword.add(jl);
@@ -1063,7 +1063,7 @@ public class Main extends JFrame {
     }
 
     public void changePasswordConfirmButtonCreate(){
-        changePasswordConfirmButton = new JButton("Confirm");
+        changePasswordConfirmButton = new JButton("Bestätigen");
         changePasswordConfirmButton.setSize(80, 20);
         changePasswordConfirmButton.setFocusable(false);
         changePasswordConfirmButton.addActionListener(new ActionListener() {
@@ -1090,7 +1090,7 @@ public class Main extends JFrame {
     }
 
     private void logOutButtonCreate() {
-        logOutButton = new JButton("Logout");
+        logOutButton = new JButton("Ausloggen");
         logOutButton.setPreferredSize(new Dimension(150, 50));
         logOutButton.setFocusable(false);
         logOutButton.addActionListener(new ActionListener() {
