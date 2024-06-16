@@ -14,6 +14,7 @@ public class Main extends JFrame {
     public static void main(String[] args) {
         Main main = new Main("35a75437476f12302f72e55d368485db");
     }
+    
     private Application facade;
 
     private JFrame jframe;
@@ -524,7 +525,7 @@ public class Main extends JFrame {
         searchConfirmButton.setPreferredSize(new Dimension(150, 80));
         searchConfirmButton.setFocusable(false);
 
-        ImageIcon icon = png("/lupe.png", 20, 20);
+        ImageIcon icon = png("/magnifier.png", 20, 20);
         searchConfirmButton.setIcon(icon);
         searchConfirmButton.setText(" Suche");
         searchConfirmButton.setIconTextGap(3);
@@ -654,7 +655,7 @@ public class Main extends JFrame {
         randDestinationsCarButton.setPreferredSize(new Dimension(150, 80));
         randDestinationsCarButton.setFocusable(false);
 
-        ImageIcon icon = png("/auto.png", 20, 20);
+        ImageIcon icon = png("/car.png", 20, 20);
         randDestinationsCarButton.setIcon(icon);
         randDestinationsCarButton.setText("Kurztrip");
         randDestinationsCarButton.setIconTextGap(3);
@@ -759,7 +760,7 @@ public class Main extends JFrame {
         randDestinationsBikeButton.setPreferredSize(new Dimension(150, 80));
         randDestinationsBikeButton.setFocusable(false);
 
-        ImageIcon icon = png("/fahrrad.png", 20, 20);
+        ImageIcon icon = png("/bike.png", 20, 20);
         randDestinationsBikeButton.setIcon(icon);
         randDestinationsBikeButton.setText("Kurztrip");
         randDestinationsBikeButton.setIconTextGap(3);
