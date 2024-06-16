@@ -43,8 +43,8 @@ public class System {
 
     public static String decoding(String string) {
         byte[] binary_data = new byte[string.length()];
-        for(int i = 0; i < string.length(); i++) {
-            binary_data[i] = (byte)string.charAt(i);
+        for (int i = 0; i < string.length(); i++) {
+            binary_data[i] = (byte) string.charAt(i);
         }
         return new String(Base64.decodeBase64(binary_data));
     }
@@ -58,12 +58,12 @@ public class System {
     }
 
     public static double parseDouble(String s) throws NumberFormatException {
-        if(s.equals(""))
+        if (s.equals(""))
             return 0;
         else
             return Double.parseDouble(s);
     }
-    
+
     public void get_all_user() {
         String[] fileString = new String[8];
 
@@ -81,21 +81,21 @@ public class System {
                         Double.parseDouble(fileString[7])));
             }
         } catch (Exception e) {
-        //
+            //
         }
     }
 
-    public ArrayList<String> all_user_toString(){
+    public ArrayList<String> all_user_toString() {
 
         ArrayList<String> result = new ArrayList<>();
 
-        for(User user : this.all_user){
+        for (User user : this.all_user) {
             result.add(user.toString());
         }
 
         return result;
     }
-    
+
     public boolean sign_in_user(String username, String password) {
 
         for (User user : this.all_user) {
@@ -111,45 +111,46 @@ public class System {
         return false;
     }
 
-    public boolean sign_up_user(String username, String password, String password_authentication, String hometown, String zip,
-                                String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
+    public boolean sign_up_user(String username, String password, String password_authentication, String hometown,
+            String zip,
+            String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS) {
 
         double car_l_100km;
         double car_avg_kmh;
         double bike_avg_kmh;
-    
-        try{
+
+        try {
             car_l_100km = parseDouble(car_l_100kmS);
             car_avg_kmh = parseDouble(car_avg_kmhS);
             bike_avg_kmh = parseDouble(bike_avg_kmhS);
-        } catch (NumberFormatException n){
+        } catch (NumberFormatException n) {
             return false;
         }
 
-        if(username.equals("")||password.equals("")||hometown.equals("")||zip.equals(""))
+        if (username.equals("") || password.equals("") || hometown.equals("") || zip.equals(""))
             return false;
 
-        if(!password.equals(password_authentication))
+        if (!password.equals(password_authentication))
             return false;
 
-        for(User user: this.all_user)
-            if(user.getUsername().equals(username))
+        for (User user : this.all_user)
+            if (user.getUsername().equals(username))
                 return false;
 
         ArrayList<String> mem = search(zip);
         boolean bool = false;
 
-        for (String line: mem)
-            if(line.split(";")[1].equals(hometown)) {
+        for (String line : mem)
+            if (line.split(";")[1].equals(hometown)) {
                 bool = true;
                 break;
             }
 
-        if(!bool)
+        if (!bool)
             return false;
 
         current_user = new User(username, password, hometown, zip, car_name, car_l_100km, car_avg_kmh, bike_avg_kmh);
-        
+
         this.all_user.add(current_user);
 
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
@@ -158,55 +159,55 @@ public class System {
         all_distances();
         return true;
     }
-    
-    public boolean change_user_details(String username, String password, String hometown, String zip, 
-                                    String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS){
-        
+
+    public boolean change_user_details(String username, String password, String hometown, String zip,
+            String car_name, String car_l_100kmS, String car_avg_kmhS, String bike_avg_kmhS) {
+
         double car_l_100km;
         double car_avg_kmh;
         double bike_avg_kmh;
-        
-        try{
+
+        try {
             car_l_100km = parseDouble(car_l_100kmS);
             car_avg_kmh = parseDouble(car_avg_kmhS);
             bike_avg_kmh = parseDouble(bike_avg_kmhS);
-        } catch (NumberFormatException n){
+        } catch (NumberFormatException n) {
             return false;
         }
-        
-        if(!current_user.getPassword().equals(password))
+
+        if (!current_user.getPassword().equals(password))
             return false;
 
-        if(username.equals("")||hometown.equals("")||zip.equals(""))
+        if (username.equals("") || hometown.equals("") || zip.equals(""))
             return false;
-        
-        if(!current_user.getUsername().equals(username)){
-            for(User user: this.all_user)
-                if(user.getUsername().equals(username))
+
+        if (!current_user.getUsername().equals(username)) {
+            for (User user : this.all_user)
+                if (user.getUsername().equals(username))
                     return false;
         }
-        
+
         ArrayList<String> mem = search(zip);
         boolean bool = false;
 
-        for (String line: mem)
-            if(line.split(";")[1].equals(hometown)) {
+        for (String line : mem)
+            if (line.split(";")[1].equals(hometown)) {
                 bool = true;
                 break;
             }
 
-        if(!bool)
+        if (!bool)
             return false;
-        
-        
-        for(int i = 0; i< this.all_user.size(); i++)
-            if(this.all_user.get(i).getUsername().equals(current_user.getUsername()))
+
+        for (int i = 0; i < this.all_user.size(); i++)
+            if (this.all_user.get(i).getUsername().equals(current_user.getUsername()))
                 this.all_user.remove(i);
-        
+
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
         write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
-        
-        this.current_user = new User(username, password, hometown, zip, car_name, car_l_100km, car_avg_kmh, bike_avg_kmh);
+
+        this.current_user = new User(username, password, hometown, zip, car_name, car_l_100km, car_avg_kmh,
+                bike_avg_kmh);
         this.all_user.add(current_user);
 
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
@@ -216,31 +217,31 @@ public class System {
         return true;
 
     }
-    
-    public boolean change_user_password(String old_password, String new_password, String new_password_authentication){
-        if(!this.current_user.getPassword().equals(old_password))
+
+    public boolean change_user_password(String old_password, String new_password, String new_password_authentication) {
+        if (!this.current_user.getPassword().equals(old_password))
             return false;
-        
-        if(!new_password.equals(new_password_authentication))
-            return false;    
-        
-        for(int i = 0; i< this.all_user.size(); i++)
-            if(this.all_user.get(i).getUsername().equals(current_user.getUsername()))
+
+        if (!new_password.equals(new_password_authentication))
+            return false;
+
+        for (int i = 0; i < this.all_user.size(); i++)
+            if (this.all_user.get(i).getUsername().equals(current_user.getUsername()))
                 this.all_user.remove(i);
-        
+
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
         write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
-        
+
         this.current_user.setPassword(new_password);
         this.all_user.add(current_user);
 
         write_to_file(all_user_toString(), "src/main/resources/user_data.csv");
         write_to_file(all_user_toString(), "src/test/resources/user_data.csv");
-        
+
         return true;
 
     }
-    
+
     public void write_to_file(ArrayList<String> lines, String file) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < lines.size() - 1; i++) {
@@ -249,7 +250,7 @@ public class System {
             }
             writer.write(lines.getLast());
         } catch (IOException e) {
-        //
+            //
         }
     }
 
@@ -257,12 +258,12 @@ public class System {
         current_user = new User();
     }
 
-    public String[] getDetails(){
-        return new String[]{current_user.getUsername(), current_user.getHometown(), 
-                current_user.getZip(), current_user.getCar_name(), 
-                current_user.getCar_l_100km()==0?"":String.valueOf(current_user.getCar_l_100km()),
-                current_user.getCar_avg_kmh()==0?"":String.valueOf(current_user.getCar_avg_kmh()), 
-                current_user.getBike_avg_kmh()==0?"":String.valueOf(current_user.getBike_avg_kmh())};
+    public String[] getDetails() {
+        return new String[] { current_user.getUsername(), current_user.getHometown(),
+                current_user.getZip(), current_user.getCar_name(),
+                current_user.getCar_l_100km() == 0 ? "" : String.valueOf(current_user.getCar_l_100km()),
+                current_user.getCar_avg_kmh() == 0 ? "" : String.valueOf(current_user.getCar_avg_kmh()),
+                current_user.getBike_avg_kmh() == 0 ? "" : String.valueOf(current_user.getBike_avg_kmh()) };
     }
 
     public ArrayList<String> search(String hometown_or_zip) {
@@ -275,11 +276,11 @@ public class System {
             String line;
             while ((line = reader.readLine()) != null && zip_set.size() < 200) {
                 line = line.replace("\"", "");
-                if (line.split(";")[0].contains(hometown_or_zip)||line.split(";")[1].contains(hometown_or_zip)) 
+                if (line.split(";")[0].contains(hometown_or_zip) || line.split(";")[1].contains(hometown_or_zip))
                     zip_set.add(line);
             }
         } catch (Exception e) {
-        //
+            //
         }
 
         return new ArrayList<>(zip_set);
@@ -291,12 +292,12 @@ public class System {
         ArrayList<String> result = new ArrayList<>();
         int random = 0;
 
-        for(Destination destination: this.all_destinations.values()){
-            if(destination.getDistance_from_user()>150)
+        for (Destination destination : this.all_destinations.values()) {
+            if (destination.getDistance_from_user() > 150)
                 mem.add(destination);
         }
 
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             random = (int) (Math.random() * mem.size());
             result.add(mem.get(random).getZip() + ";" + mem.get(random).getTown());
         }
@@ -309,12 +310,12 @@ public class System {
         ArrayList<String> result = new ArrayList<>();
         int random = 0;
 
-        for(Destination destination: this.all_destinations.values()){
-            if(destination.getDistance_from_user()<100)
+        for (Destination destination : this.all_destinations.values()) {
+            if (destination.getDistance_from_user() < 100)
                 mem.add(destination);
         }
 
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             random = (int) (Math.random() * mem.size());
             result.add(mem.get(random).getZip() + ";" + mem.get(random).getTown());
         }
@@ -322,13 +323,15 @@ public class System {
     }
 
     public String[] destination_details(String destination_zip) {
-        String[] result = new String[5];
+        String[] result = new String[7];
 
-        result[0] = distance(destination_zip); // Entfernung
-        result[1] = travel_time(destination_zip)[0]; // Reisedauer Auto
-        result[2] = travel_time(destination_zip)[1]; // Reisedauer Fahrrad
-        result[3] = calc_l_consumption(destination_zip); // Kraftstoffverbrauch Auto
-        result[4] = weather_forecast(destination_zip); // Wettervorhersage für die nächsten 3 Tage
+        result[1] = weather_forecast(destination_zip)[0]; // Wettervorhersage für die nächsten 3 Tage
+        result[2] = weather_forecast(destination_zip)[1];
+        result[3] = weather_forecast(destination_zip)[2];
+        result[4] = distance(destination_zip); // Entfernung
+        result[5] = travel_time(destination_zip)[0]; // Reisedauer Auto
+        result[6] = calc_l_consumption(destination_zip); // Kraftstoffverbrauch Auto
+        result[7] = travel_time(destination_zip)[1]; // Reisedauer Fahrrad
 
         return result;
     }
@@ -342,7 +345,8 @@ public class System {
             HttpClient http_client = HttpClient.newHttpClient();
 
             HttpRequest get_request = HttpRequest.newBuilder()
-                    .uri(new URI("https://api.openweathermap.org/data/2.5/weather?zip=" + current_user.getZip() + ",de&appid=" + api_key + "&units=metric&lang=de"))
+                    .uri(new URI("https://api.openweathermap.org/data/2.5/weather?zip=" + current_user.getZip()
+                            + ",de&appid=" + api_key + "&units=metric&lang=de"))
                     .GET()
                     .build();
 
@@ -352,21 +356,22 @@ public class System {
             weather = json.getJSONArray("weather").getJSONObject(0).getString("description");
             temperature = json.getJSONObject("main").getDouble("temp");
         } catch (Exception e) {
-        //
+            //
         }
 
         if (weather.equals(""))
             return "Es ist ein Fehler aufgetreten!";
         else
-            return weather + "\n" + temperature + "°C";
+            return weather + " " + temperature + "°C";
 
     }
 
-    public String weather_forecast(String destination_zip) {
-        
+    public String[] weather_forecast(String destination_zip) {
+
         String weather_day_1 = "";
         String weather_day_2 = "";
         String weather_day_3 = "";
+        String[] result = new String[3];
 
         double temperature_day_1_1 = 1;
         double temperature_day_1_2 = 1;
@@ -406,13 +411,14 @@ public class System {
             HttpClient http_client = HttpClient.newHttpClient();
 
             HttpRequest get_request = HttpRequest.newBuilder()
-                    .uri(new URI("https://api.openweathermap.org/data/2.5/forecast?zip=" + destination_zip + ",de&appid=" + api_key + "&units=metric&lang=de"))
+                    .uri(new URI("https://api.openweathermap.org/data/2.5/forecast?zip=" + destination_zip
+                            + ",de&appid=" + api_key + "&units=metric&lang=de"))
                     .GET()
                     .build();
 
             HttpResponse<String> get_response = http_client.send(get_request, BodyHandlers.ofString());
 
-            JSONObject json = new JSONObject(get_response.body()); 
+            JSONObject json = new JSONObject(get_response.body());
 
             int day1_1 = 0;
             int day1_2 = 0;
@@ -429,39 +435,39 @@ public class System {
             int day3_3 = 0;
             int day3_4 = 0;
             int day3_5 = 0;
-            
-            for(int i = 0; i<40; i++){
-                
-                if(json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")){
-                    day1_1 = i + 3;         // 9 Uhr
-                    day1_2 = day1_1 + 1;    // 12 Uhr
-                    day1_3 = day1_2 + 1;    // 15 Uhr
-                    day1_4 = day1_3 + 1;    // 18 Uhr
-                    day1_5 = day1_4 + 1;    // 21 Uhr
+
+            for (int i = 0; i < 40; i++) {
+
+                if (json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")) {
+                    day1_1 = i + 3; // 9 Uhr
+                    day1_2 = day1_1 + 1; // 12 Uhr
+                    day1_3 = day1_2 + 1; // 15 Uhr
+                    day1_4 = day1_3 + 1; // 18 Uhr
+                    day1_5 = day1_4 + 1; // 21 Uhr
                     break;
                 }
             }
 
-            for(int i = day1_5; i<40; i++){
+            for (int i = day1_5; i < 40; i++) {
 
-                if(json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")){
-                    day2_1 = i + 3;         // 9 Uhr
-                    day2_2 = day2_1 + 1;    // 12 Uhr
-                    day2_3 = day2_2 + 1;    // 15 Uhr
-                    day2_4 = day2_3 + 1;    // 18 Uhr
-                    day2_5 = day2_4 + 1;    // 21 Uhr
+                if (json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")) {
+                    day2_1 = i + 3; // 9 Uhr
+                    day2_2 = day2_1 + 1; // 12 Uhr
+                    day2_3 = day2_2 + 1; // 15 Uhr
+                    day2_4 = day2_3 + 1; // 18 Uhr
+                    day2_5 = day2_4 + 1; // 21 Uhr
                     break;
                 }
             }
 
-            for(int i = day2_5 + 1; i<40; i++){
+            for (int i = day2_5 + 1; i < 40; i++) {
 
-                if(json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")){
-                    day3_1 = i + 3;         // 9 Uhr
-                    day3_2 = day3_1 + 1;    // 12 Uhr
-                    day3_3 = day3_2 + 1;    // 15 Uhr
-                    day3_4 = day3_3 + 1;    // 18 Uhr
-                    day3_5 = day3_4 + 1;    // 21 Uhr
+                if (json.getJSONArray("list").getJSONObject(i).getString("dt_txt").split(" ")[1].startsWith("00")) {
+                    day3_1 = i + 3; // 9 Uhr
+                    day3_2 = day3_1 + 1; // 12 Uhr
+                    day3_3 = day3_2 + 1; // 15 Uhr
+                    day3_4 = day3_3 + 1; // 18 Uhr
+                    day3_5 = day3_4 + 1; // 21 Uhr
                     break;
                 }
             }
@@ -473,30 +479,48 @@ public class System {
             day3date = json.getJSONArray("list").getJSONObject(day3_1).getString("dt_txt").split(" ")[0];
             day3date = day3date.split("-")[2] + "." + day3date.split("-")[1] + "." + day3date.split("-")[0];
 
-            weather_day_1 = json.getJSONArray("list").getJSONObject(day1_3).getJSONArray("weather").getJSONObject(0).getString("description");
-            weather_day_2 = json.getJSONArray("list").getJSONObject(day2_3).getJSONArray("weather").getJSONObject(0).getString("description");
-            weather_day_3 = json.getJSONArray("list").getJSONObject(day3_3).getJSONArray("weather").getJSONObject(0).getString("description");
-            
-            temperature_day_1_1 = json.getJSONArray("list").getJSONObject(day1_1).getJSONObject("main").getDouble("temp");
-            temperature_day_1_2 = json.getJSONArray("list").getJSONObject(day1_2).getJSONObject("main").getDouble("temp");
-            temperature_day_1_3 = json.getJSONArray("list").getJSONObject(day1_3).getJSONObject("main").getDouble("temp");
-            temperature_day_1_4 = json.getJSONArray("list").getJSONObject(day1_4).getJSONObject("main").getDouble("temp");
-            temperature_day_1_5 = json.getJSONArray("list").getJSONObject(day1_5).getJSONObject("main").getDouble("temp");
-            
-            temperature_day_2_1 = json.getJSONArray("list").getJSONObject(day2_1).getJSONObject("main").getDouble("temp");
-            temperature_day_2_2 = json.getJSONArray("list").getJSONObject(day2_2).getJSONObject("main").getDouble("temp");
-            temperature_day_2_3 = json.getJSONArray("list").getJSONObject(day2_3).getJSONObject("main").getDouble("temp");
-            temperature_day_2_4 = json.getJSONArray("list").getJSONObject(day2_4).getJSONObject("main").getDouble("temp");
-            temperature_day_2_5 = json.getJSONArray("list").getJSONObject(day2_5).getJSONObject("main").getDouble("temp");
+            weather_day_1 = json.getJSONArray("list").getJSONObject(day1_3).getJSONArray("weather").getJSONObject(0)
+                    .getString("description");
+            weather_day_2 = json.getJSONArray("list").getJSONObject(day2_3).getJSONArray("weather").getJSONObject(0)
+                    .getString("description");
+            weather_day_3 = json.getJSONArray("list").getJSONObject(day3_3).getJSONArray("weather").getJSONObject(0)
+                    .getString("description");
 
-            temperature_day_3_1 = json.getJSONArray("list").getJSONObject(day3_1).getJSONObject("main").getDouble("temp");
-            temperature_day_3_2 = json.getJSONArray("list").getJSONObject(day3_2).getJSONObject("main").getDouble("temp");
-            temperature_day_3_3 = json.getJSONArray("list").getJSONObject(day3_3).getJSONObject("main").getDouble("temp");
-            temperature_day_3_4 = json.getJSONArray("list").getJSONObject(day3_4).getJSONObject("main").getDouble("temp");
-            temperature_day_3_5 = json.getJSONArray("list").getJSONObject(day3_5).getJSONObject("main").getDouble("temp");
+            temperature_day_1_1 = json.getJSONArray("list").getJSONObject(day1_1).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_1_2 = json.getJSONArray("list").getJSONObject(day1_2).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_1_3 = json.getJSONArray("list").getJSONObject(day1_3).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_1_4 = json.getJSONArray("list").getJSONObject(day1_4).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_1_5 = json.getJSONArray("list").getJSONObject(day1_5).getJSONObject("main")
+                    .getDouble("temp");
+
+            temperature_day_2_1 = json.getJSONArray("list").getJSONObject(day2_1).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_2_2 = json.getJSONArray("list").getJSONObject(day2_2).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_2_3 = json.getJSONArray("list").getJSONObject(day2_3).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_2_4 = json.getJSONArray("list").getJSONObject(day2_4).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_2_5 = json.getJSONArray("list").getJSONObject(day2_5).getJSONObject("main")
+                    .getDouble("temp");
+
+            temperature_day_3_1 = json.getJSONArray("list").getJSONObject(day3_1).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_3_2 = json.getJSONArray("list").getJSONObject(day3_2).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_3_3 = json.getJSONArray("list").getJSONObject(day3_3).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_3_4 = json.getJSONArray("list").getJSONObject(day3_4).getJSONObject("main")
+                    .getDouble("temp");
+            temperature_day_3_5 = json.getJSONArray("list").getJSONObject(day3_5).getJSONObject("main")
+                    .getDouble("temp");
 
         } catch (Exception e) {
-        //
+            //
         }
 
         temperature_day_1.add(temperature_day_1_1);
@@ -526,14 +550,22 @@ public class System {
         temperature_day_3_high = (double) temperature_day_3.toArray()[temperature_day_2.size() - 1];
         temperature_day_3_low = (double) temperature_day_3.toArray()[0];
 
-        if (weather_day_1.equals("") || weather_day_2.equals("") || weather_day_3.equals(""))
-            return "Es ist ein Fehler aufgetreten!";
-        else
-            return day1date + "\n" + weather_day_1 + "\nH: " + temperature_day_1_high + "°C" + " T: " + temperature_day_1_low + "°C\n\n"
-                    + day2date + "\n" + weather_day_2 + "\nH: " + temperature_day_2_high + "°C" + " T: " + temperature_day_2_low + "°C\n\n"
-                    + day3date + "\n" + weather_day_3 + "\nH: " + temperature_day_3_high + "°C" + " T: " + temperature_day_3_low + "°C";
+        if (weather_day_1.equals("") || weather_day_2.equals("") || weather_day_3.equals("")) {
+            result[0] = "Es ist ein Fehler aufgetreten!";
+            result[1] = "Es ist ein Fehler aufgetreten!";
+            result[2] = "Es ist ein Fehler aufgetreten!";
+        } else {
+            result[0] = day1date + " " + weather_day_1 + " H: " + temperature_day_1_high + "°C" + " T: "
+                    + temperature_day_1_low + "°C";
+            result[1] = day2date + " " + weather_day_2 + " H: " + temperature_day_2_high + "°C" + " T: "
+                    + temperature_day_2_low + "°C";
+            result[2] = day3date + " " + weather_day_3 + " H: " + temperature_day_3_high + "°C" + " T: "
+                    + temperature_day_3_low + "°C";
+        }
+
+        return result;
     }
-    
+
     public boolean all_distances() {
 
         double lon1 = -1;
@@ -559,7 +591,7 @@ public class System {
                 }
             }
         } catch (Exception e) {
-        //
+            //
         }
 
         InputStream inputStream2 = System.class.getResourceAsStream("/zip.csv");
@@ -571,49 +603,63 @@ public class System {
 
                 lon2 = Double.parseDouble(line.split(";")[2]);
                 lat2 = Double.parseDouble(line.split(";")[3]);
-                
+
                 if (lon1 == -1 || lon2 == -1 || lat1 == -1 || lat2 == -1)
                     return false;
 
                 dLat = lat2 - lat1;
                 dLon = lon2 - lon1;
 
-                a = Math.pow(Math.sin(Math.toRadians(dLat / 2.0)), 2) + Math.pow(Math.sin(Math.toRadians(dLon / 2.0)), 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+                a = Math.pow(Math.sin(Math.toRadians(dLat / 2.0)), 2)
+                        + Math.pow(Math.sin(Math.toRadians(dLon / 2.0)), 2) * Math.cos(Math.toRadians(lat1))
+                                * Math.cos(Math.toRadians(lat2));
 
                 distance = 6378.388 * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a));
 
-                result = Math.round(distance * 1.25 * 1000) / 1000.0;
+                result = Math.round(distance * 1.25 * 100) / 100.0;
 
-                this.all_destinations.put(line.split(";")[0],new Destination(line.split(";")[1],line.split(";")[0], result));
+                this.all_destinations.put(line.split(";")[0],
+                        new Destination(line.split(";")[1], line.split(";")[0], result));
 
             }
         } catch (Exception e) {
-        //
+            //
         }
 
         return true;
     }
 
-    public String distance(String destination_zip){
+    public String distance(String destination_zip) {
 
         return "" + this.all_destinations.get(destination_zip).getDistance_from_user() + " km";
 
     }
-    
+
     public String[] travel_time(String destination_zip) {
 
         String[] result = new String[2];
 
-        result[0] = "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getCar_avg_kmh() * 1000) / 1000.0) + " h";
-        result[1] = "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", "")) / current_user.getBike_avg_kmh() * 1000) / 1000.0) + " h";
+        if (current_user.getCar_avg_kmh() == 0)
+            result[0] = "";
+        else
+            result[0] = "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", ""))
+                    / current_user.getCar_avg_kmh() * 100) / 100.0) + " h";
+
+        if (current_user.getBike_avg_kmh() == 0)
+            result[1] = "";
+        else
+            result[1] = "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", ""))
+                    / current_user.getBike_avg_kmh() * 100) / 100.0) + " h";
 
         return result;
     }
 
     public String calc_l_consumption(String destination_zip) {
 
-        return "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", "")) * current_user.getCar_l_100km() / 100.0 * 1000) / 1000.0) + " l";
+        if (current_user.getCar_l_100km() == 0)
+            return "";
+        return "" + (Math.round(Double.parseDouble(distance(destination_zip).replace(" km", ""))
+                * current_user.getCar_l_100km() / 100.0 * 100) / 100.0) + " l";
 
     }
 }
-
