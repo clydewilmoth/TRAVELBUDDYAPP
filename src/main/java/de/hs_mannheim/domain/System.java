@@ -225,6 +225,9 @@ public class System {
         if (!new_password.equals(new_password_authentication))
             return false;
 
+        if(old_password.equals(new_password))
+            return false;
+
         for (int i = 0; i < this.all_user.size(); i++)
             if (this.all_user.get(i).getUsername().equals(current_user.getUsername()))
                 this.all_user.remove(i);
