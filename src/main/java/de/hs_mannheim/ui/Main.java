@@ -343,6 +343,10 @@ public class Main extends JFrame {
                 else{
                     errorMessageCreate();
                 }
+                JTextField clear = findTextFieldByName(loginName, "loginNameText");
+                clear.setText("");
+                clear = findTextFieldByName(loginPassword, "loginPasswordText");
+                clear.setText("");
             }
         });
     }
@@ -471,6 +475,24 @@ public class Main extends JFrame {
                 else{
                     errorMessageCreate();
                 }
+                JTextField clear = findTextFieldByName(registerName, "registerNameText");
+                clear.setText("");
+                clear = findTextFieldByName(registerPassword, "registerPasswordText");
+                clear.setText("");
+                clear = findTextFieldByName(registerPasswordTwo, "registerPasswordTwoText");
+                clear.setText("");
+                clear = findTextFieldByName(registerOrt, "registerOrtText");
+                clear.setText("");
+                clear = findTextFieldByName(registerPLZ, "registerPLZText");
+                clear.setText("");
+                clear = findTextFieldByName(registerCarName, "registerCarNameText");
+                clear.setText("");
+                clear = findTextFieldByName(registerCarCO2, "registerCarCO2Text");
+                clear.setText("");
+                clear = findTextFieldByName(registerCarSpeed, "registerCarSpeedText");
+                clear.setText("");
+                clear = findTextFieldByName(registerBikeSpeed, "registerBikeSpeedText");
+                clear.setText("");
             }
         });
     }
@@ -847,6 +869,22 @@ public class Main extends JFrame {
                 else{
                     errorMessageCreate();
                 }
+                JTextField clear = findTextFieldByName(changeName, "changeNameText");
+                clear.setText("");
+                clear = findTextFieldByName(checkChangePassword, "checkChangePasswordText");
+                clear.setText("");
+                clear = findTextFieldByName(changeOrt, "changeOrtText");
+                clear.setText("");
+                clear = findTextFieldByName(changePLZ, "changePLZText");
+                clear.setText("");
+                clear = findTextFieldByName(changeCarName, "changeCarNameText");
+                clear.setText("");
+                clear = findTextFieldByName(changeCarCO2, "changeCarCO2Text");
+                clear.setText("");
+                clear = findTextFieldByName(changeCarSpeed, "changeCarSpeedText");
+                clear.setText("");
+                clear = findTextFieldByName(changeBikeSpeed, "changeBikeSpeedText");
+                clear.setText("");
             }
         });
     }
@@ -934,6 +972,12 @@ public class Main extends JFrame {
                 else{
                     errorMessageCreate();
                 }
+                JTextField clear = findTextFieldByName(changePasswordOldPassword, "changePasswordOldPasswordText");
+                clear.setText("");
+                clear = findTextFieldByName(changePasswordNewPassword, "changePasswordNewPasswordText");
+                clear.setText("");
+                clear = findTextFieldByName(changePasswordConfirmNewPassword, "changePasswordConfirmNewPasswordText");
+                clear.setText("");
             }
         });
     }
@@ -949,6 +993,8 @@ public class Main extends JFrame {
                 facade.sign_out_user();
                 cardLayout.show(panelLayout, "1");
                 jframe.setSize(new Dimension(450, 160));
+                JTextField clear = findTextFieldByName(searchPLZ_ORT, "ortSuche");
+                clear.setText("");
             }
         });
     }
@@ -957,6 +1003,20 @@ public class Main extends JFrame {
         for (Component component : panel.getComponents()) {
             if (component instanceof JTextField && name.equals(component.getName())) {
                 return ((JTextField) component).getText();
+            }
+        }
+        return null;
+    }
+
+   public JTextField findTextFieldByName(Container container, String name) {
+        for (Component component : container.getComponents()) {
+            if (component instanceof JTextField && name.equals(component.getName())) {
+                return (JTextField) component;
+            } else if (component instanceof Container) {
+                JTextField textField = findTextFieldByName((Container) component, name);
+                if (textField != null) {
+                    return textField;
+                }
             }
         }
         return null;
