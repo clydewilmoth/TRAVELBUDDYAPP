@@ -347,13 +347,24 @@ public class System {
 
         try {
             HttpClient http_client = HttpClient.newHttpClient();
-
-            HttpRequest get_request = HttpRequest.newBuilder()
+            HttpRequest get_request;
+            
+            if(current_user.getZip().length()<5){
+                get_request = HttpRequest.newBuilder()
+                    .uri(new URI("https://api.openweathermap.org/data/2.5/weather?q=" + current_user.getHometown()
+                            + ",de&appid=" + api_key + "&units=metric&lang=de"))
+                    .GET()
+                    .build();
+            }
+            
+            else{
+                get_request = HttpRequest.newBuilder()
                     .uri(new URI("https://api.openweathermap.org/data/2.5/weather?zip=" + current_user.getZip()
                             + ",de&appid=" + api_key + "&units=metric&lang=de"))
                     .GET()
                     .build();
-
+            }
+            
             HttpResponse<String> get_response = http_client.send(get_request, BodyHandlers.ofString());
 
             JSONObject json = new JSONObject(get_response.body());
@@ -413,13 +424,23 @@ public class System {
 
         try {
             HttpClient http_client = HttpClient.newHttpClient();
-
-            HttpRequest get_request = HttpRequest.newBuilder()
+            HttpRequest get_request;
+            
+            if(destination_zip.length()<5){
+                get_request = HttpRequest.newBuilder()
+                    .uri(new URI("https://api.openweathermap.org/data/2.5/forecast?q=" + search(destination_zip).get(0).split(";")[1]
+                            + ",de&appid=" + api_key + "&units=metric&lang=de"))
+                    .GET()
+                    .build();
+            } 
+            else{
+                get_request = HttpRequest.newBuilder()
                     .uri(new URI("https://api.openweathermap.org/data/2.5/forecast?zip=" + destination_zip
                             + ",de&appid=" + api_key + "&units=metric&lang=de"))
                     .GET()
                     .build();
-
+            }
+            
             HttpResponse<String> get_response = http_client.send(get_request, BodyHandlers.ofString());
 
             JSONObject json = new JSONObject(get_response.body());
