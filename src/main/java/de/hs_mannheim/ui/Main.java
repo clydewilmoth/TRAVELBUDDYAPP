@@ -56,11 +56,11 @@ public class Main extends JFrame {
     private JButton searchConfirmButton;
     private JButton randDestinationsCarButton;
     private JButton randDestinationsBikeButton;
-    private JPanel profile;
+    private JPanel profile = new JPanel();
     private JButton changePasswordButton;
     private JButton changeDetailsButton;
     private JButton logOutButton;
-    private JScrollPane jsp;
+    private JScrollPane jsp = new JScrollPane();
     private JPanel destinationButtons = new JPanel();
 
     private JPanel changePassword;
@@ -84,6 +84,12 @@ public class Main extends JFrame {
     private JButton changeConfirmButton;
     private JButton changeBackButton;
 
+    private GridBagLayout gbl5 = new GridBagLayout();
+    private GridBagConstraints gbc5 = new GridBagConstraints();
+    private JPanel leftSide = new JPanel();
+    private JPanel rightSide = new JPanel();
+
+
     public Main(String api_key) {
         SwingUtilities.invokeLater(() -> {
             this.facade = new Application(api_key);
@@ -98,29 +104,65 @@ public class Main extends JFrame {
         panelLayout.setLayout(cardLayout);
         jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        logRegScreen = new JPanel(new FlowLayout());
-        mainMenuLabel = new JLabel("              Hauptmenü             ");
+        GridBagLayout gbl1 = new GridBagLayout();
+        GridBagConstraints gbc1 = new GridBagConstraints();
+        logRegScreen = new JPanel(gbl1);
+        mainMenuLabel = new JLabel("Hauptmenü");
         mainMenuLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         loginButtonCreate();
         registerButtonCreate();
-        logRegScreen.add(mainMenuLabel);
-        logRegScreen.add(loginButton, BorderLayout.WEST);
-        logRegScreen.add(registerButton, BorderLayout.EAST);
+        gbc1.gridx = 0;
+        gbc1.gridy = 0;
+        gbc1.ipady = 40;
+        logRegScreen.add(mainMenuLabel,gbc1);
+        JPanel p1 = new JPanel(new GridLayout(1,2,20,0));
+        p1.add(loginButton, gbc1);
+        p1.add(registerButton, gbc1);
+        gbc1.gridx = 0;
+        gbc1.gridy = 1;
+        gbc1.ipadx = -10;
+        gbc1.ipady = 5;
+        gbc1.insets = new Insets(10,0,20,0);
+        logRegScreen.add(p1,gbc1);
 
-        loginScreen = new JPanel(new FlowLayout());
-        loginLabel = new JLabel("              Einloggen             ");
+        GridBagLayout gbl2 = new GridBagLayout();
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        loginScreen = new JPanel();
+        loginScreen.setLayout(gbl2);
+        gbl2.setConstraints(loginScreen, gbc2);
+        loginLabel = new JLabel("Einloggen");
         loginLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         loginNameCreate();
         loginPasswordCreate();
-        loginConfirmButtonCreate();
+        loginConfirmButtonCreate(gbc5);
         loginZurückButtonCreate();
-        loginScreen.add(loginLabel);
-        loginScreen.add(loginName);
-        loginScreen.add(loginPassword);
-        loginScreen.add(loginConfirmButton);
-        loginScreen.add(loginBackButton);
+        gbc2.gridx = 0;
+        gbc2.gridy = 0;
+        gbc2.ipady = 40;
+        gbc2.insets = new Insets(0,0,10,0);
+        loginScreen.add(loginLabel,gbc2);
+        gbc2.insets = new Insets(0,0,0,0);
+        JPanel cnt1 = new JPanel(new GridLayout(2, 1,0,5));
+        cnt1.add(loginName);
+        cnt1.add(loginPassword);
+        gbc2.gridx = 0;
+        gbc2.gridy = 1;
+        gbc2.ipadx = 60;
+        gbc2.ipady = 20;
+        loginScreen.add(cnt1,gbc2);
+        gbc2.insets = new Insets(20,0,10,0);
+        gbc2.gridx = 0;
+        gbc2.gridy = 3;
+        gbc2.ipadx = 25;
+        gbc2.ipady = 20;
+        JPanel cnt2 = new JPanel(new GridLayout(1, 2,10,0));
+        cnt2.add(loginBackButton);
+        cnt2.add(loginConfirmButton);
+        loginScreen.add(cnt2,gbc2);
 
-        registerScreen = new JPanel(new FlowLayout()); // flowLayout muss angepasst werden, um nicht scheiße auszusehen
+        GridBagLayout gbl3 = new GridBagLayout();
+        GridBagConstraints gbc3 = new GridBagConstraints();
+        registerScreen = new JPanel(gbl3);
         registerLabel = new JLabel("Registrieren");
         registerLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         registerNameCreate();
@@ -132,50 +174,172 @@ public class Main extends JFrame {
         registerCarSpeedCreate();
         registerCarCO2Create();
         registerBikeSpeedCreate();
-        registerConfirmButtonCreate();
+        registerConfirmButtonCreate(gbc5);
         registerBackButtonCreate();
-        registerScreen.add(registerLabel);
-        registerScreen.add(registerName);
-        registerScreen.add(registerPassword);
-        registerScreen.add(registerPasswordTwo);
-        registerScreen.add(registerOrt);
-        registerScreen.add(registerPLZ);
-        registerScreen.add(registerCarName);
-        registerScreen.add(registerCarSpeed);
-        registerScreen.add(registerCarCO2);
-        registerScreen.add(registerBikeSpeed);
-        registerScreen.add(registerConfirmButton);
-        registerScreen.add(registerBackButton);
+        gbc3.gridx = 0;
+        gbc3.gridy = 0;
+        gbc3.ipady = 40;
+        gbc3.insets = new Insets(0,0,10,0);
+        registerScreen.add(registerLabel,gbc3);
+        gbc3.insets = new Insets(0,0,0,0);
+        JPanel p2 = new JPanel(new GridLayout(9, 1,0,5));
+        p2.add(registerName);
+        p2.add(registerPassword);
+        p2.add(registerPasswordTwo);
+        p2.add(registerPLZ);
+        p2.add(registerOrt);
+        p2.add(registerCarName);
+        p2.add(registerCarSpeed);
+        p2.add(registerCarCO2);
+        p2.add(registerBikeSpeed);
+        gbc3.gridx = 0;
+        gbc3.gridy = 1;
+        gbc3.ipadx = 5;
+        gbc3.ipady = 20;
+        registerScreen.add(p2,gbc3);
+        gbc3.insets = new Insets(20,0,10,0);
+        gbc3.gridx = 0;
+        gbc3.gridy = 2;
+        gbc3.ipadx = 25;
+        gbc3.ipady = 20;
+        JPanel p3 = new JPanel(new GridLayout(1, 2,10,0));
+        p3.add(registerBackButton);
+        p3.add(registerConfirmButton);
+        registerScreen.add(p3,gbc3);
 
-        menu = new JPanel(null);
+        menu = new JPanel(new BorderLayout());
         menuLabel = new JLabel("Travel-Buddy-App");
         menuLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         searchPLZ_ORTCreate();
-        searchConfirmButtonCreate();
-        randDestinationsCarButtonCreate();
-        randDestinationsBikeButtonCreate();
+        searchConfirmButtonCreate(gbc5);
+        randDestinationsCarButtonCreate(gbc5);
+        randDestinationsBikeButtonCreate(gbc5);
         logOutButtonCreate();
         changeDetailsButtonCreate();
         changePasswordButtonCreate();
-        menuLabel.setBounds(180, -125, 300, 300);
-        searchPLZ_ORT.setBounds(20, 50, 300, 100);
-        searchConfirmButton.setBounds(346, 70, 110, 30);
-        randDestinationsCarButton.setBounds(346, 105, 110, 30);
-        randDestinationsBikeButton.setBounds(346, 140, 110, 30);
-        logOutButton.setBounds(340, 430, 130, 30);
-        changeDetailsButton.setBounds(340, 398, 130, 30);
-        changePasswordButton.setBounds(340, 366, 130, 30);
+        //menuLabel.setBounds(140, -125, 300, 300);
+        //searchPLZ_ORT.setBounds(20, 50, 300, 100);
+        //searchConfirmButton.setBounds(346, 70, 110, 30);
+        //randDestinationsCarButton.setBounds(346, 105, 110, 30);
+        //randDestinationsBikeButton.setBounds(346, 140, 110, 30);
+        //logOutButton.setBounds(340, 430, 130, 30);
+        //changeDetailsButton.setBounds(340, 398, 130, 30);
+        //changePasswordButton.setBounds(340, 366, 130, 30);
 
-        menu.add(menuLabel);
-        menu.add(searchPLZ_ORT);
-        menu.add(searchConfirmButton);
-        menu.add(randDestinationsCarButton);
-        menu.add(randDestinationsBikeButton);
-        menu.add(logOutButton);
-        menu.add(changeDetailsButton);
-        menu.add(changePasswordButton);
+        leftSide.setLayout(new BoxLayout(leftSide,BoxLayout.Y_AXIS));
+        rightSide.setLayout(new BoxLayout(rightSide,BoxLayout.Y_AXIS));
 
-        changePassword = new JPanel(new FlowLayout());
+        gbc5.gridheight = 1;
+        gbc5.ipady = 0;
+        gbc5.ipadx = 0;
+        gbc5.gridx = 0;
+        gbc5.gridy = 0;
+        
+        leftSide.add(Box.createRigidArea(new Dimension(0,25)));
+        menuLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftSide.add(menuLabel,1); 
+
+        gbc5.gridy = 1;
+        searchPLZ_ORT.setAlignmentX(Component.CENTER_ALIGNMENT);
+        searchPLZ_ORT.setMaximumSize(new Dimension(250,55));
+        searchPLZ_ORT.setPreferredSize(new Dimension(250,55));
+        leftSide.add(searchPLZ_ORT,2);
+
+        gbc5.gridy = 2;
+        jsp.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jsp.setMaximumSize(new Dimension(250, 500));
+        jsp.setPreferredSize(new Dimension(250, 500));
+        leftSide.add(jsp,3);
+
+        gbc5.gridheight = 1;
+        gbc5.ipady = 0;
+        gbc5.ipadx = 0;
+        gbc5.gridx = 1;
+        gbc5.gridy = 1;
+
+        rightSide.add(Box.createRigidArea(new Dimension(0,80)));
+        searchConfirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        searchConfirmButton.setMaximumSize(new Dimension(140,35));
+        searchConfirmButton.setPreferredSize(new Dimension(140,35));
+        rightSide.add(searchConfirmButton,1);
+        
+        gbc5.gridy = 2;
+
+        randDestinationsCarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        randDestinationsCarButton.setMaximumSize(new Dimension(140,35));
+        randDestinationsCarButton.setPreferredSize(new Dimension(140,35));
+        rightSide.add(randDestinationsCarButton,2);
+
+        gbc5.gridy = 3;
+
+        randDestinationsBikeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        randDestinationsBikeButton.setMaximumSize(new Dimension(140,35));
+        randDestinationsBikeButton.setPreferredSize(new Dimension(140,35));
+        rightSide.add(randDestinationsBikeButton,3);
+        
+        gbc5.gridy = 4;
+           
+        rightSide.add(Box.createRigidArea(new Dimension(0,230)));
+        profile.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rightSide.add(profile,5);
+
+        gbc5.gridy = 5;
+
+        changeDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        changeDetailsButton.setMaximumSize(new Dimension(140,35));
+        changeDetailsButton.setPreferredSize(new Dimension(140,35));
+        rightSide.add(changeDetailsButton,6);
+
+        gbc5.gridy = 6;
+        
+        changePasswordButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        changePasswordButton.setMaximumSize(new Dimension(140,35));
+        changePasswordButton.setPreferredSize(new Dimension(140,35));
+        rightSide.add(changePasswordButton,7);
+
+        gbc5.gridy = 7;
+
+        logOutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logOutButton.setMaximumSize(new Dimension(140,35));
+        logOutButton.setPreferredSize(new Dimension(140,35));
+        rightSide.add(logOutButton,8);
+
+        menu.add(leftSide,BorderLayout.WEST);
+        menu.add(rightSide,BorderLayout.EAST);
+
+        /*p4 = new JPanel(new GridLayout(4,1));
+        p4.add(menuLabel);
+        p4.add(searchPLZ_ORT);
+        p4.add(new JLabel());
+        //menu.add(menuLabel,gbc5);
+        gbc5.ipady = 20;
+        gbc5.ipadx = 20;
+        gbc5.gridy = 1;
+        gbc5.insets = new Insets(0, 0, 10, 20);
+        menu.add(p4,gbc5);
+        //menu.add(searchPLZ_ORT,gbc5);
+        gbc5.gridx = 2;
+        gbc5.gridy = 1;
+        gbc5.insets = new Insets(0, 10, 0, 0);
+        menu.add(searchConfirmButton,gbc5);
+        gbc5.gridy = 2;
+        gbc5.insets = new Insets(0, 10, 0, 0);
+        menu.add(randDestinationsCarButton,gbc5);
+        gbc5.gridy = 3;
+        gbc5.insets = new Insets(0, 10, 0, 0);
+        menu.add(randDestinationsBikeButton,gbc5);
+        gbc5.gridy = 7;
+        gbc5.insets = new Insets(0, 10, 0, 0);
+        menu.add(logOutButton,gbc5);
+        gbc5.gridy = 5;
+        gbc5.insets = new Insets(0, 10, 0, 0);
+        menu.add(changeDetailsButton,gbc5);
+        gbc5.gridy = 6;
+        gbc5.insets = new Insets(0, 10, 0, 0);
+        menu.add(changePasswordButton,gbc5);
+        gbc5.insets = new Insets(0, 0, 0, 0);
+        */
+        changePassword = new JPanel(gbl5);
         changePasswordLabel = new JLabel("Password ändern");
         changePasswordLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         changePasswordOldPasswordCreate();
@@ -183,15 +347,44 @@ public class Main extends JFrame {
         changePasswordConfirmNewPasswordCreate();
         changePasswordBackButtonCreate();
         changePasswordConfirmButtonCreate();
-        changePassword.add(changePasswordLabel);
+        
+        gbc5.gridheight = 1;
+        gbc5.gridx = 0;
+        gbc5.gridy = 0;
+        gbc5.ipady = 40;
+        gbc5.insets = new Insets(0,0,10,0);
+        changePassword.add(changePasswordLabel,gbc5);
+        gbc5.insets = new Insets(0,0,0,0);
+        JPanel p7 = new JPanel(new GridLayout(3, 1,0,5));
+        p7.add(changePasswordOldPassword);
+        p7.add(changePasswordNewPassword);
+        p7.add(changePasswordConfirmNewPassword);
+        gbc5.gridx = 0;
+        gbc5.gridy = 1;
+        gbc5.ipadx = 5;
+        gbc5.ipady = 20;
+        changePassword.add(p7,gbc5);
+        gbc5.insets = new Insets(20,0,10,0);
+        gbc5.gridx = 0;
+        gbc5.gridy = 2;
+        gbc5.ipadx = 25;
+        gbc5.ipady = 20;
+        JPanel p8 = new JPanel(new GridLayout(1, 2,10,0));
+        p8.add(changePasswordBackButton);
+        p8.add(changePasswordConfirmButton);
+        gbc5.ipadx = -45;
+        gbc5.ipady = 10;
+        changePassword.add(p8,gbc5);
+        
+        /*changePassword.add(changePasswordLabel);
         changePassword.add(changePasswordOldPassword);
         changePassword.add(changePasswordNewPassword);
         changePassword.add(changePasswordConfirmNewPassword);
         changePassword.add(changePasswordBackButton);
-        changePassword.add(changePasswordConfirmButton);
+        changePassword.add(changePasswordConfirmButton);*/
 
-        changeDetails = new JPanel(new FlowLayout());
-        changeDetailsLabel = new JLabel("Daten ändern");
+        changeDetails = new JPanel(gbl5);
+        changeDetailsLabel = new JLabel("Nutzerdaten ändern");
         changeDetailsLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         changeNameCreate();
         changeOrtCreate();
@@ -201,9 +394,43 @@ public class Main extends JFrame {
         changeCarCO2Create();
         changeBikeSpeedCreate();
         checkChangePasswordCreate();
-        changeConfirmButtonCreate();
+        changeConfirmButtonCreate(gbc5);
         changeBackButtonCreate();
-        changeDetails.add(changeDetailsLabel);
+                gbc5.gridheight = 1;
+                gbc5.gridx = 0;
+                gbc5.gridy = 0;
+                gbc5.ipadx = 0;
+                gbc5.ipady = 40;
+                gbc5.insets = new Insets(0,0,10,0);
+                changeDetails.add(changeDetailsLabel,gbc5);
+                gbc5.insets = new Insets(0,0,0,0);
+                JPanel p5 = new JPanel(new GridLayout(8, 1,0,5));
+                p5.add(changeName);
+                p5.add(changeOrt);
+                p5.add(changePLZ);
+                p5.add(changeCarName);
+                p5.add(changeCarCO2);
+                p5.add(changeCarSpeed);
+                p5.add(changeBikeSpeed);
+                p5.add(checkChangePassword);
+                gbc5.gridx = 0;
+                gbc5.gridy = 1;
+                gbc5.ipadx = 5;
+                gbc5.ipady = 20;
+                changeDetails.add(p5,gbc5);
+                gbc5.insets = new Insets(20,0,10,0);
+                gbc5.gridx = 0;
+                gbc5.gridy = 2;
+                gbc5.ipadx = 25;
+                gbc5.ipady = 20;
+                JPanel p6 = new JPanel(new GridLayout(1, 2,10,0));
+                p6.add(changeBackButton);
+                p6.add(changeConfirmButton);
+                gbc5.ipadx = -30;
+                gbc5.ipady = 10;
+                changeDetails.add(p6,gbc5);
+        
+        /*changeDetails.add(changeDetailsLabel);
         changeDetails.add(changeName);
         changeDetails.add(changeOrt);
         changeDetails.add(changePLZ);
@@ -213,7 +440,7 @@ public class Main extends JFrame {
         changeDetails.add(changeBikeSpeed);
         changeDetails.add(checkChangePassword);
         changeDetails.add(changeBackButton);
-        changeDetails.add(changeConfirmButton);
+        changeDetails.add(changeConfirmButton);*/
 
         panelLayout.add(logRegScreen, "1");
         panelLayout.add(loginScreen, "2");
@@ -224,38 +451,38 @@ public class Main extends JFrame {
         cardLayout.show(panelLayout, "1");
         jframe.add(panelLayout);
         jframe.setResizable(false);
-        jframe.setSize(450, 160);
+        jframe.setSize(400, 200);
         jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
     }
 
     private void profileCreate() {
-        JPanel jp = new JPanel(null);
+        JPanel jp = new JPanel();
         ImageIcon png = png("/profile.png", 40, 40);
         JLabel jl = new JLabel(png);
         String[] details = facade.getDetails();
-        JLabel jlName = new JLabel("Nutzername:");
+        jp.setToolTipText("<html>Nutzername:<br>"+details[0]+"<br><br>Adresse:<br>"+details[2] + ", " + details[1]+"<br><br>Aktuelles Wetter:<br>"+facade.current_weather()+"</html>");
+        /*JLabel jlName = new JLabel("Nutzername:");
+        jlName.setToolTipText(details[0]);
         JLabel jlNameText = new JLabel(details[0]);
         JLabel jlWohnort = new JLabel("Adresse:");
-        JLabel jlWohnortText = new JLabel(details[1] + ", " + details[2]);
+        jlWohnort.setToolTipText(details[2] + ", " + details[1]);
+        JLabel jlWohnortText = new JLabel(details[2] + ", " + details[1]);
         JLabel jlWetter = new JLabel("Aktuelles Wetter:");
+        jlWetter.setToolTipText(facade.current_weather());
         JLabel jlWetterText = new JLabel(facade.current_weather());
-        jl.setBounds(90,0, 60,60);
-        jlName.setBounds(60,30, 200,60);
-        jlNameText.setBounds(60,44, 200,60);
-        jlWohnort.setBounds(60,70, 200,60);
-        jlWohnortText.setBounds(60,84, 200,60);
-        jlWetter.setBounds(60,110, 200,60);
-        jlWetterText.setBounds(60,124, 200,60);
-
+        */
         jp.add(jl);
+        /*jp.add(new JLabel());
         jp.add(jlName);
         jp.add(jlNameText);
+        jp.add(new JLabel());
         jp.add(jlWohnort);
         jp.add(jlWohnortText);
+        jp.add(new JLabel());
         jp.add(jlWetter);
         jp.add(jlWetterText);
-
+        */
         profile = jp;
     }
 
@@ -263,8 +490,8 @@ public class Main extends JFrame {
         errorMessage = new JFrame();
         errorMessage.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         JPanel jp = new JPanel(new FlowLayout());
-        JLabel jl = new JLabel("Daten falsch oder unvollständig!");
-        JButton jb = new JButton("OK");
+        JLabel jl = new JLabel("Überprüfen sie Ihre Eingabe!");
+        JButton jb = new JButton("Bestätigen");
         jb.setFocusable(false);
 
         jb.addActionListener(e -> errorMessage.dispose());
@@ -286,7 +513,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "2");
-                jframe.setSize(new Dimension(400, 150));
+                jframe.setSize(new Dimension(400, 330));
             }
         });
 
@@ -300,14 +527,14 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "3");
-                jframe.setSize(new Dimension(260, 430));
+                jframe.setSize(new Dimension(400, 728));
             }
         });
     }
 
     private void loginNameCreate() {
-        loginName = new JPanel();
-        JLabel jl = new JLabel("Nutzername");
+        loginName = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Nutzername");
         JTextField tf = new JTextField(10);
         tf.setName("loginNameText");
         loginName.add(jl);
@@ -315,15 +542,15 @@ public class Main extends JFrame {
     }
 
     private void loginPasswordCreate() {
-        loginPassword = new JPanel();
-        JLabel jl = new JLabel("Passwort");
+        loginPassword = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Passwort");
         JTextField tf = new JTextField(10);
         tf.setName("loginPasswordText");
         loginPassword.add(jl);
         loginPassword.add(tf);
     }
 
-    private void loginConfirmButtonCreate() {
+    private void loginConfirmButtonCreate(GridBagConstraints gbc5) {
         loginConfirmButton = new JButton("Bestätigen");
         loginConfirmButton.setPreferredSize(new Dimension(80, 20));
         loginConfirmButton.setFocusable(false);
@@ -334,12 +561,20 @@ public class Main extends JFrame {
                 String passwordTXT = getTextfieldContent(loginPassword, "loginPasswordText");
                 if(facade.sign_in_user(nameTXT, passwordTXT)) {
                     profileCreate();
-                    profile.setBounds(280, 168, 200,200);
-                    menu.add(profile);
+                    try {
+                        rightSide.remove(5);
+                    } catch (Exception err) {
+                        //
+                    }
+                    profile.setMaximumSize(new Dimension(50,50));
+                    profile.setPreferredSize(new Dimension(50,50));
+                    gbc5.gridx = 1;
+                    gbc5.gridy = 4;
+                    rightSide.add(profile,5);
+                    rightSide.revalidate();
                     menu.revalidate();
-                    menu.repaint();
                     cardLayout.show(panelLayout, "4");
-                    jframe.setSize(new Dimension(500, 500));
+                    jframe.setSize(new Dimension(400, 600));
                 }
                 else{
                     errorMessageCreate();
@@ -360,14 +595,14 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "1");
-                jframe.setSize(new Dimension(450, 140));
+                jframe.setSize(new Dimension(400, 200));
             }
         });
     }
 
     private void registerNameCreate() {
-        registerName = new JPanel();
-        JLabel jl = new JLabel("                   Nutzername");
+        registerName = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Nutzername");
         JTextField tf = new JTextField(10);
         tf.setName("registerNameText");
         registerName.add(jl);
@@ -375,8 +610,8 @@ public class Main extends JFrame {
     }
 
     private void registerPasswordCreate() {
-        registerPassword = new JPanel();
-        JLabel jl = new JLabel("             Passwort");
+        registerPassword = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Passwort");
         JTextField tf = new JTextField(10);
         tf.setName("registerPasswordText");
         registerPassword.add(jl);
@@ -384,8 +619,8 @@ public class Main extends JFrame {
     }
 
     private void registerPasswordTwoCreate() {
-        registerPasswordTwo = new JPanel();
-        JLabel jl = new JLabel("    Passwort bestätigen");
+        registerPasswordTwo = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Passwort bestätigen");
         JTextField tf = new JTextField(10);
         tf.setName("registerPasswordTwoText");
         registerPasswordTwo.add(jl);
@@ -393,8 +628,8 @@ public class Main extends JFrame {
     }
 
     private void registerOrtCreate() {
-        registerOrt = new JPanel();
-        JLabel jl = new JLabel("                        Heimatort");
+        registerOrt = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Heimatort");
         JTextField tf = new JTextField(10);
         tf.setName("registerOrtText");
         registerOrt.add(jl);
@@ -402,8 +637,8 @@ public class Main extends JFrame {
     }
 
     private void registerPLZCreate() {
-        registerPLZ = new JPanel();
-        JLabel jl = new JLabel("                       Postleitzahl");
+        registerPLZ = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Postleitzahl");
         JTextField tf = new JTextField(10);
         tf.setName("registerPLZText");
         registerPLZ.add(jl);
@@ -411,8 +646,8 @@ public class Main extends JFrame {
     }
 
     private void registerCarNameCreate() {
-        registerCarName = new JPanel();
-        JLabel jl = new JLabel("            Auto Name");
+        registerCarName = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Auto Name");
         JTextField tf = new JTextField(10);
         tf.setName("registerCarNameText");
         registerCarName.add(jl);
@@ -420,8 +655,8 @@ public class Main extends JFrame {
     }
 
     private void registerCarSpeedCreate() {
-        registerCarSpeed = new JPanel();
-        JLabel jl = new JLabel("             Auto Durchschnittsgeschwindigkeit in km/h");
+        registerCarSpeed = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Auto ⌀-Tempo km/h");
         JTextField tf = new JTextField(10);
         tf.setName("registerCarSpeedText");
         registerCarSpeed.add(jl);
@@ -429,8 +664,8 @@ public class Main extends JFrame {
     }
 
     private void registerCarCO2Create() {
-        registerCarCO2 = new JPanel();
-        JLabel jl = new JLabel("Kraftstoffverbrauch in l/100km");
+        registerCarCO2 = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Kraftstoffverbrauch l/100km");
         JTextField tf = new JTextField(10);
         tf.setName("registerCarCO2Text");
         registerCarCO2.add(jl);
@@ -438,15 +673,15 @@ public class Main extends JFrame {
     }
 
     private void registerBikeSpeedCreate() {
-        registerBikeSpeed = new JPanel();
-        JLabel jl = new JLabel("             Fahrrad Durchschnittsgeschwindigkeit in km/h");
+        registerBikeSpeed = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Fahrrad ⌀-Tempo km/h");
         JTextField tf = new JTextField(10);
         tf.setName("registerBikeSpeedText");
         registerBikeSpeed.add(jl);
         registerBikeSpeed.add(tf);
     }
 
-    private void registerConfirmButtonCreate() {
+    private void registerConfirmButtonCreate(GridBagConstraints gbc5) {
         registerConfirmButton = new JButton();
         registerConfirmButton = new JButton("Bestätigen");
         registerConfirmButton.setPreferredSize(new Dimension(80, 20));
@@ -466,12 +701,21 @@ public class Main extends JFrame {
                 if(facade.sign_up_user(nameTXT, passwordTXT, passwordTXTTwo, ortTXT, plzTXT,
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
                     profileCreate();
-                    profile.setBounds(280, 168, 200,200);
-                    menu.add(profile);
+                    try {
+                        rightSide.remove(5);
+                    } catch (Exception err) {
+                        //
+                    }
+                    profile.setMaximumSize(new Dimension(50,50));
+                    profile.setPreferredSize(new Dimension(50,50));
+                    gbc5.gridx = 1;
+                    gbc5.gridy = 4;
+                    rightSide.add(profile,5);
+                    rightSide.revalidate();                    
                     menu.revalidate();
-                    menu.repaint();
+                   
                     cardLayout.show(panelLayout, "4");
-                    jframe.setSize(new Dimension(500, 500));
+                    jframe.setSize(new Dimension(400, 600));
                 }
                 else{
                     errorMessageCreate();
@@ -506,26 +750,26 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "1");
-                jframe.setSize(new Dimension(450, 140));
+                jframe.setSize(new Dimension(400, 200));
             }
         });
     }
 
     private void searchPLZ_ORTCreate() {
-        searchPLZ_ORT = new JPanel();
-        JLabel jl = new JLabel("Postleitzahl oder Ort");
-        JTextField tf = new JTextField(28);
+        searchPLZ_ORT = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Postleitzahl oder Ort");
+        JTextField tf = new JTextField(20);
         tf.setName("ortSuche");
         searchPLZ_ORT.add(jl);
         searchPLZ_ORT.add(tf);
     }
 
-    private void searchConfirmButtonCreate() {
+    private void searchConfirmButtonCreate(GridBagConstraints gbc5) {
         searchConfirmButton = new JButton();
         searchConfirmButton.setPreferredSize(new Dimension(150, 80));
         searchConfirmButton.setFocusable(false);
 
-        ImageIcon icon = png("/magnifier.png", 20, 20);
+        ImageIcon icon = png("/magnifier.png", 25, 25);
         searchConfirmButton.setIcon(icon);
         searchConfirmButton.setText(" Suche");
         searchConfirmButton.setIconTextGap(3);
@@ -541,8 +785,10 @@ public class Main extends JFrame {
                         String[] ortUndPLZ = s.split(";");
                         String plz = ortUndPLZ[0];
                         String address = plz + ", " + ortUndPLZ[1];
-                        JButton jb = new JButton(address + ": " + facade.distance(plz));
+                        JButton jb = new JButton(address);
                         jb.setPreferredSize(new Dimension(290, 40));
+                        jb.setToolTipText(facade.distance(plz));
+                        jb.setHorizontalAlignment(SwingConstants.LEFT);
                         jb.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -563,28 +809,28 @@ public class Main extends JFrame {
                                 JLabel jlAutoVerbrauchText = new JLabel(details[5]);
                                 JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
                                 JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
-                                if(details[4].equals("")&&details[5].equals("")){
-                                    jlReisedauerUndKraftstoffverbrauch.setText("");
-                                    jlAutoDauerText.setText("");
-                                    jlAutoVerbrauchText.setText("");
+                                if(details[4].equals("")){
+                                    jlAutoDauerText.setText("---");
+                                }
+                                if(details[5].equals("")){
+                                    jlAutoVerbrauchText.setText("---");
                                 }
                                 if(details[6].equals("")){
-                                    jlReisedauerMitFahrrad.setText("");
-                                    jlReisedauerMitFahrradText.setText("");
+                                    jlReisedauerMitFahrradText.setText("---");
                                 }
-                                jlAddress.setBounds(4, 0, 300, 20);
-                                jlAddressText.setBounds(4, 12, 300, 20);
-                                jlWettervorhersage.setBounds(4, 45, 300, 20);
-                                jlWettervorhersageTextOne.setBounds(4, 57, 300, 20);
-                                jlWettervorhersageTextTwo.setBounds(4, 69, 300, 20);
-                                jlWettervorhersageTextThree.setBounds(4, 81, 300, 20);
-                                jlEntfernung.setBounds(4, 108, 300, 20);
-                                jlEntfernungText.setBounds(4, 120, 300, 20);
-                                jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 300, 20);
-                                jlAutoDauerText.setBounds(4, 159, 300, 20);
-                                jlAutoVerbrauchText.setBounds(4, 171, 300, 20);
-                                jlReisedauerMitFahrrad.setBounds(4, 198, 300, 20);
-                                jlReisedauerMitFahrradText.setBounds(4, 210, 300, 20);
+                                jlAddress.setBounds(4, 0, 400, 20);
+                                jlAddressText.setBounds(4, 12, 400, 20);
+                                jlWettervorhersage.setBounds(4, 45, 400, 20);
+                                jlWettervorhersageTextOne.setBounds(4, 57, 400, 20);
+                                jlWettervorhersageTextTwo.setBounds(4, 69, 400, 20);
+                                jlWettervorhersageTextThree.setBounds(4, 81, 400, 20);
+                                jlEntfernung.setBounds(4, 108, 400, 20);
+                                jlEntfernungText.setBounds(4, 120, 400, 20);
+                                jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 400, 20);
+                                jlAutoDauerText.setBounds(4, 159, 400, 20);
+                                jlAutoVerbrauchText.setBounds(4, 171, 400, 20);
+                                jlReisedauerMitFahrrad.setBounds(4, 198, 400, 20);
+                                jlReisedauerMitFahrradText.setBounds(4, 210, 400, 20);
                                 jp.add(jlAddress);
                                 jp.add(jlAddressText);
                                 jp.add(jlWettervorhersage);
@@ -601,61 +847,78 @@ public class Main extends JFrame {
 
                                 jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                                 jf.add(jp);
-                                jf.setSize(320, 270);
+                                jf.setSize(400, 270);
                                 jf.setResizable(false);
                                 jf.setVisible(true);
                             }
                         });
                         destinationButtonsProxy.add(jb);
-                        JLabel placeholder = new JLabel("");
-                        destinationButtonsProxy.add(placeholder);
+                        //JLabel placeholder = new JLabel("");
+                        //destinationButtonsProxy.add(placeholder);
                     }
                     destinationButtons = destinationButtonsProxy;
-                    destinationButtons.revalidate();
-                    destinationButtons.repaint();
                     try {
-                        menu.remove(jsp);
+                        leftSide.remove(jsp);
                     } catch (Exception jspNotYetIncluded) {
                     }
-                    jsp = new JScrollPane(destinationButtons);
-                    jsp.setBounds(40, 110, 256, 336);
+                    jsp = new JScrollPane(destinationButtons, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    //jsp.setBounds(40, 110, 256, 336);
+                    jsp.setMaximumSize(new Dimension(250, 450));
+                    jsp.setPreferredSize(new Dimension(250, 450));
                     jsp.revalidate();
-                    jsp.repaint();
-                    menu.add(jsp);
+                    
+                    gbc5.gridx = 0;
+                    gbc5.gridy = 2;
+                    gbc5.gridheight = GridBagConstraints.RELATIVE;
+                    //gbc5.ipady = 500;
+                    //gbc5.ipadx = 200;
+                    leftSide.add(jsp,3);
+                    leftSide.revalidate();
+                    gbc5.ipady = 0;
+                    gbc5.ipadx = 0;
+                    
+                    gbc5.gridheight = 1;
                     menu.revalidate();
-                    menu.repaint();
                 }
                 else {
                     destinationButtonsProxy = new JPanel();
-                    JLabel jl = new JLabel("Kein Ergebnis");
-                    jl.setFont(new Font("Arial", Font.PLAIN, 38));
+                    JLabel jl = new JLabel("Ihre Suche liefert keine Treffer!");
+                    jl.setFont(new Font("Arial", Font.PLAIN, 14));
                     destinationButtonsProxy.add(jl);
                     destinationButtons = destinationButtonsProxy;
                     destinationButtons.revalidate();
-                    destinationButtons.repaint();
+                    
                     try {
-                        menu.remove(jsp);
+                        leftSide.remove(jsp);
                     } catch (Exception jspNotYetIncluded) {
                     }
                     jsp = new JScrollPane(destinationButtons);
-                    jsp.setBounds(40, 110, 244, 336);
+                    jsp.setMaximumSize(new Dimension(250, 450));
+                    jsp.setPreferredSize(new Dimension(250, 450));
                     jsp.revalidate();
-                    jsp.repaint();
-                    menu.add(jsp);
+                    
+                    gbc5.gridx = 0;
+                    gbc5.gridy = 2;
+                    gbc5.gridheight = GridBagConstraints.RELATIVE;
+
+                    leftSide.add(jsp,3);
+                    leftSide.revalidate();
+                    
+                    gbc5.gridheight = 1;
+                    
                     menu.revalidate();
-                    menu.repaint();
                 }
             }
         });
     }
 
 
-    private void randDestinationsCarButtonCreate() { //Auto Icon hinzufügen
+    private void randDestinationsCarButtonCreate(GridBagConstraints gbc5) { //Auto Icon hinzufügen
         randDestinationsCarButton = new JButton();
         randDestinationsCarButton.setPreferredSize(new Dimension(150, 80));
         randDestinationsCarButton.setFocusable(false);
 
-        ImageIcon icon = png("/car.png", 20, 20);
+        ImageIcon icon = png("/car.png", 25, 25);
         randDestinationsCarButton.setIcon(icon);
         randDestinationsCarButton.setText("Kurztrip");
         randDestinationsCarButton.setIconTextGap(3);
@@ -670,7 +933,9 @@ public class Main extends JFrame {
                         String[] ortUndPLZ = s.split(";");
                         String plz = ortUndPLZ[0];
                         String address = plz + ", " + ortUndPLZ[1];
-                        JButton jb = new JButton(address + ": " + facade.distance(plz));
+                        JButton jb = new JButton(address);
+                        jb.setToolTipText(facade.distance(plz));
+                        jb.setHorizontalAlignment(SwingConstants.LEFT);
                         jb.setPreferredSize(new Dimension(290, 40));
                         jb.addActionListener(new ActionListener() {
                             @Override
@@ -692,28 +957,28 @@ public class Main extends JFrame {
                                 JLabel jlAutoVerbrauchText = new JLabel(details[5]);
                                 JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
                                 JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
-                                if(details[4].equals("")&&details[5].equals("")){
-                                    jlReisedauerUndKraftstoffverbrauch.setText("");
-                                    jlAutoDauerText.setText("");
-                                    jlAutoVerbrauchText.setText("");
+                                if(details[4].equals("")){
+                                    jlAutoDauerText.setText("---");
+                                }
+                                if(details[5].equals("")){
+                                    jlAutoVerbrauchText.setText("---");
                                 }
                                 if(details[6].equals("")){
-                                    jlReisedauerMitFahrrad.setText("");
-                                    jlReisedauerMitFahrradText.setText("");
+                                    jlReisedauerMitFahrradText.setText("---");
                                 }
-                                jlAddress.setBounds(4, 0, 300, 20);
-                                jlAddressText.setBounds(4, 12, 300, 20);
-                                jlWettervorhersage.setBounds(4, 45, 300, 20);
-                                jlWettervorhersageTextOne.setBounds(4, 57, 300, 20);
-                                jlWettervorhersageTextTwo.setBounds(4, 69, 300, 20);
-                                jlWettervorhersageTextThree.setBounds(4, 81, 300, 20);
-                                jlEntfernung.setBounds(4, 108, 300, 20);
-                                jlEntfernungText.setBounds(4, 120, 300, 20);
-                                jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 300, 20);
-                                jlAutoDauerText.setBounds(4, 159, 300, 20);
-                                jlAutoVerbrauchText.setBounds(4, 171, 300, 20);
-                                jlReisedauerMitFahrrad.setBounds(4, 198, 300, 20);
-                                jlReisedauerMitFahrradText.setBounds(4, 210, 300, 20);
+                                jlAddress.setBounds(4, 0, 400, 20);
+                                jlAddressText.setBounds(4, 12, 400, 20);
+                                jlWettervorhersage.setBounds(4, 45, 400, 20);
+                                jlWettervorhersageTextOne.setBounds(4, 57, 400, 20);
+                                jlWettervorhersageTextTwo.setBounds(4, 69, 400, 20);
+                                jlWettervorhersageTextThree.setBounds(4, 81, 400, 20);
+                                jlEntfernung.setBounds(4, 108, 400, 20);
+                                jlEntfernungText.setBounds(4, 120, 400, 20);
+                                jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 400, 20);
+                                jlAutoDauerText.setBounds(4, 159, 400, 20);
+                                jlAutoVerbrauchText.setBounds(4, 171, 400, 20);
+                                jlReisedauerMitFahrrad.setBounds(4, 198, 400, 20);
+                                jlReisedauerMitFahrradText.setBounds(4, 210, 400, 20);
                                 jp.add(jlAddress);
                                 jp.add(jlAddressText);
                                 jp.add(jlWettervorhersage);
@@ -730,7 +995,7 @@ public class Main extends JFrame {
 
                                 jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                                 jf.add(jp);
-                                jf.setSize(320, 270);
+                                jf.setSize(400, 270);
                                 jf.setResizable(false);
                                 jf.setVisible(true);
                             }
@@ -739,28 +1004,38 @@ public class Main extends JFrame {
                     }
                     destinationButtons = destinationButtonsProxy;
                     destinationButtons.revalidate();
-                    destinationButtons.repaint();
+                    
                     try {
-                        menu.remove(jsp);
+                        leftSide.remove(jsp);
                     } catch (Exception jspNotYetIncluded) {
                     }
                     jsp = new JScrollPane(destinationButtons);
-                    jsp.setBounds(40, 110, 244, 336);
+                    jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    jsp.setMaximumSize(new Dimension(250, 450));
+                    jsp.setPreferredSize(new Dimension(250, 450));
                     jsp.revalidate();
-                    jsp.repaint();
-                    menu.add(jsp);
+                    
+                    gbc5.gridx = 0;
+                    gbc5.gridy = 2;
+                    gbc5.gridheight = GridBagConstraints.RELATIVE;
+
+                    leftSide.add(jsp,3);
+                    leftSide.revalidate();                    
+                    gbc5.gridheight = 1;
+                    
                     menu.revalidate();
-                    menu.repaint();
+                    
             }
         });
     }
 
-    private void randDestinationsBikeButtonCreate() { //Fahrrad Icon hinzufügen
+    private void randDestinationsBikeButtonCreate(GridBagConstraints gbc5) { //Fahrrad Icon hinzufügen
         randDestinationsBikeButton = new JButton();
         randDestinationsBikeButton.setPreferredSize(new Dimension(150, 80));
         randDestinationsBikeButton.setFocusable(false);
 
-        ImageIcon icon = png("/bike.png", 20, 20);
+        ImageIcon icon = png("/bike.png", 25, 25);
         randDestinationsBikeButton.setIcon(icon);
         randDestinationsBikeButton.setText("Kurztrip");
         randDestinationsBikeButton.setIconTextGap(3);
@@ -775,7 +1050,9 @@ public class Main extends JFrame {
                     String[] ortUndPLZ = s.split(";");
                     String plz = ortUndPLZ[0];
                     String address = plz + ", " + ortUndPLZ[1];
-                    JButton jb = new JButton(address + ": " + facade.distance(plz));
+                    JButton jb = new JButton(address);
+                    jb.setToolTipText(facade.distance(plz));
+                    jb.setHorizontalAlignment(SwingConstants.LEFT);
                     jb.setPreferredSize(new Dimension(290, 40));
                     jb.addActionListener(new ActionListener() {
                         @Override
@@ -797,28 +1074,28 @@ public class Main extends JFrame {
                             JLabel jlAutoVerbrauchText = new JLabel(details[5]);
                             JLabel jlReisedauerMitFahrrad = new JLabel("Reisedauer mit Fahrrad:");
                             JLabel jlReisedauerMitFahrradText = new JLabel(details[6]);
-                            if(details[4].equals("")&&details[5].equals("")){
-                                jlReisedauerUndKraftstoffverbrauch.setText("");
-                                jlAutoDauerText.setText("");
-                                jlAutoVerbrauchText.setText("");
+                            if(details[4].equals("")){
+                                jlAutoDauerText.setText("---");
+                            }
+                            if(details[5].equals("")){
+                                jlAutoVerbrauchText.setText("---");
                             }
                             if(details[6].equals("")){
-                                jlReisedauerMitFahrrad.setText("");
-                                jlReisedauerMitFahrradText.setText("");
+                                jlReisedauerMitFahrradText.setText("---");
                             }
-                            jlAddress.setBounds(4, 0, 300, 20);
-                            jlAddressText.setBounds(4, 12, 300, 20);
-                            jlWettervorhersage.setBounds(4, 45, 300, 20);
-                            jlWettervorhersageTextOne.setBounds(4, 57, 300, 20);
-                            jlWettervorhersageTextTwo.setBounds(4, 69, 300, 20);
-                            jlWettervorhersageTextThree.setBounds(4, 81, 300, 20);
-                            jlEntfernung.setBounds(4, 108, 300, 20);
-                            jlEntfernungText.setBounds(4, 120, 300, 20);
-                            jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 300, 20);
-                            jlAutoDauerText.setBounds(4, 159, 300, 20);
-                            jlAutoVerbrauchText.setBounds(4, 171, 300, 20);
-                            jlReisedauerMitFahrrad.setBounds(4, 198, 300, 20);
-                            jlReisedauerMitFahrradText.setBounds(4, 210, 300, 20);
+                            jlAddress.setBounds(4, 0, 400, 20);
+                            jlAddressText.setBounds(4, 12, 400, 20);
+                            jlWettervorhersage.setBounds(4, 45, 400, 20);
+                            jlWettervorhersageTextOne.setBounds(4, 57, 400, 20);
+                            jlWettervorhersageTextTwo.setBounds(4, 69, 400, 20);
+                            jlWettervorhersageTextThree.setBounds(4, 81, 400, 20);
+                            jlEntfernung.setBounds(4, 108, 400, 20);
+                            jlEntfernungText.setBounds(4, 120, 400, 20);
+                            jlReisedauerUndKraftstoffverbrauch.setBounds(4, 147, 400, 20);
+                            jlAutoDauerText.setBounds(4, 159, 400, 20);
+                            jlAutoVerbrauchText.setBounds(4, 171, 400, 20);
+                            jlReisedauerMitFahrrad.setBounds(4, 198, 400, 20);
+                            jlReisedauerMitFahrradText.setBounds(4, 210, 400, 20);
                             jp.add(jlAddress);
                             jp.add(jlAddressText);
                             jp.add(jlWettervorhersage);
@@ -835,7 +1112,7 @@ public class Main extends JFrame {
 
                             jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                             jf.add(jp);
-                            jf.setSize(320, 270);
+                            jf.setSize(400, 270);
                             jf.setResizable(false);
                             jf.setVisible(true);
                         }
@@ -844,18 +1121,29 @@ public class Main extends JFrame {
                 }
                 destinationButtons = destinationButtonsProxy;
                 destinationButtons.revalidate();
-                destinationButtons.repaint();
+                
                 try {
-                    menu.remove(jsp);
+                    leftSide.remove(jsp);
                 } catch (Exception jspNotYetIncluded) {
                 }
                 jsp = new JScrollPane(destinationButtons);
-                jsp.setBounds(40, 110, 244, 336);
+                jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jsp.setMaximumSize(new Dimension(250, 450));
+                jsp.setPreferredSize(new Dimension(250, 450));
+                
                 jsp.revalidate();
-                jsp.repaint();
-                menu.add(jsp);
+                
+                gbc5.gridx = 0;
+                gbc5.gridy = 2;
+                gbc5.gridheight = GridBagConstraints.RELATIVE;
+
+                leftSide.add(jsp,3);
+                leftSide.revalidate();                    
+                gbc5.gridheight = 1;
+                
                 menu.revalidate();
-                menu.repaint();
+               
             }
         });
     }
@@ -868,6 +1156,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] details = facade.getDetails();
+
                 JTextField detailsText = findTextFieldByName(changeName, "changeNameText");
                 detailsText.setText(details[0]);
                 detailsText = findTextFieldByName(changeOrt, "changeOrtText");
@@ -886,14 +1175,14 @@ public class Main extends JFrame {
                 detailsText.setText("");
 
                 cardLayout.show(panelLayout, "5");
-                jframe.setSize(new Dimension(260, 394));
+                jframe.setSize(new Dimension(400, 670));
             }
         });
     }
 
     public void checkChangePasswordCreate(){
-        checkChangePassword = new JPanel();
-        JLabel jl = new JLabel("Passwortbestätigung");
+        checkChangePassword = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Passwortbestätigung");
         JTextField tf = new JTextField(10);
         tf.setName("checkChangePasswordText");
         checkChangePassword.add(jl);
@@ -901,8 +1190,8 @@ public class Main extends JFrame {
     }
 
     public void changeNameCreate(){
-        changeName = new JPanel();
-        JLabel jl = new JLabel("                          Nutzername");
+        changeName = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Nutzername");
         JTextField tf = new JTextField(10);
         tf.setName("changeNameText");
         changeName.add(jl);
@@ -910,8 +1199,8 @@ public class Main extends JFrame {
     }
 
     public void changeOrtCreate(){
-        changeOrt = new JPanel();
-        JLabel jl = new JLabel("                             Heimatort");
+        changeOrt = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Heimatort");
         JTextField tf = new JTextField(10);
         tf.setName("changeOrtText");
         changeOrt.add(jl);
@@ -919,8 +1208,8 @@ public class Main extends JFrame {
     }
 
     public void changePLZCreate(){
-        changePLZ = new JPanel();
-        JLabel jl = new JLabel("                            Postleitzahl");
+        changePLZ = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Postleitzahl");
         JTextField tf = new JTextField(10);
         tf.setName("changePLZText");
         changePLZ.add(jl);
@@ -928,8 +1217,8 @@ public class Main extends JFrame {
     }
 
     public void changeCarNameCreate(){
-        changeCarName = new JPanel();
-        JLabel jl = new JLabel("                 Auto Name");
+        changeCarName = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Auto Name");
         JTextField tf = new JTextField(10);
         tf.setName("changeCarNameText");
         changeCarName.add(jl);
@@ -937,8 +1226,8 @@ public class Main extends JFrame {
     }
 
     public void changeCarCO2Create(){
-        changeCarCO2 = new JPanel();
-        JLabel jl = new JLabel("                   Kraftstoffverbrauch Auto in l/100km ");
+        changeCarCO2 = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Kraftstoffverbrauch l/100km ");
         JTextField tf = new JTextField(10);
         tf.setName("changeCarCO2Text");
         changeCarCO2.add(jl);
@@ -946,8 +1235,8 @@ public class Main extends JFrame {
     }
 
     public void changeCarSpeedCreate(){
-        changeCarSpeed = new JPanel();
-        JLabel jl = new JLabel("           Auto Durchschnittseschwindigkeit in km/h");
+        changeCarSpeed = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Auto ⌀-Tempo km/h");
         JTextField tf = new JTextField(10);
         tf.setName("changeCarSpeedText");
         changeCarSpeed.add(jl);
@@ -955,15 +1244,15 @@ public class Main extends JFrame {
     }
 
     public void changeBikeSpeedCreate(){
-        changeBikeSpeed = new JPanel();
-        JLabel jl = new JLabel("      Fahrrad Durchschnittseschwindigkeit in km/h");
+        changeBikeSpeed = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Fahrrad ⌀-Tempo km/h");
         JTextField tf = new JTextField(10);
         tf.setName("changeBikeSpeedText");
         changeBikeSpeed.add(jl);
         changeBikeSpeed.add(tf);
     }
 
-    public void changeConfirmButtonCreate(){
+    public void changeConfirmButtonCreate(GridBagConstraints gbc5){
         changeConfirmButton = new JButton("Bestätigen");
         changeConfirmButton.setSize(80, 20);
         changeConfirmButton.setFocusable(false);
@@ -980,14 +1269,15 @@ public class Main extends JFrame {
                 String bikeSpeedTXT = getTextfieldContent(changeBikeSpeed, "changeBikeSpeedText");
                 if(facade.change_user_details(nameTXT, passwordTXT, ortTXT, plzTXT,
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
-                    menu.remove(profile);
+                    rightSide.remove(5);
                     profileCreate();
-                    profile.setBounds(280, 168, 200,200);
-                    menu.add(profile);
+                    gbc5.gridx = 1;
+                    gbc5.gridy = 4;
+                    rightSide.add(profile,5);
+                    rightSide.revalidate();
                     menu.revalidate();
-                    menu.repaint();
                     cardLayout.show(panelLayout, "4");
-                    jframe.setSize(new Dimension(500, 500));
+                    jframe.setSize(new Dimension(400, 600));
                 }
                 else{
                     errorMessageCreate();
@@ -1004,7 +1294,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "4");
-                jframe.setSize(new Dimension(500, 500));
+                jframe.setSize(new Dimension(400, 600));
             }
         });
     }
@@ -1017,14 +1307,14 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "6");
-                jframe.setSize(new Dimension(260, 215));
+                jframe.setSize(new Dimension(400, 400));
             }
         });
     }
 
     public void changePasswordOldPasswordCreate(){
-        changePasswordOldPassword = new JPanel();
-        JLabel jl = new JLabel("           Aktuelles Passwort");
+        changePasswordOldPassword = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Aktuelles Passwort");
         JTextField tf = new JTextField(10);
         tf.setName("changePasswordOldPasswordText");
         changePasswordOldPassword.add(jl);
@@ -1032,8 +1322,8 @@ public class Main extends JFrame {
     }
 
     public void changePasswordNewPasswordCreate(){
-        changePasswordNewPassword = new JPanel();
-        JLabel jl = new JLabel("           Neues Passwort");
+        changePasswordNewPassword = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Neues Passwort");
         JTextField tf = new JTextField(10);
         tf.setName("changePasswordNewPasswordText");
         changePasswordNewPassword.add(jl);
@@ -1041,8 +1331,8 @@ public class Main extends JFrame {
     }
 
     public void changePasswordConfirmNewPasswordCreate(){
-        changePasswordConfirmNewPassword = new JPanel();
-        JLabel jl = new JLabel("Neues Passwort bestätigen");
+        changePasswordConfirmNewPassword = new JPanel(new GridLayout(2,1));
+        JLabel jl = new JLabel(" Neues Passwort bestätigen");
         JTextField tf = new JTextField(10);
         tf.setName("changePasswordConfirmNewPasswordText");
         changePasswordConfirmNewPassword.add(jl);
@@ -1057,7 +1347,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelLayout, "4");
-                jframe.setSize(new Dimension(500, 500));
+                jframe.setSize(new Dimension(400, 600));
             }
         });
     }
@@ -1074,7 +1364,7 @@ public class Main extends JFrame {
                 String passwordConfirmNewTXT = getTextfieldContent(changePasswordConfirmNewPassword, "changePasswordConfirmNewPasswordText");
                 if(facade.change_user_password(passwordOldTXT, passwordNewTXT, passwordConfirmNewTXT)){
                     cardLayout.show(panelLayout, "4");
-                    jframe.setSize(new Dimension(500, 500));
+                    jframe.setSize(new Dimension(400, 600));
                 }
                 else{
                     errorMessageCreate();
@@ -1099,7 +1389,7 @@ public class Main extends JFrame {
                 menu.remove(profile);
                 facade.sign_out_user();
                 cardLayout.show(panelLayout, "1");
-                jframe.setSize(new Dimension(450, 160));
+                jframe.setSize(new Dimension(400, 200));
                 JTextField clear = findTextFieldByName(searchPLZ_ORT, "ortSuche");
                 clear.setText("");
                 clear = findTextFieldByName(changeName, "changeNameText");
