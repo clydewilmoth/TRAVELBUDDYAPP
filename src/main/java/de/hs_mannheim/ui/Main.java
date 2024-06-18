@@ -61,7 +61,6 @@ public class Main extends JFrame {
     private JButton changeDetailsButton;
     private JButton logOutButton;
     private JScrollPane jsp = new JScrollPane();
-    private JPanel destinationButtons = new JPanel();
 
     private JPanel changePassword;
     private JLabel changePasswordLabel;
@@ -104,6 +103,7 @@ public class Main extends JFrame {
         panelLayout.setLayout(cardLayout);
         jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        // => Hauptmenü Fenster
         GridBagLayout gbl1 = new GridBagLayout();
         GridBagConstraints gbc1 = new GridBagConstraints();
         logRegScreen = new JPanel(gbl1);
@@ -125,6 +125,8 @@ public class Main extends JFrame {
         gbc1.insets = new Insets(10,0,20,0);
         logRegScreen.add(p1,gbc1);
 
+
+        // => Einloggen Fenster
         GridBagLayout gbl2 = new GridBagLayout();
         GridBagConstraints gbc2 = new GridBagConstraints();
         loginScreen = new JPanel();
@@ -160,6 +162,7 @@ public class Main extends JFrame {
         cnt2.add(loginConfirmButton);
         loginScreen.add(cnt2,gbc2);
 
+        // => Registrieren Fenster
         GridBagLayout gbl3 = new GridBagLayout();
         GridBagConstraints gbc3 = new GridBagConstraints();
         registerScreen = new JPanel(gbl3);
@@ -207,6 +210,8 @@ public class Main extends JFrame {
         p3.add(registerConfirmButton);
         registerScreen.add(p3,gbc3);
 
+
+        // => Such Fenster
         menu = new JPanel(new BorderLayout());
         menuLabel = new JLabel("Travel-Buddy-App");
         menuLabel.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -217,45 +222,25 @@ public class Main extends JFrame {
         logOutButtonCreate();
         changeDetailsButtonCreate();
         changePasswordButtonCreate();
-        //menuLabel.setBounds(140, -125, 300, 300);
-        //searchPLZ_ORT.setBounds(20, 50, 300, 100);
-        //searchConfirmButton.setBounds(346, 70, 110, 30);
-        //randDestinationsCarButton.setBounds(346, 105, 110, 30);
-        //randDestinationsBikeButton.setBounds(346, 140, 110, 30);
-        //logOutButton.setBounds(340, 430, 130, 30);
-        //changeDetailsButton.setBounds(340, 398, 130, 30);
-        //changePasswordButton.setBounds(340, 366, 130, 30);
 
         leftSide.setLayout(new BoxLayout(leftSide,BoxLayout.Y_AXIS));
         rightSide.setLayout(new BoxLayout(rightSide,BoxLayout.Y_AXIS));
 
-        gbc5.gridheight = 1;
-        gbc5.ipady = 0;
-        gbc5.ipadx = 0;
-        gbc5.gridx = 0;
-        gbc5.gridy = 0;
         
         leftSide.add(Box.createRigidArea(new Dimension(0,25)));
         menuLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftSide.add(menuLabel,1); 
 
-        gbc5.gridy = 1;
         searchPLZ_ORT.setAlignmentX(Component.CENTER_ALIGNMENT);
         searchPLZ_ORT.setMaximumSize(new Dimension(250,55));
         searchPLZ_ORT.setPreferredSize(new Dimension(250,55));
         leftSide.add(searchPLZ_ORT,2);
 
-        gbc5.gridy = 2;
         jsp.setAlignmentX(Component.CENTER_ALIGNMENT);
         jsp.setMaximumSize(new Dimension(250, 500));
         jsp.setPreferredSize(new Dimension(250, 500));
         leftSide.add(jsp,3);
 
-        gbc5.gridheight = 1;
-        gbc5.ipady = 0;
-        gbc5.ipadx = 0;
-        gbc5.gridx = 1;
-        gbc5.gridy = 1;
 
         rightSide.add(Box.createRigidArea(new Dimension(0,80)));
         searchConfirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -263,41 +248,35 @@ public class Main extends JFrame {
         searchConfirmButton.setPreferredSize(new Dimension(140,35));
         rightSide.add(searchConfirmButton,1);
         
-        gbc5.gridy = 2;
 
         randDestinationsCarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         randDestinationsCarButton.setMaximumSize(new Dimension(140,35));
         randDestinationsCarButton.setPreferredSize(new Dimension(140,35));
         rightSide.add(randDestinationsCarButton,2);
 
-        gbc5.gridy = 3;
 
         randDestinationsBikeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         randDestinationsBikeButton.setMaximumSize(new Dimension(140,35));
         randDestinationsBikeButton.setPreferredSize(new Dimension(140,35));
         rightSide.add(randDestinationsBikeButton,3);
         
-        gbc5.gridy = 4;
            
         rightSide.add(Box.createRigidArea(new Dimension(0,230)));
         profile.setAlignmentX(Component.CENTER_ALIGNMENT);
         rightSide.add(profile,5);
 
-        gbc5.gridy = 5;
 
         changeDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         changeDetailsButton.setMaximumSize(new Dimension(140,35));
         changeDetailsButton.setPreferredSize(new Dimension(140,35));
         rightSide.add(changeDetailsButton,6);
 
-        gbc5.gridy = 6;
         
         changePasswordButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         changePasswordButton.setMaximumSize(new Dimension(140,35));
         changePasswordButton.setPreferredSize(new Dimension(140,35));
         rightSide.add(changePasswordButton,7);
 
-        gbc5.gridy = 7;
 
         logOutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         logOutButton.setMaximumSize(new Dimension(140,35));
@@ -307,40 +286,9 @@ public class Main extends JFrame {
         menu.add(leftSide,BorderLayout.WEST);
         menu.add(rightSide,BorderLayout.EAST);
 
-        /*p4 = new JPanel(new GridLayout(4,1));
-        p4.add(menuLabel);
-        p4.add(searchPLZ_ORT);
-        p4.add(new JLabel());
-        //menu.add(menuLabel,gbc5);
-        gbc5.ipady = 20;
-        gbc5.ipadx = 20;
-        gbc5.gridy = 1;
-        gbc5.insets = new Insets(0, 0, 10, 20);
-        menu.add(p4,gbc5);
-        //menu.add(searchPLZ_ORT,gbc5);
-        gbc5.gridx = 2;
-        gbc5.gridy = 1;
-        gbc5.insets = new Insets(0, 10, 0, 0);
-        menu.add(searchConfirmButton,gbc5);
-        gbc5.gridy = 2;
-        gbc5.insets = new Insets(0, 10, 0, 0);
-        menu.add(randDestinationsCarButton,gbc5);
-        gbc5.gridy = 3;
-        gbc5.insets = new Insets(0, 10, 0, 0);
-        menu.add(randDestinationsBikeButton,gbc5);
-        gbc5.gridy = 7;
-        gbc5.insets = new Insets(0, 10, 0, 0);
-        menu.add(logOutButton,gbc5);
-        gbc5.gridy = 5;
-        gbc5.insets = new Insets(0, 10, 0, 0);
-        menu.add(changeDetailsButton,gbc5);
-        gbc5.gridy = 6;
-        gbc5.insets = new Insets(0, 10, 0, 0);
-        menu.add(changePasswordButton,gbc5);
-        gbc5.insets = new Insets(0, 0, 0, 0);
-        */
+        // => Passwort ändern Fenster
         changePassword = new JPanel(gbl5);
-        changePasswordLabel = new JLabel("Password ändern");
+        changePasswordLabel = new JLabel("Passwort ändern");
         changePasswordLabel.setFont(new Font("Arial", Font.PLAIN, 24));
         changePasswordOldPasswordCreate();
         changePasswordNewPasswordCreate();
@@ -376,13 +324,8 @@ public class Main extends JFrame {
         gbc5.ipady = 10;
         changePassword.add(p8,gbc5);
         
-        /*changePassword.add(changePasswordLabel);
-        changePassword.add(changePasswordOldPassword);
-        changePassword.add(changePasswordNewPassword);
-        changePassword.add(changePasswordConfirmNewPassword);
-        changePassword.add(changePasswordBackButton);
-        changePassword.add(changePasswordConfirmButton);*/
 
+        // => Nutzerdaten ändern Fenster
         changeDetails = new JPanel(gbl5);
         changeDetailsLabel = new JLabel("Nutzerdaten ändern");
         changeDetailsLabel.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -396,51 +339,41 @@ public class Main extends JFrame {
         checkChangePasswordCreate();
         changeConfirmButtonCreate(gbc5);
         changeBackButtonCreate();
-                gbc5.gridheight = 1;
-                gbc5.gridx = 0;
-                gbc5.gridy = 0;
-                gbc5.ipadx = 0;
-                gbc5.ipady = 40;
-                gbc5.insets = new Insets(0,0,10,0);
-                changeDetails.add(changeDetailsLabel,gbc5);
-                gbc5.insets = new Insets(0,0,0,0);
-                JPanel p5 = new JPanel(new GridLayout(8, 1,0,5));
-                p5.add(changeName);
-                p5.add(changeOrt);
-                p5.add(changePLZ);
-                p5.add(changeCarName);
-                p5.add(changeCarCO2);
-                p5.add(changeCarSpeed);
-                p5.add(changeBikeSpeed);
-                p5.add(checkChangePassword);
-                gbc5.gridx = 0;
-                gbc5.gridy = 1;
-                gbc5.ipadx = 5;
-                gbc5.ipady = 20;
-                changeDetails.add(p5,gbc5);
-                gbc5.insets = new Insets(20,0,10,0);
-                gbc5.gridx = 0;
-                gbc5.gridy = 2;
-                gbc5.ipadx = 25;
-                gbc5.ipady = 20;
-                JPanel p6 = new JPanel(new GridLayout(1, 2,10,0));
-                p6.add(changeBackButton);
-                p6.add(changeConfirmButton);
-                gbc5.ipadx = -30;
-                gbc5.ipady = 10;
-                changeDetails.add(p6,gbc5);
+        gbc5.gridheight = 1;
+        gbc5.gridx = 0;
+        gbc5.gridy = 0;
+        gbc5.ipadx = 0;
+        gbc5.ipady = 40;
+        gbc5.insets = new Insets(0,0,10,0);
+        changeDetails.add(changeDetailsLabel,gbc5);
+        gbc5.insets = new Insets(0,0,0,0);
+        JPanel p5 = new JPanel(new GridLayout(8, 1,0,5));
+        p5.add(changeName);
+        p5.add(changePLZ);
+        p5.add(changeOrt);
+        p5.add(changeCarName);
+        p5.add(changeCarSpeed);
+        p5.add(changeCarCO2);
+        p5.add(changeBikeSpeed);
+        p5.add(checkChangePassword);
+        gbc5.gridx = 0;
+        gbc5.gridy = 1;
+        gbc5.ipadx = 5;
+        gbc5.ipady = 20;
+        changeDetails.add(p5,gbc5);
+        gbc5.insets = new Insets(20,0,10,0);
+        gbc5.gridx = 0;
+        gbc5.gridy = 2;
+        gbc5.ipadx = 25;
+        gbc5.ipady = 20;
+        JPanel p6 = new JPanel(new GridLayout(1, 2,10,0));
+        p6.add(changeBackButton);
+        p6.add(changeConfirmButton);
+        gbc5.ipadx = -30;
+        gbc5.ipady = 10;
+        changeDetails.add(p6,gbc5);
         
-        /*changeDetails.add(changeDetailsLabel);
-        changeDetails.add(changeName);
-        changeDetails.add(changeOrt);
-        changeDetails.add(changePLZ);
-        changeDetails.add(changeCarName);
-        changeDetails.add(changeCarCO2);
-        changeDetails.add(changeCarSpeed);
-        changeDetails.add(changeBikeSpeed);
-        changeDetails.add(checkChangePassword);
-        changeDetails.add(changeBackButton);
-        changeDetails.add(changeConfirmButton);*/
+        // cardLayout
 
         panelLayout.add(logRegScreen, "1");
         panelLayout.add(loginScreen, "2");
@@ -462,27 +395,7 @@ public class Main extends JFrame {
         JLabel jl = new JLabel(png);
         String[] details = facade.getDetails();
         jp.setToolTipText("<html>Nutzername:<br>"+details[0]+"<br><br>Adresse:<br>"+details[2] + ", " + details[1]+"<br><br>Aktuelles Wetter:<br>"+facade.current_weather()+"</html>");
-        /*JLabel jlName = new JLabel("Nutzername:");
-        jlName.setToolTipText(details[0]);
-        JLabel jlNameText = new JLabel(details[0]);
-        JLabel jlWohnort = new JLabel("Adresse:");
-        jlWohnort.setToolTipText(details[2] + ", " + details[1]);
-        JLabel jlWohnortText = new JLabel(details[2] + ", " + details[1]);
-        JLabel jlWetter = new JLabel("Aktuelles Wetter:");
-        jlWetter.setToolTipText(facade.current_weather());
-        JLabel jlWetterText = new JLabel(facade.current_weather());
-        */
         jp.add(jl);
-        /*jp.add(new JLabel());
-        jp.add(jlName);
-        jp.add(jlNameText);
-        jp.add(new JLabel());
-        jp.add(jlWohnort);
-        jp.add(jlWohnortText);
-        jp.add(new JLabel());
-        jp.add(jlWetter);
-        jp.add(jlWetterText);
-        */
         profile = jp;
     }
 
@@ -568,8 +481,7 @@ public class Main extends JFrame {
                     }
                     profile.setMaximumSize(new Dimension(50,50));
                     profile.setPreferredSize(new Dimension(50,50));
-                    gbc5.gridx = 1;
-                    gbc5.gridy = 4;
+                    
                     rightSide.add(profile,5);
                     rightSide.revalidate();
                     menu.revalidate();
@@ -708,8 +620,7 @@ public class Main extends JFrame {
                     }
                     profile.setMaximumSize(new Dimension(50,50));
                     profile.setPreferredSize(new Dimension(50,50));
-                    gbc5.gridx = 1;
-                    gbc5.gridy = 4;
+                    
                     rightSide.add(profile,5);
                     rightSide.revalidate();                    
                     menu.revalidate();
@@ -853,31 +764,24 @@ public class Main extends JFrame {
                             }
                         });
                         destinationButtonsProxy.add(jb);
-                        //JLabel placeholder = new JLabel("");
-                        //destinationButtonsProxy.add(placeholder);
                     }
-                    destinationButtons = destinationButtonsProxy;
+                    destinationButtonsProxy.revalidate();
+
                     try {
                         leftSide.remove(jsp);
                     } catch (Exception jspNotYetIncluded) {
                     }
-                    jsp = new JScrollPane(destinationButtons, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                    //jsp.setBounds(40, 110, 256, 336);
+                    jsp = new JScrollPane(destinationButtonsProxy, 
+                                            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    
                     jsp.setMaximumSize(new Dimension(250, 450));
                     jsp.setPreferredSize(new Dimension(250, 450));
                     jsp.revalidate();
                     
-                    gbc5.gridx = 0;
-                    gbc5.gridy = 2;
-                    gbc5.gridheight = GridBagConstraints.RELATIVE;
-                    //gbc5.ipady = 500;
-                    //gbc5.ipadx = 200;
                     leftSide.add(jsp,3);
                     leftSide.revalidate();
-                    gbc5.ipady = 0;
-                    gbc5.ipadx = 0;
                     
-                    gbc5.gridheight = 1;
                     menu.revalidate();
                 }
                 else {
@@ -885,26 +789,19 @@ public class Main extends JFrame {
                     JLabel jl = new JLabel("Ihre Suche liefert keine Treffer!");
                     jl.setFont(new Font("Arial", Font.PLAIN, 14));
                     destinationButtonsProxy.add(jl);
-                    destinationButtons = destinationButtonsProxy;
-                    destinationButtons.revalidate();
+                    destinationButtonsProxy.revalidate();
                     
                     try {
                         leftSide.remove(jsp);
                     } catch (Exception jspNotYetIncluded) {
                     }
-                    jsp = new JScrollPane(destinationButtons);
+                    jsp = new JScrollPane(destinationButtonsProxy);
                     jsp.setMaximumSize(new Dimension(250, 450));
                     jsp.setPreferredSize(new Dimension(250, 450));
                     jsp.revalidate();
                     
-                    gbc5.gridx = 0;
-                    gbc5.gridy = 2;
-                    gbc5.gridheight = GridBagConstraints.RELATIVE;
-
                     leftSide.add(jsp,3);
                     leftSide.revalidate();
-                    
-                    gbc5.gridheight = 1;
                     
                     menu.revalidate();
                 }
@@ -1002,27 +899,21 @@ public class Main extends JFrame {
                         });
                         destinationButtonsProxy.add(jb);
                     }
-                    destinationButtons = destinationButtonsProxy;
-                    destinationButtons.revalidate();
+                    destinationButtonsProxy.revalidate();
                     
                     try {
                         leftSide.remove(jsp);
                     } catch (Exception jspNotYetIncluded) {
                     }
-                    jsp = new JScrollPane(destinationButtons);
+                    jsp = new JScrollPane(destinationButtonsProxy);
                     jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                     jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                     jsp.setMaximumSize(new Dimension(250, 450));
                     jsp.setPreferredSize(new Dimension(250, 450));
                     jsp.revalidate();
-                    
-                    gbc5.gridx = 0;
-                    gbc5.gridy = 2;
-                    gbc5.gridheight = GridBagConstraints.RELATIVE;
 
                     leftSide.add(jsp,3);
                     leftSide.revalidate();                    
-                    gbc5.gridheight = 1;
                     
                     menu.revalidate();
                     
@@ -1119,14 +1010,13 @@ public class Main extends JFrame {
                     });
                     destinationButtonsProxy.add(jb);
                 }
-                destinationButtons = destinationButtonsProxy;
-                destinationButtons.revalidate();
+                destinationButtonsProxy.revalidate();
                 
                 try {
                     leftSide.remove(jsp);
                 } catch (Exception jspNotYetIncluded) {
                 }
-                jsp = new JScrollPane(destinationButtons);
+                jsp = new JScrollPane(destinationButtonsProxy);
                 jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
                 jsp.setMaximumSize(new Dimension(250, 450));
@@ -1134,13 +1024,8 @@ public class Main extends JFrame {
                 
                 jsp.revalidate();
                 
-                gbc5.gridx = 0;
-                gbc5.gridy = 2;
-                gbc5.gridheight = GridBagConstraints.RELATIVE;
-
                 leftSide.add(jsp,3);
                 leftSide.revalidate();                    
-                gbc5.gridheight = 1;
                 
                 menu.revalidate();
                
@@ -1271,8 +1156,7 @@ public class Main extends JFrame {
                         carNameTXT, carCO2TXT, carSpeedTXT, bikeSpeedTXT)){
                     rightSide.remove(5);
                     profileCreate();
-                    gbc5.gridx = 1;
-                    gbc5.gridy = 4;
+        
                     rightSide.add(profile,5);
                     rightSide.revalidate();
                     menu.revalidate();
