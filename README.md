@@ -1,6 +1,6 @@
 # Short Trip App
 
-Works in Germany, build in Java Swing.
+Works in Germany, build in Java Swing within Maven project.
 
 ## Devs
 
