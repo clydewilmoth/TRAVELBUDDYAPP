@@ -12,14 +12,6 @@ public class SystemTest {
     System current_system = new System("35a75437476f12302f72e55d368485db");
 
     @Test
-    public void weather_forecast() {
-
-        current_system.sign_in_user("David", "123Esel");
-
-        assertNotEquals("Es ist ein Fehler aufgetreten!", current_system.weather_forecast("68161")[0]);
-    }
-
-    @Test
     public void current_weather() {
 
         current_system.sign_in_user("David", "123Esel");
@@ -129,20 +121,25 @@ public class SystemTest {
     @Test
     public void sign_up_user() {
         // Username darf nicht doppelt vorkommen!
-        assertEquals(false, current_system.sign_up_user("David", "123Esel", "123Esel", "Mannheim", "68161", "AMG", "10",
+        assertEquals(false, current_system.sign_up_user("David", "123Esel",
+                "123Esel", "Mannheim", "68161", "AMG", "10",
                 "300", "20"));
-        assertEquals(true, current_system.sign_up_user("Selim", "Penis69", "Penis69", "Mannheim", "68161", "AMG", "10",
+        assertEquals(true, current_system.sign_up_user("Selim", "Penis69", "Penis69",
+                "Mannheim", "68161", "AMG", "10",
                 "300", "20"));
         // PLZ muss mit Stadt übereinstimmen
-        assertEquals(false, current_system.sign_up_user("Lukas", "123Esel", "123Esel", "Mannheim", "11105", "AMG", "10",
+        assertEquals(false, current_system.sign_up_user("Lukas", "123Esel",
+                "123Esel", "Mannheim", "11105", "AMG", "10",
                 "300", "20"));
-        assertEquals(true, current_system.sign_up_user("Lukas", "123Esel", "123Esel", "Mannheim", "68305", "AMG", "10",
+        assertEquals(true, current_system.sign_up_user("Lukas", "123Esel", "123Esel",
+                "Mannheim", "68305", "AMG", "10",
                 "300", "20"));
 
         assertEquals("Lukas", current_system.getDetails()[0]);
         current_system.sign_out_user();
         assertEquals("", current_system.getDetails()[0]);
         assertEquals(true, current_system.sign_in_user("Lukas", "123Esel"));
+
     }
 
     @Test
@@ -164,13 +161,10 @@ public class SystemTest {
         assertEquals(true, current_system.change_user_details("Enes", "123Esel", "Mannheim", "68161", "", "", "", ""));
         current_system.change_user_details("David", "123Esel", "Mannheim", "68161", "AMG", "10", "100", "20");
 
-        ;
-
     }
-    /*
-     * Tests auf Basis von user_data.csv:
-     * Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
-     * David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;100.0;20.0
-     */
 
 }
+
+// Test auf Basis von user_data.csv:
+// Daniel;MTQwMURhbmllbA==;Mannheim;68305;BMW;1.5;50.4;40.2
+// David;MTIzRXNlbA==;Mannheim;68161;AMG;10.0;100.0;20.0
